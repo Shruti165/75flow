@@ -1,0 +1,533 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Scoreboard Hero Section for Home Page -->
+<div class="scoreboard-hero">
+    <div class="hero-background">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="hero-content text-center">
+            <div class="hero-title">
+                <h1 class="display-4 fw-bold text-white mb-3">
+                    <i class="ri-heart-pulse-line me-3 hero-icon"></i>
+                    Welcome to 75Flow, {{ user.username }}!
+                </h1>
+                <p class="lead text-white-50 mb-4">Your 75-day journey to better habits starts here. Track, grow, and celebrate every step!</p>
+            </div>
+            <div class="hero-stats">
+                <div class="row justify-content-center">
+                    <div class="col-md-2 col-6 mb-3">
+                        <div class="hero-stat-card">
+                            <div class="hero-stat-icon">
+                                <i class="ri-folder-line"></i>
+                            </div>
+                            <div class="hero-stat-number">{{ categories.count }}</div>
+                            <div class="hero-stat-label">Categories</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-6 mb-3">
+                        <div class="hero-stat-card">
+                            <div class="hero-stat-icon">
+                                <i class="ri-check-double-line"></i>
+                            </div>
+                            <div class="hero-stat-number">{{ habits.count }}</div>
+                            <div class="hero-stat-label">Active Habits</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-6 mb-3">
+                        <div class="hero-stat-card">
+                            <div class="hero-stat-icon">
+                                <i class="ri-calendar-check-line"></i>
+                            </div>
+                            <div class="hero-stat-number">Day {{ challenge_stats.current_day|default:1 }}/75</div>
+                            <div class="hero-stat-label">Current Day</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-6 mb-3">
+                        <div class="hero-stat-card">
+                            <div class="hero-stat-icon">
+                                <i class="ri-fire-line"></i>
+                            </div>
+                            <div class="hero-stat-number">{{ challenge_stats.best_streak|default:0 }}</div>
+                            <div class="hero-stat-label">Best Streak</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4">
+                <a href="{% url 'habits:daily_tracking' %}" class="btn btn-primary btn-lg me-2">
+                    <i class="ri-check-line me-1"></i>Track Today
+                </a>
+                <a href="{% url 'habits:scoreboard' %}" class="btn btn-outline-light btn-lg me-2">
+                    <i class="ri-trophy-line me-1"></i>View Scoreboard
+                </a>
+                <a href="{% url 'habits:profile' %}" class="btn btn-outline-light btn-lg">
+                    <i class="ri-user-settings-line me-1"></i>Edit Profile
+                </a>
+            </div>
+            <div class="mt-4">
+                <blockquote class="blockquote text-white-50 mb-0">
+                    <p class="mb-0">“Small daily improvements are the key to staggering long-term results.”</p>
+                    <footer class="blockquote-footer text-white-50">James Clear</footer>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Scoreboard Hero Section -->
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4><i class="ri-dashboard-line icon-gradient me-2"></i>Challenge Dashboard</h4>
+                        <div>
+                            <a href="{% url 'habits:create_category' %}" class="btn btn-primary btn-sm me-2">
+                                <i class="ri-folder-add-line me-1"></i>Add Category
+                            </a>
+                            <a href="{% url 'habits:create_habit' %}" class="btn btn-success btn-sm">
+                                <i class="ri-add-line me-1"></i>Add Habit
+                            </a>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <span class="text-muted small"><i class="ri-information-line me-1"></i>These categories and habits are shared by all participants in the challenge.</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- Categories Overview -->
+                    {% if categories %}
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="mb-3"><i class="ri-folder-line me-2"></i>All Habit Categories</h5>
+                                <div class="row">
+                                    {% for category in categories %}
+                                    <div class="col-md-4 col-lg-3 mb-3">
+                                        <div class="card h-100 category-card" style="border-left: 4px solid {{ category.color }};">
+                                            <div class="card-body text-center p-3">
+                                                <div class="category-icon emoji-bounce mb-2">
+                                                    {% if category.name == "Reading" %}<i class="ri-book-line icon-large"></i>
+                                                    {% elif category.name == "Fitness" %}<i class="ri-heart-pulse-line icon-large"></i>
+                                                    {% elif category.name == "Nutrition" %}<i class="ri-restaurant-line icon-large"></i>
+                                                    {% elif category.name == "Wealth" %}<i class="ri-money-dollar-circle-line icon-large"></i>
+                                                    {% elif category.name == "Spiritual" %}<i class="ri-mental-health-line icon-large"></i>
+                                                    {% elif category.name == "Fun" %}<i class="ri-gamepad-line icon-large"></i>
+                                                    {% else %}<i class="ri-file-list-line icon-large"></i>{% endif %}
+                                                </div>
+                                                <h6 class="card-title mb-1">{{ category.name }}</h6>
+                                                <small class="text-muted">{{ category.habits.count }} habits</small>
+                                                <div class="mt-2">
+                                                    <span class="badge fun-badge">
+                                                        <i class="ri-check-double-line me-1"></i>{{ category.habits.count }} Active
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <!-- Compact Habits by Category -->
+                    {% if categories %}
+                        <div class="row">
+                            <div class="col-12">
+                                <h5 class="mb-3"><i class="ri-list-check me-2"></i>All Habits by Category</h5>
+                                <div class="accordion" id="habitsAccordion">
+                                    {% for category in categories %}
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="heading{{ category.id }}">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ category.id }}" aria-expanded="false" aria-controls="collapse{{ category.id }}">
+                                                <div class="d-flex align-items-center w-100">
+                                                    <div class="me-3">
+                                                        {% if category.name == "Reading" %}<i class="ri-book-line icon-medium"></i>
+                                                        {% elif category.name == "Fitness" %}<i class="ri-heart-pulse-line icon-medium"></i>
+                                                        {% elif category.name == "Nutrition" %}<i class="ri-restaurant-line icon-medium"></i>
+                                                        {% elif category.name == "Wealth" %}<i class="ri-money-dollar-circle-line icon-medium"></i>
+                                                        {% elif category.name == "Spiritual" %}<i class="ri-mental-health-line icon-medium"></i>
+                                                        {% elif category.name == "Fun" %}<i class="ri-gamepad-line icon-medium"></i>
+                                                        {% else %}<i class="ri-file-list-line icon-medium"></i>{% endif %}
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <strong>{{ category.name }}</strong>
+                                                        <small class="text-muted ms-2">({{ category.habits.count }} habits)</small>
+                                                    </div>
+                                                    <span class="badge" style="background-color: {{ category.color }}; color: white;">
+                                                        <i class="ri-check-double-line me-1"></i>{{ category.habits.count }} Active
+                                                    </span>
+                                                </div>
+                                            </button>
+                                        </h2>
+                                        <div id="collapse{{ category.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ category.id }}" data-bs-parent="#habitsAccordion">
+                                            <div class="accordion-body">
+                                                <div class="row">
+                                                    {% for habit in category.habits.all %}
+                                                    <div class="col-md-6 col-lg-4 mb-3">
+                                                        <div class="habit-card p-3 border rounded" style="border-left: 3px solid {{ category.color }} !important;">
+                                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                                <h6 class="mb-0 habit-title">
+                                                                    {% if "Swim" in habit.name %}<i class="ri-swimming-line me-1"></i>
+                                                                    {% elif "Run" in habit.name %}<i class="ri-run-line me-1"></i>
+                                                                    {% elif "Dance" in habit.name %}<i class="ri-dance-line me-1"></i>
+                                                                    {% elif "Yoga" in habit.name %}<i class="ri-mental-health-line me-1"></i>
+                                                                    {% elif "Gym" in habit.name %}<i class="ri-heart-pulse-line me-1"></i>
+                                                                    {% elif "Walk" in habit.name %}<i class="ri-walk-line me-1"></i>
+                                                                    {% elif "Football" in habit.name %}<i class="ri-football-line me-1"></i>
+                                                                    {% elif "HIIT" in habit.name %}<i class="ri-fire-line me-1"></i>
+                                                                    {% elif "Drink" in habit.name %}<i class="ri-cup-line me-1"></i>
+                                                                    {% elif "Fruits" in habit.name %}<i class="ri-apple-line me-1"></i>
+                                                                    {% elif "Water" in habit.name %}<i class="ri-water-flash-line me-1"></i>
+                                                                    {% elif "Cook" in habit.name %}<i class="ri-restaurant-line me-1"></i>
+                                                                    {% elif "Job" in habit.name %}<i class="ri-briefcase-line me-1"></i>
+                                                                    {% elif "LinkedIn" in habit.name %}<i class="ri-linkedin-box-line me-1"></i>
+                                                                    {% elif "AI" in habit.name %}<i class="ri-robot-line me-1"></i>
+                                                                    {% elif "Content" in habit.name %}<i class="ri-file-text-line me-1"></i>
+                                                                    {% elif "Office" in habit.name %}<i class="ri-building-line me-1"></i>
+                                                                    {% elif "Meditate" in habit.name %}<i class="ri-mental-health-line me-1"></i>
+                                                                    {% elif "Journal" in habit.name %}<i class="ri-book-open-line me-1"></i>
+                                                                    {% elif "Sleep" in habit.name %}<i class="ri-hotel-bed-line me-1"></i>
+                                                                    {% elif "Event" in habit.name %}<i class="ri-calendar-event-line me-1"></i>
+                                                                    {% elif "Hackathon" in habit.name %}<i class="ri-code-line me-1"></i>
+                                                                    {% elif "Music" in habit.name %}<i class="ri-music-line me-1"></i>
+                                                                    {% elif "Painting" in habit.name %}<i class="ri-palette-line me-1"></i>
+                                                                    {% elif "Dogs" in habit.name %}<i class="ri-dog-line me-1"></i>
+                                                                    {% elif "Fiction" in habit.name %}<i class="ri-book-line me-1"></i>
+                                                                    {% elif "Non-Fiction" in habit.name %}<i class="ri-book-read-line me-1"></i>
+                                                                    {% else %}<i class="ri-check-line me-1"></i>{% endif %}
+                                                                    {{ habit.name }}
+                                                                </h6>
+                                                            </div>
+                                                            {% if habit.description %}
+                                                                <p class="text-muted small mb-2">{{ habit.description|truncatechars:60 }}</p>
+                                                            {% endif %}
+                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                <small class="text-muted"><i class="ri-calendar-line me-1"></i>{{ habit.start_date|date:"M d" }}</small>
+                                                                <div class="progress flex-grow-1 mx-2" style="height: 6px;">
+                                                                    <div class="progress-bar" role="progressbar" style="width: 0%; background-color: {{ category.color }};"></div>
+                                                                </div>
+                                                                <small class="text-muted">0/75</small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-5">
+                            <i class="ri-folder-line icon-large icon-gradient mb-3"></i>
+                            <h5 class="text-muted mb-3">No categories yet!</h5>
+                            <p class="text-muted">Start your 75-day journey by creating your first category.</p>
+                            <a href="{% url 'habits:create_category' %}" class="btn btn-primary">
+                                <i class="ri-add-line"></i>Create Category
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Scoreboard Hero Section Styles for Home Page */
+    .scoreboard-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 80px 0 60px;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 40px;
+    }
+
+    .hero-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+
+    .floating-shapes {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    .shape {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .shape-1 {
+        width: 80px;
+        height: 80px;
+        top: 20%;
+        left: 10%;
+        animation-delay: 0s;
+    }
+
+    .shape-2 {
+        width: 120px;
+        height: 120px;
+        top: 60%;
+        right: 15%;
+        animation-delay: 2s;
+    }
+
+    .shape-3 {
+        width: 60px;
+        height: 60px;
+        top: 40%;
+        left: 70%;
+        animation-delay: 4s;
+    }
+
+    .shape-4 {
+        width: 100px;
+        height: 100px;
+        bottom: 20%;
+        left: 20%;
+        animation-delay: 1s;
+    }
+
+    .shape-5 {
+        width: 90px;
+        height: 90px;
+        top: 80%;
+        right: 30%;
+        animation-delay: 3s;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-title h1 {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        animation: fadeInUp 1s ease-out;
+    }
+
+    .hero-icon {
+        font-size: 3rem;
+        animation: pulse 2s infinite;
+    }
+
+    .hero-stats {
+        margin-top: 40px;
+    }
+
+    .hero-stat-card {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 20px;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+        animation: fadeInUp 1s ease-out;
+    }
+
+    .hero-stat-card:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.25);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .hero-stat-icon {
+        font-size: 2rem;
+        color: white;
+        margin-bottom: 10px;
+    }
+
+    .hero-stat-number {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: white;
+        margin-bottom: 5px;
+    }
+
+    .hero-stat-label {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+
+    /* Welcome User Avatar Styles */
+    .welcome-user-avatar {
+        flex-shrink: 0;
+    }
+
+    .welcome-profile-image {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid var(--water-blue);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s ease;
+    }
+
+    .welcome-profile-image:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .welcome-avatar-fallback {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--gradient-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        border: 3px solid var(--water-blue);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s ease;
+    }
+
+    .welcome-avatar-fallback:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .category-card {
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .category-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .habit-card {
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.8);
+    }
+    
+    .habit-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .habit-title {
+        font-size: 0.9rem;
+        line-height: 1.3;
+    }
+    
+    .accordion-button {
+        background: linear-gradient(135deg, 
+            rgba(125, 211, 252, 0.1) 0%, 
+            rgba(134, 239, 172, 0.1) 50%, 
+            rgba(252, 165, 165, 0.1) 100%);
+        border: none;
+        font-weight: 600;
+    }
+    
+    .accordion-button:not(.collapsed) {
+        background: linear-gradient(135deg, 
+            rgba(125, 211, 252, 0.2) 0%, 
+            rgba(134, 239, 172, 0.2) 50%, 
+            rgba(252, 165, 165, 0.2) 100%);
+        color: #333;
+    }
+    
+    .accordion-button:focus {
+        box-shadow: none;
+        border-color: rgba(0, 0, 0, 0.125);
+    }
+    
+    .accordion-item {
+        border-radius: 15px;
+        margin-bottom: 10px;
+        overflow: hidden;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+    }
+    
+    .progress {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+    }
+    
+    .badge {
+        font-size: 0.75rem;
+    }
+    
+    .fun-badge {
+        background: var(--gradient-primary);
+        background-size: 300% 300%;
+        animation: gradientShift 3s ease infinite;
+        color: white;
+        border: none;
+    }
+    
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    /* Responsive Design for Welcome Avatar */
+    @media (max-width: 768px) {
+        .welcome-profile-image,
+        .welcome-avatar-fallback {
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .welcome-profile-image,
+        .welcome-avatar-fallback {
+            width: 35px;
+            height: 35px;
+            font-size: 1rem;
+        }
+    }
+</style>
+{% endblock %} 

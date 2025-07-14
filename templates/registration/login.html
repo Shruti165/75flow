@@ -1,0 +1,396 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid mt-5">
+    <div class="row justify-content-center align-items-center min-vh-100">
+        <!-- Logo Section - Left Side -->
+        <div class="col-lg-6 d-flex justify-content-center align-items-center">
+            <div class="logo-section">
+                <div class="logo-container">
+                    <img src="{% static 'images/logo.jpg' %}" alt="75 FLOW Logo" class="logo-image" 
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div class="logo-placeholder" style="display: none;">
+                        <div class="logo-placeholder-content">
+                            <h1 class="text-primary mb-0">75</h1>
+                            <h2 class="text-secondary mb-0">FLOW</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="logo-subtitle mt-4">
+                    <h2 class="text-dark mb-3">Transform Your Life in 75 Days</h2>
+                    <p class="text-muted mb-0 fs-5">Track habits, build consistency, achieve your goals</p>
+                    <div class="features-list mt-4">
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle text-success me-2"></i>
+                            <span>Build lasting habits</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle text-success me-2"></i>
+                            <span>Track your progress</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle text-success me-2"></i>
+                            <span>Stay motivated</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Login Form - Right Side -->
+        <div class="col-lg-5 col-md-8">
+            <div class="login-form-container">
+                <div class="card">
+                    <div class="card-header text-center bg-primary text-white">
+                        <h4><i class="fas fa-sign-in-alt"></i> Welcome Back</h4>
+                        <p class="mb-0">Sign in to continue your journey</p>
+                    </div>
+                    <div class="card-body">
+                        {% if form.errors %}
+                            <div class="alert alert-danger">Invalid username or password.</div>
+                        {% endif %}
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="mb-4">
+                                <label for="id_username" class="form-label">Username</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    <input type="text" name="username" class="form-control" id="id_username" required>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label for="id_password" class="form-label">Password</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                    <input type="password" name="password" class="form-control" id="id_password" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100 mb-3">Login</button>
+                            <div class="text-center">
+                                <small class="text-muted">Join the 75-day challenge and transform your life</small>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Logo Section - Left Side */
+.logo-section {
+    text-align: center;
+    padding: 2rem;
+    animation: fadeInLeft 1s ease-out;
+}
+
+.logo-container {
+    margin-bottom: 2rem;
+}
+
+.logo-image {
+    max-width: 300px;
+    max-height: 300px;
+    border-radius: 25px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    transition: all 0.4s ease;
+    border: 4px solid rgba(255, 255, 255, 0.2);
+}
+
+.logo-image:hover {
+    transform: scale(1.05) rotate(2deg);
+    box-shadow: 0 16px 50px rgba(0,0,0,0.25);
+}
+
+.logo-placeholder {
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    transition: all 0.4s ease;
+    border: 4px solid rgba(255, 255, 255, 0.2);
+}
+
+.logo-placeholder:hover {
+    transform: scale(1.05) rotate(2deg);
+    box-shadow: 0 16px 50px rgba(0,0,0,0.25);
+}
+
+.logo-placeholder-content {
+    text-align: center;
+    color: white;
+}
+
+.logo-placeholder-content h1 {
+    font-size: 5rem;
+    font-weight: bold;
+    margin: 0;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+    background: linear-gradient(45deg, #fff, #f0f0f0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.logo-placeholder-content h2 {
+    font-size: 3rem;
+    font-weight: 600;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+    background: linear-gradient(45deg, #e0e0e0, #c0c0c0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.logo-subtitle {
+    animation: fadeInUp 0.8s ease-out 0.3s both;
+}
+
+.logo-subtitle h2 {
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+.logo-subtitle p {
+    font-size: 1.2rem;
+    color: #6c757d;
+    margin-bottom: 20px;
+}
+
+.features-list {
+    text-align: left;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 1.1rem;
+    color: #495057;
+}
+
+.feature-item i {
+    font-size: 1.2rem;
+    margin-right: 12px;
+}
+
+/* Login Form - Right Side */
+.login-form-container {
+    animation: fadeInRight 1s ease-out 0.2s both;
+}
+
+.card {
+    border-radius: 20px;
+    box-shadow: 0 15px 45px rgba(0,0,0,0.1);
+    border: none;
+    overflow: hidden;
+}
+
+.card-header {
+    border-radius: 0;
+    border: none;
+    padding: 25px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+.card-header h4 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+.card-header p {
+    margin: 8px 0 0 0;
+    opacity: 0.9;
+}
+
+.card-body {
+    padding: 30px;
+}
+
+.btn-primary {
+    border-radius: 25px;
+    padding: 15px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+}
+
+.form-control {
+    border-radius: 15px;
+    border: 2px solid #e9ecef;
+    padding: 12px 15px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    transform: translateY(-2px);
+}
+
+.input-group-text {
+    background: rgba(102, 126, 234, 0.1);
+    border: 2px solid #e9ecef;
+    border-right: none;
+    color: #667eea;
+    border-radius: 15px 0 0 15px;
+}
+
+.input-group .form-control {
+    border-left: none;
+    border-radius: 0 15px 15px 0;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+.alert {
+    border-radius: 15px;
+    border: none;
+    padding: 15px 20px;
+}
+
+/* Animations */
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 991px) {
+    .row {
+        min-height: auto;
+        padding: 2rem 0;
+    }
+    
+    .logo-section {
+        margin-bottom: 3rem;
+    }
+    
+    .logo-image, .logo-placeholder {
+        max-width: 250px;
+        max-height: 250px;
+        width: 250px;
+        height: 250px;
+    }
+    
+    .logo-placeholder-content h1 {
+        font-size: 4rem;
+    }
+    
+    .logo-placeholder-content h2 {
+        font-size: 2.5rem;
+    }
+    
+    .logo-subtitle h2 {
+        font-size: 1.8rem;
+    }
+    
+    .logo-subtitle p {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .logo-image, .logo-placeholder {
+        max-width: 200px;
+        max-height: 200px;
+        width: 200px;
+        height: 200px;
+    }
+    
+    .logo-placeholder-content h1 {
+        font-size: 3rem;
+    }
+    
+    .logo-placeholder-content h2 {
+        font-size: 2rem;
+    }
+    
+    .logo-subtitle h2 {
+        font-size: 1.5rem;
+    }
+    
+    .logo-subtitle p {
+        font-size: 1rem;
+    }
+    
+    .feature-item {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .logo-image, .logo-placeholder {
+        max-width: 180px;
+        max-height: 180px;
+        width: 180px;
+        height: 180px;
+    }
+    
+    .logo-placeholder-content h1 {
+        font-size: 2.5rem;
+    }
+    
+    .logo-placeholder-content h2 {
+        font-size: 1.8rem;
+    }
+    
+    .card-body {
+        padding: 20px;
+    }
+}
+</style>
+{% endblock %} 

@@ -1,0 +1,1240 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section with Animated Background -->
+<div class="profile-hero">
+    <div class="hero-background">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="hero-content text-center">
+            <div class="hero-title">
+                <h1 class="display-4 fw-bold text-white mb-3">
+                    <i class="ri-user-settings-line me-3 hero-icon"></i>
+                    Your Profile
+                </h1>
+                <p class="lead text-white-50 mb-4">Customize your experience and track your 75-day transformation journey</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <!-- Quick Actions Bar -->
+            <div class="quick-actions-bar mb-4">
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                    <div class="d-flex align-items-center">
+                        <a href="{% url 'habits:home' %}" class="btn btn-outline-primary me-3">
+                            <i class="ri-home-4-line me-2"></i>Back to Home
+                        </a>
+                        <a href="{% url 'habits:scoreboard' %}" class="btn btn-primary me-3">
+                            <i class="ri-trophy-line me-2"></i>View Scoreboard
+                        </a>
+                    </div>
+                    <div class="profile-status">
+                        <span class="badge bg-success fs-6">
+                            <i class="ri-user-line me-1"></i>
+                            Profile Active
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Overview Cards -->
+            <div class="row mb-5">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="profile-stat-card">
+                        <div class="stat-icon-wrapper">
+                            <i class="ri-calendar-check-line"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-number">{{ user.habit_set.count }}</div>
+                            <div class="stat-label">Active Habits</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="profile-stat-card">
+                        <div class="stat-icon-wrapper">
+                            <i class="ri-fire-line"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-number">{{ user.habitday_set.filter.completed.count }}</div>
+                            <div class="stat-label">Days Completed</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="profile-stat-card">
+                        <div class="stat-icon-wrapper">
+                            <i class="ri-folder-line"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-number">{{ user.habit_set.values.category__name.distinct.count }}</div>
+                            <div class="stat-label">Categories</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="profile-stat-card">
+                        <div class="stat-icon-wrapper">
+                            <i class="ri-trophy-line"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-number">{{ user.date_joined|timesince|default:"0 days" }}</div>
+                            <div class="stat-label">Member Since</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Profile Form -->
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="profile-form-card">
+                        <div class="form-header">
+                            <h4 class="form-title">
+                                <i class="ri-edit-line me-2"></i>Edit Profile Information
+                            </h4>
+                            <p class="form-subtitle">Update your personal information and preferences</p>
+                        </div>
+                        
+                        <form method="post" enctype="multipart/form-data" class="profile-form">
+                            {% csrf_token %}
+                            
+                            <!-- Profile Image Section -->
+                            <div class="profile-image-section mb-4">
+                                <div class="image-upload-container">
+                                    <div class="current-image-display">
+                                        {% if user.profile.profile_image %}
+                                            <img src="{{ user.profile.profile_image.url }}" 
+                                                 alt="Profile Image" 
+                                                 class="profile-image-preview"
+                                                 id="profileImagePreview">
+                                        {% else %}
+                                            <div class="profile-image-placeholder" id="profileImagePreview">
+                                                <i class="ri-user-line"></i>
+                                            </div>
+                                        {% endif %}
+                                        <div class="image-overlay">
+                                            <i class="ri-camera-line"></i>
+                                            <span>Change Photo</span>
+                                        </div>
+                                    </div>
+                                    <div class="upload-controls">
+                                        <label for="{{ form.profile_image.id_for_label }}" class="upload-btn">
+                                            <i class="ri-upload-line me-2"></i>Upload New Photo
+                                        </label>
+                                        {{ form.profile_image }}
+                                        <small class="upload-hint">Drag & drop or click to upload (JPG, PNG, max 5MB)</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Personal Information -->
+                            <div class="form-section">
+                                <h5 class="section-title">
+                                    <i class="ri-user-line me-2"></i>Personal Information
+                                </h5>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">
+                                            <i class="ri-user-line me-1"></i>Username
+                                        </label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                <i class="ri-at-line"></i>
+                                            </span>
+                                            <input type="text" class="form-control" value="{{ user.username }}" readonly>
+                                        </div>
+                                        <small class="form-text text-muted">Username cannot be changed</small>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="{{ form.email.id_for_label }}" class="form-label">
+                                            <i class="ri-mail-line me-1"></i>Email for Weekly Stats
+                                        </label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                <i class="ri-mail-line"></i>
+                                            </span>
+                                            {{ form.email }}
+                                        </div>
+                                        {% if form.email.errors %}
+                                            <div class="error-message">{{ form.email.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="{{ form.date_of_birth.id_for_label }}" class="form-label">
+                                            <i class="ri-calendar-line me-1"></i>Date of Birth
+                                        </label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                <i class="ri-calendar-line"></i>
+                                            </span>
+                                            {{ form.date_of_birth }}
+                                        </div>
+                                        {% if form.date_of_birth.errors %}
+                                            <div class="error-message">{{ form.date_of_birth.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">
+                                            <i class="ri-time-line me-1"></i>Member Since
+                                        </label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                <i class="ri-time-line"></i>
+                                            </span>
+                                            <input type="text" class="form-control" value="{{ user.date_joined|date:'M d, Y' }}" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="{{ form.bio.id_for_label }}" class="form-label">
+                                        <i class="ri-file-text-line me-1"></i>Bio
+                                    </label>
+                                    {{ form.bio }}
+                                    <small class="form-text text-muted">Tell us about yourself and your goals (max 500 characters)</small>
+                                    {% if form.bio.errors %}
+                                        <div class="error-message">{{ form.bio.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Notification Preferences -->
+                            <div class="form-section">
+                                <h5 class="section-title">
+                                    <i class="ri-notification-line me-2"></i>Notification Preferences
+                                </h5>
+                                <div class="notification-option">
+                                    <div class="form-check custom-checkbox">
+                                        {{ form.weekly_stats_enabled }}
+                                        <label class="form-check-label" for="{{ form.weekly_stats_enabled.id_for_label }}">
+                                            <div class="checkbox-content">
+                                                <div class="checkbox-icon">
+                                                    <i class="ri-mail-check-line"></i>
+                                                </div>
+                                                <div class="checkbox-text">
+                                                    <strong>Weekly Progress Reports</strong>
+                                                    <small>Receive detailed weekly statistics and progress updates via email</small>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    {% if form.weekly_stats_enabled.errors %}
+                                        <div class="error-message">{{ form.weekly_stats_enabled.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="ri-save-line me-2"></i>Save Changes
+                                </button>
+                                <a href="{% url 'habits:home' %}" class="btn btn-outline-secondary btn-lg ms-3">
+                                    <i class="ri-close-line me-2"></i>Cancel
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Profile Sidebar -->
+                <div class="col-lg-4">
+                    <div class="profile-sidebar">
+                        <!-- Profile Summary -->
+                        <div class="sidebar-card">
+                            <div class="card-header">
+                                <h6 class="card-title">
+                                    <i class="ri-user-heart-line me-2"></i>Profile Summary
+                                </h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="profile-summary">
+                                    <div class="summary-item">
+                                        <i class="ri-calendar-line"></i>
+                                        <span>Joined {{ user.date_joined|date:"M Y" }}</span>
+                                    </div>
+                                    <div class="summary-item">
+                                        <i class="ri-target-line"></i>
+                                        <span>{{ user.habit_set.count }} Active Habits</span>
+                                    </div>
+                                    <div class="summary-item">
+                                        <i class="ri-fire-line"></i>
+                                        <span>{{ user.habitday_set.filter.completed.count }} Days Completed</span>
+                                    </div>
+                                    {% if user.profile.bio %}
+                                    <div class="summary-item">
+                                        <i class="ri-file-text-line"></i>
+                                        <span>Bio: {{ user.profile.bio|truncatechars:50 }}</span>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Stats -->
+                        <div class="sidebar-card">
+                            <div class="card-header">
+                                <h6 class="card-title">
+                                    <i class="ri-bar-chart-line me-2"></i>Quick Stats
+                                </h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="quick-stats">
+                                    <div class="stat-item">
+                                        <div class="stat-circle">
+                                            <span>{{ user.habit_set.count }}</span>
+                                        </div>
+                                        <div class="stat-info">
+                                            <div class="stat-label">Habits</div>
+                                            <div class="stat-value">Active</div>
+                                        </div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-circle">
+                                            <span>{{ user.habit_set.values.category__name.distinct.count }}</span>
+                                        </div>
+                                        <div class="stat-info">
+                                            <div class="stat-label">Categories</div>
+                                            <div class="stat-value">Covered</div>
+                                        </div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-circle">
+                                            <span>{{ user.habitday_set.filter.completed.count }}</span>
+                                        </div>
+                                        <div class="stat-info">
+                                            <div class="stat-label">Days</div>
+                                            <div class="stat-value">Completed</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Profile Tips -->
+                        <div class="sidebar-card">
+                            <div class="card-header">
+                                <h6 class="card-title">
+                                    <i class="ri-lightbulb-line me-2"></i>Profile Tips
+                                </h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="profile-tips">
+                                    <div class="tip-item">
+                                        <i class="ri-check-line"></i>
+                                        <span>Add a profile photo to personalize your experience</span>
+                                    </div>
+                                    <div class="tip-item">
+                                        <i class="ri-check-line"></i>
+                                        <span>Enable weekly stats to track your progress</span>
+                                    </div>
+                                    <div class="tip-item">
+                                        <i class="ri-check-line"></i>
+                                        <span>Write a bio to share your goals with the community</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Hero Section Styles */
+    .profile-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 80px 0 60px;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 40px;
+    }
+
+    .hero-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+
+    .floating-shapes {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    .shape {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .shape-1 {
+        width: 80px;
+        height: 80px;
+        top: 20%;
+        left: 10%;
+        animation-delay: 0s;
+    }
+
+    .shape-2 {
+        width: 120px;
+        height: 120px;
+        top: 60%;
+        right: 15%;
+        animation-delay: 2s;
+    }
+
+    .shape-3 {
+        width: 60px;
+        height: 60px;
+        top: 40%;
+        left: 70%;
+        animation-delay: 4s;
+    }
+
+    .shape-4 {
+        width: 100px;
+        height: 100px;
+        bottom: 20%;
+        left: 20%;
+        animation-delay: 1s;
+    }
+
+    .shape-5 {
+        width: 90px;
+        height: 90px;
+        top: 80%;
+        right: 30%;
+        animation-delay: 3s;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-title h1 {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        animation: fadeInUp 1s ease-out;
+    }
+
+    .hero-icon {
+        font-size: 3rem;
+        animation: pulse 2s infinite;
+    }
+
+    /* Quick Actions Bar */
+    .quick-actions-bar {
+        background: var(--soft-white);
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .profile-status .badge {
+        padding: 10px 15px;
+        border-radius: 25px;
+        font-weight: 600;
+    }
+
+    /* Profile Stat Cards */
+    .profile-stat-card {
+        background: var(--soft-white);
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .profile-stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: var(--gradient-primary);
+    }
+
+    .profile-stat-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-medium);
+    }
+
+    .stat-icon-wrapper {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: var(--gradient-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        box-shadow: var(--shadow-soft);
+        flex-shrink: 0;
+    }
+
+    .stat-content {
+        flex-grow: 1;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--text-primary);
+        line-height: 1;
+        margin-bottom: 5px;
+    }
+
+    .stat-label {
+        color: var(--text-secondary);
+        font-weight: 500;
+        font-size: 0.9rem;
+    }
+
+    /* Profile Form Card */
+    .profile-form-card {
+        background: var(--soft-white);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        height: 100%;
+    }
+
+    .form-header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .form-title {
+        color: var(--text-primary);
+        font-weight: 700;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .form-subtitle {
+        color: var(--text-secondary);
+        font-size: 1.1rem;
+        margin-bottom: 0;
+    }
+
+    /* Profile Image Section */
+    .profile-image-section {
+        text-align: center;
+    }
+
+    .image-upload-container {
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    .current-image-display {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .current-image-display:hover .image-overlay {
+        opacity: 1;
+    }
+
+    .profile-image-preview {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid var(--water-blue);
+        box-shadow: var(--shadow-medium);
+        transition: all 0.3s ease;
+    }
+
+    .profile-image-preview:hover {
+        transform: scale(1.05);
+        box-shadow: var(--shadow-strong);
+    }
+
+    .profile-image-placeholder {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: var(--gradient-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 4rem;
+        border: 4px solid var(--water-blue);
+        box-shadow: var(--shadow-medium);
+        transition: all 0.3s ease;
+    }
+
+    .profile-image-placeholder:hover {
+        transform: scale(1.05);
+        box-shadow: var(--shadow-strong);
+    }
+
+    .image-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+
+    .image-overlay i {
+        font-size: 2rem;
+        margin-bottom: 5px;
+    }
+
+    .image-overlay span {
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    .upload-controls {
+        text-align: center;
+    }
+
+    .upload-btn {
+        display: inline-block;
+        background: var(--gradient-primary);
+        color: white;
+        padding: 12px 24px;
+        border-radius: 25px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+        text-decoration: none;
+    }
+
+    .upload-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-medium);
+        color: white;
+        text-decoration: none;
+    }
+
+    .upload-hint {
+        display: block;
+        margin-top: 10px;
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+    }
+
+    /* Form Sections */
+    .form-section {
+        margin-bottom: 30px;
+        padding: 25px;
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 15px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .section-title {
+        color: var(--text-primary);
+        font-weight: 700;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        padding-bottom: 10px;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+    }
+
+    /* Form Controls */
+    .form-label {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 12px 15px;
+        transition: all 0.3s ease;
+        font-size: 0.95rem;
+    }
+
+    .form-control:focus {
+        border-color: var(--water-blue);
+        box-shadow: 0 0 0 0.2rem rgba(125, 211, 252, 0.25);
+    }
+
+    .form-control[readonly] {
+        background-color: rgba(248, 249, 250, 0.8);
+        color: var(--text-secondary);
+    }
+
+    .input-group-text {
+        background: var(--gradient-primary);
+        border: none;
+        color: white;
+        border-radius: 10px 0 0 10px;
+    }
+
+    .input-group .form-control {
+        border-radius: 0 10px 10px 0;
+    }
+
+    /* Custom Checkbox */
+    .custom-checkbox {
+        padding: 0;
+    }
+
+    .custom-checkbox .form-check-input {
+        display: none;
+    }
+
+    .custom-checkbox .form-check-label {
+        display: block;
+        padding: 20px;
+        background: var(--soft-white);
+        border-radius: 15px;
+        border: 2px solid rgba(0, 0, 0, 0.05);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .custom-checkbox .form-check-input:checked + .form-check-label {
+        border-color: var(--water-blue);
+        background: rgba(125, 211, 252, 0.1);
+        box-shadow: var(--shadow-soft);
+    }
+
+    .checkbox-content {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .checkbox-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--gradient-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        flex-shrink: 0;
+    }
+
+    .checkbox-text {
+        flex-grow: 1;
+    }
+
+    .checkbox-text strong {
+        display: block;
+        color: var(--text-primary);
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .checkbox-text small {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+
+    /* Form Actions */
+    .form-actions {
+        text-align: center;
+        padding-top: 30px;
+        border-top: 2px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .btn {
+        border-radius: 25px;
+        padding: 15px 30px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+    }
+
+    .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-medium);
+    }
+
+    .btn-primary {
+        background: var(--gradient-primary);
+        border: none;
+    }
+
+    .btn-outline-secondary {
+        border-color: var(--text-secondary);
+        color: var(--text-secondary);
+    }
+
+    .btn-outline-secondary:hover {
+        background: var(--text-secondary);
+        border-color: var(--text-secondary);
+        color: white;
+    }
+
+    /* Profile Sidebar */
+    .profile-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .sidebar-card {
+        background: var(--soft-white);
+        border-radius: 15px;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .sidebar-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-medium);
+    }
+
+    .sidebar-card .card-header {
+        background: var(--gradient-secondary);
+        color: white;
+        padding: 20px;
+        border: none;
+    }
+
+    .sidebar-card .card-title {
+        margin: 0;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+    }
+
+    .sidebar-card .card-body {
+        padding: 20px;
+    }
+
+    /* Profile Summary */
+    .profile-summary {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .summary-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px;
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .summary-item:hover {
+        background: rgba(255, 255, 255, 0.9);
+        transform: translateX(5px);
+    }
+
+    .summary-item i {
+        color: var(--water-blue);
+        font-size: 1.2rem;
+        flex-shrink: 0;
+    }
+
+    .summary-item span {
+        color: var(--text-primary);
+        font-weight: 500;
+        font-size: 0.9rem;
+    }
+
+    /* Quick Stats */
+    .quick-stats {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .stat-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px;
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 12px;
+        transition: all 0.3s ease;
+    }
+
+    .stat-item:hover {
+        background: rgba(255, 255, 255, 0.9);
+        transform: translateX(5px);
+    }
+
+    .stat-circle {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--gradient-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+    }
+
+    .stat-info {
+        flex-grow: 1;
+    }
+
+    .stat-info .stat-label {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        margin-bottom: 2px;
+    }
+
+    .stat-info .stat-value {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 0.9rem;
+    }
+
+    /* Profile Tips */
+    .profile-tips {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .tip-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 10px;
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .tip-item:hover {
+        background: rgba(255, 255, 255, 0.9);
+        transform: translateX(5px);
+    }
+
+    .tip-item i {
+        color: var(--air-green);
+        font-size: 1rem;
+        margin-top: 2px;
+        flex-shrink: 0;
+    }
+
+    .tip-item span {
+        color: var(--text-primary);
+        font-size: 0.85rem;
+        line-height: 1.4;
+    }
+
+    /* Error Messages */
+    .error-message {
+        color: #dc3545;
+        font-size: 0.85rem;
+        margin-top: 5px;
+        padding: 8px 12px;
+        background: rgba(220, 53, 69, 0.1);
+        border-radius: 8px;
+        border-left: 3px solid #dc3545;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .profile-hero {
+            padding: 60px 0 40px;
+        }
+
+        .hero-title h1 {
+            font-size: 2rem;
+        }
+
+        .profile-stat-card {
+            flex-direction: column;
+            text-align: center;
+            gap: 15px;
+        }
+
+        .stat-icon-wrapper {
+            width: 50px;
+            height: 50px;
+            font-size: 1.3rem;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+        }
+
+        .profile-image-preview,
+        .profile-image-placeholder {
+            width: 150px;
+            height: 150px;
+            font-size: 3rem;
+        }
+
+        .form-section {
+            padding: 20px;
+        }
+
+        .checkbox-content {
+            flex-direction: column;
+            text-align: center;
+            gap: 10px;
+        }
+
+        .checkbox-icon {
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+        }
+
+        .form-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .form-actions .btn {
+            width: 100%;
+        }
+
+        .profile-sidebar {
+            margin-top: 20px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .profile-image-preview,
+        .profile-image-placeholder {
+            width: 120px;
+            height: 120px;
+            font-size: 2.5rem;
+        }
+
+        .stat-item {
+            flex-direction: column;
+            text-align: center;
+            gap: 10px;
+        }
+
+        .summary-item {
+            flex-direction: column;
+            text-align: center;
+            gap: 8px;
+        }
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Profile image upload functionality
+    const profileImageInput = document.querySelector('input[type="file"]');
+    const profileImagePreview = document.getElementById('profileImagePreview');
+    const imageOverlay = document.querySelector('.image-overlay');
+
+    // Handle file selection
+    profileImageInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            // Validate file type
+            if (!file.type.startsWith('image/')) {
+                alert('Please select an image file.');
+                return;
+            }
+
+            // Validate file size (5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('File size must be less than 5MB.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                if (profileImagePreview.tagName === 'IMG') {
+                    profileImagePreview.src = e.target.result;
+                } else {
+                    // Replace placeholder with image
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.alt = 'Profile Image';
+                    img.className = 'profile-image-preview';
+                    img.id = 'profileImagePreview';
+                    profileImagePreview.parentNode.replaceChild(img, profileImagePreview);
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Handle drag and drop
+    const imageDisplay = document.querySelector('.current-image-display');
+    
+    imageDisplay.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        this.style.border = '2px dashed var(--water-blue)';
+    });
+
+    imageDisplay.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        this.style.border = 'none';
+    });
+
+    imageDisplay.addEventListener('drop', function(e) {
+        e.preventDefault();
+        this.style.border = 'none';
+        
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            profileImageInput.files = files;
+            profileImageInput.dispatchEvent(new Event('change'));
+        }
+    });
+
+    // Click to upload
+    imageDisplay.addEventListener('click', function() {
+        profileImageInput.click();
+    });
+
+    // Form validation and enhancement
+    const form = document.querySelector('.profile-form');
+    const bioTextarea = document.querySelector('textarea[name="bio"]');
+    
+    if (bioTextarea) {
+        // Character counter for bio
+        const charCounter = document.createElement('div');
+        charCounter.className = 'char-counter';
+        charCounter.style.cssText = 'text-align: right; font-size: 0.8rem; color: var(--text-secondary); margin-top: 5px;';
+        bioTextarea.parentNode.appendChild(charCounter);
+
+        function updateCharCounter() {
+            const currentLength = bioTextarea.value.length;
+            const maxLength = 500;
+            charCounter.textContent = `${currentLength}/${maxLength} characters`;
+            
+            if (currentLength > maxLength * 0.9) {
+                charCounter.style.color = '#dc3545';
+            } else {
+                charCounter.style.color = 'var(--text-secondary)';
+            }
+        }
+
+        bioTextarea.addEventListener('input', updateCharCounter);
+        updateCharCounter(); // Initial count
+    }
+
+    // Form submission enhancement
+    form.addEventListener('submit', function(e) {
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        
+        // Show loading state
+        submitBtn.innerHTML = '<i class="ri-loader-4-line me-2"></i>Saving...';
+        submitBtn.disabled = true;
+        
+        // Re-enable after a delay (in case of validation errors)
+        setTimeout(() => {
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }, 3000);
+    });
+
+    // Animate elements on scroll
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    // Observe all cards and sections
+    document.querySelectorAll('.profile-stat-card, .form-section, .sidebar-card').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'all 0.6s ease';
+        observer.observe(el);
+    });
+});
+</script>
+{% endblock %} 

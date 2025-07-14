@@ -1,0 +1,713 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4><i class="ri-checkbox-multiple-line icon-gradient me-2"></i>Daily Habit Tracker - Day {{ current_day }}</h4>
+                        <div>
+                            <a href="{% url 'habits:home' %}" class="btn btn-outline-primary me-2">
+                                <i class="ri-home-4-line"></i>Home
+                            </a>
+                            <a href="{% url 'habits:scoreboard' %}" class="btn btn-outline-primary">
+                                <i class="ri-trophy-line"></i>Scoreboard
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- Challenge Progress Header -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="alert alert-info">
+                                <div class="row text-center">
+                                    <div class="col-md-3">
+                                        <i class="ri-calendar-line icon-medium mb-2"></i>
+                                        <strong>Today:</strong><br>
+                                        {{ today|date:"M d, Y" }}
+                                    </div>
+                                    <div class="col-md-3">
+                                        <i class="ri-target-line icon-medium mb-2"></i>
+                                        <strong>Challenge Day:</strong><br>
+                                        Day {{ current_day }} of 75
+                                    </div>
+                                    <div class="col-md-3">
+                                        <i class="ri-check-line icon-medium mb-2"></i>
+                                        <strong>Categories:</strong><br>
+                                        {{ completed_categories }}/{{ total_categories }} Complete
+                                    </div>
+                                    <div class="col-md-3">
+                                        <i class="ri-bar-chart-line icon-medium mb-2"></i>
+                                        <strong>Progress:</strong><br>
+                                        {{ completion_percentage|floatformat:1 }}% Complete
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Scoring Rules Info -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="alert alert-warning">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-3">
+                                        <i class="ri-information-line icon-large"></i>
+                                    </div>
+                                    <div>
+                                        <strong>New Scoring System:</strong> Complete <strong>2 activities from each category</strong> to get full points for that category. 
+                                        You need to complete <strong>{{ total_categories }} categories</strong> each day for 100% progress.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Overall Progress Bar with Fun Elements -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="progress-container">
+                                <div class="progress" style="height: 25px; border-radius: 15px;">
+                                    <div class="progress-bar bg-success" role="progressbar" 
+                                         style="width: {{ completion_percentage }}%"
+                                         aria-valuenow="{{ completion_percentage }}" 
+                                         aria-valuemin="0" aria-valuemax="100">
+                                        <strong>{{ completion_percentage|floatformat:1 }}% Complete ({{ completed_categories }}/{{ total_categories }} Categories)</strong>
+                                    </div>
+                                </div>
+                                <!-- Floating icons around progress bar -->
+                                <div class="floating-icons">
+                                    <i class="ri-target-line floating-icon" style="left: 10%; animation-delay: 0s;"></i>
+                                    <i class="ri-heart-pulse-line floating-icon" style="left: 30%; animation-delay: 1s;"></i>
+                                    <i class="ri-fire-line floating-icon" style="left: 50%; animation-delay: 2s;"></i>
+                                    <i class="ri-star-line floating-icon" style="left: 70%; animation-delay: 3s;"></i>
+                                    <i class="ri-trophy-line floating-icon" style="left: 90%; animation-delay: 4s;"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Achievement Badges -->
+                    <div class="row mb-4" id="achievement-badges" style="display: none;">
+                        <div class="col-12">
+                            <div class="alert alert-success text-center achievement-alert">
+                                <h5><i class="ri-trophy-line"></i>Achievement Unlocked!</h5>
+                                <div id="achievement-text"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Habit Categories -->
+                    <form method="post" id="habit-form">
+                        {% csrf_token %}
+                        {% for category_data in habits_by_category %}
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="card category-card" style="border-left: 4px solid {{ category_data.category.color }};">
+                                    <div class="card-header" style="background-color: {{ category_data.category.color }}; color: white;">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h5 class="mb-0">
+                                                {% if category_data.category.name == "Reading" %}<i class="ri-book-line me-2"></i>
+                                                {% elif category_data.category.name == "Fitness" %}<i class="ri-heart-pulse-line me-2"></i>
+                                                {% elif category_data.category.name == "Nutrition" %}<i class="ri-restaurant-line me-2"></i>
+                                                {% elif category_data.category.name == "Wealth" %}<i class="ri-money-dollar-circle-line me-2"></i>
+                                                {% elif category_data.category.name == "Spiritual" %}<i class="ri-mental-health-line me-2"></i>
+                                                {% elif category_data.category.name == "Fun" %}<i class="ri-gamepad-line me-2"></i>
+                                                {% elif category_data.category.name == "Uncategorized" %}<i class="ri-file-list-line me-2"></i>
+                                                {% else %}<i class="ri-file-list-line me-2"></i>{% endif %}
+                                                {{ category_data.category.name }}
+                                            </h5>
+                                            <div class="d-flex align-items-center">
+                                                {% if category_data.category_completed %}
+                                                    <span class="badge bg-success me-2 category-status">
+                                                        <i class="ri-check-line me-1"></i>Complete
+                                                    </span>
+                                                {% else %}
+                                                    <span class="badge bg-warning me-2 category-status">
+                                                        <i class="ri-error-warning-line me-1"></i>Need {{ category_data.needed_for_completion }} more
+                                                    </span>
+                                                {% endif %}
+                                                <span class="badge bg-light text-dark">
+                                                    <i class="ri-list-check me-1"></i>{{ category_data.completed_count }}/{{ category_data.total_count }} habits
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            {% for habit in category_data.habits %}
+                                            <div class="col-md-6 mb-3">
+                                                <div class="habit-item p-3 border rounded" 
+                                                     style="background: {% if habit.id in completed_today %}rgba(76, 175, 80, 0.1){% else %}rgba(255, 255, 255, 0.05){% endif %}; 
+                                                            border-color: {% if habit.id in completed_today %}{{ category_data.category.color }}{% else %}#dee2e6{% endif %} !important;">
+                                                    <div class="form-check d-flex align-items-center">
+                                                        <input class="form-check-input habit-checkbox me-3" 
+                                                               type="checkbox" 
+                                                               name="completed_habits" 
+                                                               value="{{ habit.id }}" 
+                                                               id="habit_{{ habit.id }}"
+                                                               {% if habit.id in completed_today %}checked{% endif %}
+                                                               style="transform: scale(1.5);">
+                                                        <label class="form-check-label flex-grow-1" for="habit_{{ habit.id }}">
+                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                <div class="d-flex align-items-center gap-2">
+                                                                    {% if "Read" in habit.name or "Book" in habit.name %}<i class="ri-book-line me-2"></i>
+                                                                    {% elif "Run" in habit.name %}<i class="ri-run-line me-2"></i>
+                                                                    {% elif "Swim" in habit.name %}<i class="ri-swimming-line me-2"></i>
+                                                                    {% elif "Dance" in habit.name %}<i class="ri-dance-line me-2"></i>
+                                                                    {% elif "Yoga" in habit.name or "Meditate" in habit.name %}<i class="ri-mental-health-line me-2"></i>
+                                                                    {% elif "Gym" in habit.name or "Workout" in habit.name or "HIIT" in habit.name %}<i class="ri-heart-pulse-line me-2"></i>
+                                                                    {% elif "Walk" in habit.name %}<i class="ri-walk-line me-2"></i>
+                                                                    {% elif "Football" in habit.name %}<i class="ri-football-line me-2"></i>
+                                                                    {% elif "Drink" in habit.name or "Water" in habit.name %}<i class="ri-water-flash-line me-2"></i>
+                                                                    {% elif "Fruits" in habit.name or "Fruit" in habit.name %}<i class="ri-apple-line me-2"></i>
+                                                                    {% elif "Cook" in habit.name or "Meal" in habit.name %}<i class="ri-restaurant-line me-2"></i>
+                                                                    {% elif "Job" in habit.name or "Work" in habit.name %}<i class="ri-briefcase-line me-2"></i>
+                                                                    {% elif "LinkedIn" in habit.name %}<i class="ri-linkedin-box-line me-2"></i>
+                                                                    {% elif "AI" in habit.name %}<i class="ri-robot-line me-2"></i>
+                                                                    {% elif "Content" in habit.name %}<i class="ri-file-text-line me-2"></i>
+                                                                    {% elif "Office" in habit.name %}<i class="ri-building-line me-2"></i>
+                                                                    {% elif "Journal" in habit.name %}<i class="ri-book-open-line me-2"></i>
+                                                                    {% elif "Sleep" in habit.name %}<i class="ri-hotel-bed-line me-2"></i>
+                                                                    {% elif "Event" in habit.name %}<i class="ri-calendar-event-line me-2"></i>
+                                                                    {% elif "Hackathon" in habit.name %}<i class="ri-code-line me-2"></i>
+                                                                    {% elif "Music" in habit.name %}<i class="ri-music-line me-2"></i>
+                                                                    {% elif "Painting" in habit.name or "Art" in habit.name %}<i class="ri-palette-line me-2"></i>
+                                                                    {% elif "Dogs" in habit.name or "Dog" in habit.name %}<i class="ri-dog-line me-2"></i>
+                                                                    {% elif "Fiction" in habit.name %}<i class="ri-book-line me-2"></i>
+                                                                    {% elif "Non-Fiction" in habit.name %}<i class="ri-book-read-line me-2"></i>
+                                                                    {% elif "Money" in habit.name or "Wealth" in habit.name %}<i class="ri-money-dollar-circle-line me-2"></i>
+                                                                    {% elif "Fun" in habit.name %}<i class="ri-gamepad-line me-2"></i>
+                                                                    {% else %}<i class="ri-check-line me-2"></i>{% endif %}
+                                                                    <strong class="habit-name">{{ habit.name }}</strong>
+                                                                </div>
+                                                                <div class="habit-status">
+                                                                    {% if habit.id in completed_today %}
+                                                                    <span class="badge bg-success">
+                                                                        {% if "Read" in habit.name or "Book" in habit.name %}<i class="ri-book-line me-1"></i>
+                                                                        {% elif "Run" in habit.name %}<i class="ri-run-line me-1"></i>
+                                                                        {% elif "Swim" in habit.name %}<i class="ri-swimming-line me-1"></i>
+                                                                        {% elif "Dance" in habit.name %}<i class="ri-dance-line me-1"></i>
+                                                                        {% elif "Yoga" in habit.name or "Meditate" in habit.name %}<i class="ri-mental-health-line me-1"></i>
+                                                                        {% elif "Gym" in habit.name or "Workout" in habit.name or "HIIT" in habit.name %}<i class="ri-heart-pulse-line me-1"></i>
+                                                                        {% elif "Walk" in habit.name %}<i class="ri-walk-line me-1"></i>
+                                                                        {% elif "Football" in habit.name %}<i class="ri-football-line me-1"></i>
+                                                                        {% elif "Drink" in habit.name or "Water" in habit.name %}<i class="ri-water-flash-line me-1"></i>
+                                                                        {% elif "Fruits" in habit.name or "Fruit" in habit.name %}<i class="ri-apple-line me-1"></i>
+                                                                        {% elif "Cook" in habit.name or "Meal" in habit.name %}<i class="ri-restaurant-line me-1"></i>
+                                                                        {% elif "Job" in habit.name or "Work" in habit.name %}<i class="ri-briefcase-line me-1"></i>
+                                                                        {% elif "LinkedIn" in habit.name %}<i class="ri-linkedin-box-line me-1"></i>
+                                                                        {% elif "AI" in habit.name %}<i class="ri-robot-line me-1"></i>
+                                                                        {% elif "Content" in habit.name %}<i class="ri-file-text-line me-1"></i>
+                                                                        {% elif "Office" in habit.name %}<i class="ri-building-line me-1"></i>
+                                                                        {% elif "Journal" in habit.name %}<i class="ri-book-open-line me-1"></i>
+                                                                        {% elif "Sleep" in habit.name %}<i class="ri-hotel-bed-line me-1"></i>
+                                                                        {% elif "Event" in habit.name %}<i class="ri-calendar-event-line me-1"></i>
+                                                                        {% elif "Hackathon" in habit.name %}<i class="ri-code-line me-1"></i>
+                                                                        {% elif "Music" in habit.name %}<i class="ri-music-line me-1"></i>
+                                                                        {% elif "Painting" in habit.name or "Art" in habit.name %}<i class="ri-palette-line me-1"></i>
+                                                                        {% elif "Dogs" in habit.name or "Dog" in habit.name %}<i class="ri-dog-line me-1"></i>
+                                                                        {% elif "Fiction" in habit.name %}<i class="ri-book-line me-1"></i>
+                                                                        {% elif "Non-Fiction" in habit.name %}<i class="ri-book-read-line me-1"></i>
+                                                                        {% elif "Money" in habit.name or "Wealth" in habit.name %}<i class="ri-money-dollar-circle-line me-1"></i>
+                                                                        {% elif "Fun" in habit.name %}<i class="ri-gamepad-line me-1"></i>
+                                                                        {% else %}<i class="ri-check-line me-1"></i>{% endif %}
+                                                                        Done
+                                                                    </span>
+                                                                    {% else %}
+                                                                    <span class="badge bg-secondary">
+                                                                        {% if "Read" in habit.name or "Book" in habit.name %}<i class="ri-book-line me-1"></i>
+                                                                        {% elif "Run" in habit.name %}<i class="ri-run-line me-1"></i>
+                                                                        {% elif "Swim" in habit.name %}<i class="ri-swimming-line me-1"></i>
+                                                                        {% elif "Dance" in habit.name %}<i class="ri-dance-line me-1"></i>
+                                                                        {% elif "Yoga" in habit.name or "Meditate" in habit.name %}<i class="ri-mental-health-line me-1"></i>
+                                                                        {% elif "Gym" in habit.name or "Workout" in habit.name or "HIIT" in habit.name %}<i class="ri-heart-pulse-line me-1"></i>
+                                                                        {% elif "Walk" in habit.name %}<i class="ri-walk-line me-1"></i>
+                                                                        {% elif "Football" in habit.name %}<i class="ri-football-line me-1"></i>
+                                                                        {% elif "Drink" in habit.name or "Water" in habit.name %}<i class="ri-water-flash-line me-1"></i>
+                                                                        {% elif "Fruits" in habit.name or "Fruit" in habit.name %}<i class="ri-apple-line me-1"></i>
+                                                                        {% elif "Cook" in habit.name or "Meal" in habit.name %}<i class="ri-restaurant-line me-1"></i>
+                                                                        {% elif "Job" in habit.name or "Work" in habit.name %}<i class="ri-briefcase-line me-1"></i>
+                                                                        {% elif "LinkedIn" in habit.name %}<i class="ri-linkedin-box-line me-1"></i>
+                                                                        {% elif "AI" in habit.name %}<i class="ri-robot-line me-1"></i>
+                                                                        {% elif "Content" in habit.name %}<i class="ri-file-text-line me-1"></i>
+                                                                        {% elif "Office" in habit.name %}<i class="ri-building-line me-1"></i>
+                                                                        {% elif "Journal" in habit.name %}<i class="ri-book-open-line me-1"></i>
+                                                                        {% elif "Sleep" in habit.name %}<i class="ri-hotel-bed-line me-1"></i>
+                                                                        {% elif "Event" in habit.name %}<i class="ri-calendar-event-line me-1"></i>
+                                                                        {% elif "Hackathon" in habit.name %}<i class="ri-code-line me-1"></i>
+                                                                        {% elif "Music" in habit.name %}<i class="ri-music-line me-1"></i>
+                                                                        {% elif "Painting" in habit.name or "Art" in habit.name %}<i class="ri-palette-line me-1"></i>
+                                                                        {% elif "Dogs" in habit.name or "Dog" in habit.name %}<i class="ri-dog-line me-1"></i>
+                                                                        {% elif "Fiction" in habit.name %}<i class="ri-book-line me-1"></i>
+                                                                        {% elif "Non-Fiction" in habit.name %}<i class="ri-book-read-line me-1"></i>
+                                                                        {% elif "Money" in habit.name or "Wealth" in habit.name %}<i class="ri-money-dollar-circle-line me-1"></i>
+                                                                        {% elif "Fun" in habit.name %}<i class="ri-gamepad-line me-1"></i>
+                                                                        {% else %}<i class="ri-check-line me-1"></i>{% endif %}
+                                                                        Pending
+                                                                    </span>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                            {% if habit.description %}
+                                                            <div><small class="text-muted">{{ habit.description }}</small></div>
+                                                            {% endif %}
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                        
+                                        <!-- Category Progress Bar -->
+                                        <div class="mt-3">
+                                            <div class="progress" style="height: 8px;">
+                                                <div class="progress-bar" role="progressbar" 
+                                                     style="width: {% if category_data.total_count > 0 %}{{ category_data.completed_count|floatformat:0|add:0 }}{% else %}0{% endif %}%; background-color: {{ category_data.category.color }};">
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                                <small class="text-muted">
+                                                    <i class="ri-list-check me-1"></i>{{ category_data.completed_count }} of {{ category_data.total_count }} habits completed
+                                                </small>
+                                                {% if category_data.category_completed %}
+                                                    <small class="text-success category-complete-text">
+                                                        <i class="ri-check-double-line me-1"></i>Category Complete!
+                                                    </small>
+                                                {% else %}
+                                                    <small class="text-warning category-incomplete-text">
+                                                        <i class="ri-error-warning-line me-1"></i>Need {{ category_data.needed_for_completion }} more for completion
+                                                    </small>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        <!-- Submit Button -->
+                        <div class="row mt-4">
+                            <div class="col-12 text-center">
+                                <button type="submit" class="btn btn-success btn-lg submit-btn">
+                                    <i class="ri-save-line"></i>Save
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Motivational Message -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="alert alert-warning text-center">
+                                <h5><i class="ri-target-line me-2"></i>Remember: 2 activities per category = Full points!</h5>
+                                <p class="mb-0">
+                                    {% if completion_percentage >= 80 %}
+                                        <i class="ri-star-line me-1"></i>Amazing work! You're crushing it today!
+                                    {% elif completion_percentage >= 60 %}
+                                        <i class="ri-heart-pulse-line me-1"></i>Great progress! Keep up the momentum!
+                                    {% elif completion_percentage >= 40 %}
+                                        <i class="ri-fire-line me-1"></i>Good start! Every category counts!
+                                    {% else %}
+                                        <i class="ri-lightbulb-line me-1"></i>Focus on completing 2 activities from each category. You've got this!
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Confetti Container -->
+<div id="confetti-container"></div>
+
+<style>
+    .habit-item {
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .habit-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .habit-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 0.5s;
+    }
+    
+    .habit-item:hover::before {
+        left: 100%;
+    }
+    
+    .habit-checkbox:checked + label .habit-name {
+        text-decoration: line-through;
+        opacity: 0.7;
+    }
+    
+    .form-check-input:checked {
+        background-color: #28a745;
+        border-color: #28a745;
+        animation: checkboxPop 0.3s ease;
+    }
+    
+    @keyframes checkboxPop {
+        0% { transform: scale(1.5); }
+        50% { transform: scale(1.8); }
+        100% { transform: scale(1.5); }
+    }
+    
+    .progress {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+    }
+    
+    .card {
+        border-radius: 15px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    
+    .card-header {
+        border-radius: 0;
+    }
+    
+    .btn-lg {
+        padding: 15px 30px;
+        font-size: 1.1rem;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-lg:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+    
+    .alert {
+        border-radius: 15px;
+    }
+    
+    /* Floating icons */
+    .progress-container {
+        position: relative;
+    }
+    
+    .floating-icons {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+    }
+    
+    .floating-icon {
+        position: absolute;
+        font-size: 1.2rem;
+        animation: float 3s ease-in-out infinite;
+        opacity: 0.7;
+        color: var(--water-blue);
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+        50% { transform: translateY(-10px) rotate(180deg); opacity: 1; }
+    }
+    
+    /* Achievement animations */
+    .achievement-alert {
+        animation: achievementSlide 0.5s ease-out;
+    }
+    
+    @keyframes achievementSlide {
+        0% { transform: translateY(-50px); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
+    }
+    
+    /* Category completion animation */
+    .category-card.completed {
+        animation: categoryComplete 0.5s ease;
+    }
+    
+    @keyframes categoryComplete {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.02); }
+        100% { transform: scale(1); }
+    }
+    
+    /* Confetti styles */
+    .confetti {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        background: #f00;
+        animation: confettiFall 3s linear forwards;
+        z-index: 1000;
+    }
+    
+    @keyframes confettiFall {
+        0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+    
+    /* Pulse animation for progress bar */
+    .progress-bar {
+        animation: progressPulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes progressPulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.8; }
+    }
+    
+    /* Fun button hover effects */
+    .submit-btn {
+        background: var(--gradient-secondary);
+        background-size: 200% 200%;
+        animation: gradientShift 3s ease infinite;
+        border: none;
+    }
+    
+    .submit-btn:hover {
+        background: var(--gradient-primary);
+        background-size: 200% 200%;
+        animation: gradientShift 1s ease infinite;
+    }
+    
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle checkbox changes with visual feedback
+    const checkboxes = document.querySelectorAll('.habit-checkbox');
+    let previousCompletionPercentage = 0;
+    
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const habitItem = this.closest('.habit-item');
+            const habitName = habitItem.querySelector('.habit-name');
+            const habitStatus = habitItem.querySelector('.habit-status .badge');
+            
+            if (this.checked) {
+                habitItem.style.background = 'rgba(76, 175, 80, 0.1)';
+                habitItem.style.borderColor = habitItem.style.borderColor || '#28a745';
+                habitName.style.textDecoration = 'line-through';
+                habitName.style.opacity = '0.7';
+                habitStatus.innerHTML = '<i class="ri-check-line me-1"></i>Done';
+                habitStatus.className = 'badge bg-success';
+                
+                // Add sparkle effect
+                createSparkle(habitItem);
+            } else {
+                habitItem.style.background = 'rgba(255, 255, 255, 0.05)';
+                habitItem.style.borderColor = '#dee2e6';
+                habitName.style.textDecoration = 'none';
+                habitName.style.opacity = '1';
+                habitStatus.innerHTML = '<i class="ri-time-line me-1"></i>Pending';
+                habitStatus.className = 'badge bg-secondary';
+            }
+            
+            // Update completion count
+            updateCompletionCount();
+        });
+    });
+    
+    function createSparkle(element) {
+        const sparkle = document.createElement('div');
+        sparkle.innerHTML = '<i class="ri-sparkles-line"></i>';
+        sparkle.style.position = 'absolute';
+        sparkle.style.top = '50%';
+        sparkle.style.left = '50%';
+        sparkle.style.transform = 'translate(-50%, -50%)';
+        sparkle.style.fontSize = '2rem';
+        sparkle.style.pointerEvents = 'none';
+        sparkle.style.animation = 'sparkle 1s ease-out forwards';
+        sparkle.style.zIndex = '10';
+        sparkle.style.color = '#28a745';
+        
+        element.style.position = 'relative';
+        element.appendChild(sparkle);
+        
+        setTimeout(() => {
+            sparkle.remove();
+        }, 1000);
+    }
+    
+    function updateCompletionCount() {
+        // Get all category cards
+        const categoryCards = document.querySelectorAll('.card[style*="border-left"]');
+        let totalCategories = 0;
+        let completedCategories = 0;
+        
+        categoryCards.forEach(card => {
+            const categoryCheckboxes = card.querySelectorAll('.habit-checkbox');
+            const checkedInCategory = card.querySelectorAll('.habit-checkbox:checked').length;
+            
+            if (categoryCheckboxes.length > 0) {
+                totalCategories++;
+                // Category is complete if 2 or more activities are checked
+                if (checkedInCategory >= 2) {
+                    completedCategories++;
+                }
+            }
+        });
+        
+        const completionPercentage = totalCategories > 0 ? (completedCategories / totalCategories * 100) : 0;
+        
+        // Update the main progress bar
+        const progressBar = document.querySelector('.progress-bar');
+        if (progressBar) {
+            progressBar.style.width = completionPercentage + '%';
+            progressBar.setAttribute('aria-valuenow', completionPercentage);
+            progressBar.innerHTML = '<strong>' + completionPercentage.toFixed(1) + '% Complete (' + completedCategories + '/' + totalCategories + ' Categories)</strong>';
+        }
+        
+        // Check for achievements
+        checkAchievements(completionPercentage, completedCategories, totalCategories);
+        
+        // Update category-specific progress bars and status
+        categoryCards.forEach(card => {
+            const categoryCheckboxes = card.querySelectorAll('.habit-checkbox');
+            const checkedInCategory = card.querySelectorAll('.habit-checkbox:checked').length;
+            const totalInCategory = categoryCheckboxes.length;
+            
+            // Update category progress bar
+            const categoryProgressBar = card.querySelector('.progress-bar');
+            if (categoryProgressBar) {
+                const categoryProgress = totalInCategory > 0 ? (checkedInCategory / totalInCategory * 100) : 0;
+                categoryProgressBar.style.width = categoryProgress + '%';
+            }
+            
+            // Update category status badges
+            const statusBadge = card.querySelector('.badge.bg-success, .badge.bg-warning');
+            const statusText = card.querySelector('.text-success, .text-warning');
+            
+            if (checkedInCategory >= 2) {
+                // Category complete
+                if (statusBadge && statusBadge.classList.contains('bg-warning')) {
+                    statusBadge.className = 'badge bg-success me-2 category-status';
+                    statusBadge.innerHTML = '<i class="ri-check-line me-1"></i>Complete';
+                    card.classList.add('completed');
+                    setTimeout(() => card.classList.remove('completed'), 500);
+                }
+                if (statusText && statusText.classList.contains('text-warning')) {
+                    statusText.className = 'text-success category-complete-text';
+                    statusText.innerHTML = '<i class="ri-check-double-line me-1"></i>Category Complete!';
+                }
+            } else {
+                // Category incomplete
+                const needed = Math.max(0, 2 - checkedInCategory);
+                if (statusBadge && statusBadge.classList.contains('bg-success')) {
+                    statusBadge.className = 'badge bg-warning me-2 category-status';
+                    statusBadge.innerHTML = '<i class="ri-error-warning-line me-1"></i>Need ' + needed + ' more';
+                }
+                if (statusText && statusText.classList.contains('text-success')) {
+                    statusText.className = 'text-warning category-incomplete-text';
+                    statusText.innerHTML = '<i class="ri-error-warning-line me-1"></i>Need ' + needed + ' more for completion';
+                }
+            }
+        });
+        
+        previousCompletionPercentage = completionPercentage;
+    }
+    
+    function checkAchievements(percentage, completed, total) {
+        const achievements = [
+            { threshold: 20, message: "Getting Started! You've completed your first category!", icon: "ri-target-line" },
+            { threshold: 40, message: "Making Progress! You're on fire today!", icon: "ri-fire-line" },
+            { threshold: 60, message: "Halfway There! You're crushing it!", icon: "ri-star-line" },
+            { threshold: 80, message: "Almost Perfect! You're unstoppable!", icon: "ri-diamond-line" },
+            { threshold: 100, message: "PERFECT DAY! All categories completed! You're a legend!", icon: "ri-crown-line" }
+        ];
+        
+        achievements.forEach(achievement => {
+            if (percentage >= achievement.threshold && previousCompletionPercentage < achievement.threshold) {
+                showAchievement(achievement.message, achievement.icon);
+                createConfetti();
+            }
+        });
+    }
+    
+    function showAchievement(message, icon) {
+        const achievementBadges = document.getElementById('achievement-badges');
+        const achievementText = document.getElementById('achievement-text');
+        
+        achievementText.innerHTML = `<h4><i class="${icon} me-2"></i>${message}</h4>`;
+        achievementBadges.style.display = 'block';
+        
+        // Hide after 5 seconds
+        setTimeout(() => {
+            achievementBadges.style.display = 'none';
+        }, 5000);
+    }
+    
+    function createConfetti() {
+        const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3'];
+        const container = document.getElementById('confetti-container');
+        
+        for (let i = 0; i < 50; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.animationDelay = Math.random() * 2 + 's';
+            container.appendChild(confetti);
+            
+            setTimeout(() => {
+                confetti.remove();
+            }, 3000);
+        }
+    }
+    
+    // Add sparkle animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes sparkle {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+            50% { transform: translate(-50%, -50%) scale(1.5); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Initialize completion count
+    updateCompletionCount();
+    
+    // Add fun hover effects to submit button
+    const submitBtn = document.querySelector('.submit-btn');
+    submitBtn.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-3px) scale(1.05)';
+    });
+    
+    submitBtn.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0) scale(1)';
+    });
+});
+</script>
+{% endblock %} 

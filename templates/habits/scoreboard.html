@@ -1,0 +1,4762 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Hero Section with Animated Background -->
+<div class="scoreboard-hero">
+    <div class="hero-background">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="hero-content text-center">
+            <div class="hero-title">
+                <h1 class="display-4 fw-bold text-white mb-3">
+                    <i class="ri-trophy-line me-3 hero-icon"></i>
+                    75 FLOW Scoreboard
+                </h1>
+                <p class="lead text-white-50 mb-4">Track your journey, celebrate achievements, and stay motivated with your team!</p>
+            </div>
+            <div class="hero-stats">
+                <div class="row justify-content-center">
+                    <div class="col-md-2 col-6 mb-3">
+                        <div class="hero-stat-card">
+                            <div class="hero-stat-icon">
+                                <i class="ri-group-line"></i>
+                            </div>
+                            <div class="hero-stat-number">{{ challenge_stats.total_participants }}</div>
+                            <div class="hero-stat-label">Participants</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-6 mb-3">
+                        <div class="hero-stat-card">
+                            <div class="hero-stat-icon">
+                                <i class="ri-target-line"></i>
+                            </div>
+                            <div class="hero-stat-number">{{ challenge_stats.current_day }}/75</div>
+                            <div class="hero-stat-label">Challenge Day</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-6 mb-3">
+                        <div class="hero-stat-card">
+                            <div class="hero-stat-icon">
+                                <i class="ri-fire-line"></i>
+                            </div>
+                            <div class="hero-stat-number">{{ challenge_stats.best_streak }}</div>
+                            <div class="hero-stat-label">Best Streak</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-6 mb-3">
+                        <div class="hero-stat-card">
+                            <div class="hero-stat-icon">
+                                <i class="ri-percent-line"></i>
+                            </div>
+                            <div class="hero-stat-number">{{ challenge_stats.average_completion|floatformat:1 }}%</div>
+                            <div class="hero-stat-label">Avg Progress</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <!-- Quick Actions Bar -->
+            <div class="quick-actions-bar mb-4">
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                    <div class="d-flex align-items-center">
+                        <a href="{% url 'habits:home' %}" class="btn btn-outline-primary me-3">
+                            <i class="ri-home-4-line me-2"></i>Back to Home
+                        </a>
+                        <a href="{% url 'habits:daily_tracking' %}" class="btn btn-primary me-3">
+                            <i class="ri-check-line me-2"></i>Track Today
+                        </a>
+                    </div>
+                    <div class="challenge-status">
+                        <span class="badge bg-success fs-6">
+                            <i class="ri-time-line me-1"></i>
+                            Day {{ challenge_stats.current_day }} of 75
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced Challenge Progress Overview -->
+            <div class="row mb-5">
+                <div class="col-12">
+                    <div class="section-header">
+                        <h4 class="section-title">
+                            <i class="ri-bar-chart-line me-2"></i>Challenge Progress Overview
+                        </h4>
+                        <p class="section-subtitle">Real-time insights into your 75-day transformation journey</p>
+                    </div>
+                    
+                    <!-- Enhanced Progress Cards -->
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 mb-4">
+                            <div class="enhanced-progress-card">
+                                <div class="card-icon-wrapper">
+                                    <i class="ri-group-line"></i>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-number">{{ challenge_stats.total_participants }}</div>
+                                    <div class="card-label">Active Participants</div>
+                                    <div class="card-progress">
+                                        <div class="progress-ring">
+                                            <svg width="60" height="60">
+                                                <circle cx="30" cy="30" r="25" stroke="rgba(255,255,255,0.2)" stroke-width="4" fill="none"/>
+                                                <circle cx="30" cy="30" r="25" stroke="white" stroke-width="4" fill="none" 
+                                                        stroke-dasharray="157" stroke-dashoffset="0" class="progress-circle"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 mb-4">
+                            <div class="enhanced-progress-card">
+                                <div class="card-icon-wrapper">
+                                    <i class="ri-target-line"></i>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-number">{{ challenge_stats.current_day }}/75</div>
+                                    <div class="card-label">Challenge Day</div>
+                                    <div class="card-progress">
+                                        <div class="progress-ring">
+                                            <svg width="60" height="60">
+                                                <circle cx="30" cy="30" r="25" stroke="rgba(255,255,255,0.2)" stroke-width="4" fill="none"/>
+                                                <circle cx="30" cy="30" r="25" stroke="white" stroke-width="4" fill="none" 
+                                                        stroke-dasharray="157" stroke-dashoffset="{{ challenge_stats.current_day|floatformat:0|add:'-100' }}" class="progress-circle"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 mb-4">
+                            <div class="enhanced-progress-card">
+                                <div class="card-icon-wrapper">
+                                    <i class="ri-calendar-line"></i>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-number">Week {{ challenge_stats.current_week }}/11</div>
+                                    <div class="card-label">Current Week</div>
+                                    <div class="card-progress">
+                                        <div class="progress-ring">
+                                            <svg width="60" height="60">
+                                                <circle cx="30" cy="30" r="25" stroke="rgba(255,255,255,0.2)" stroke-width="4" fill="none"/>
+                                                <circle cx="30" cy="30" r="25" stroke="white" stroke-width="4" fill="none" 
+                                                        stroke-dasharray="157" stroke-dashoffset="{{ challenge_stats.current_week|floatformat:0|add:'-100' }}" class="progress-circle"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 mb-4">
+                            <div class="enhanced-progress-card">
+                                <div class="card-icon-wrapper">
+                                    <i class="ri-fire-line"></i>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-number">{{ challenge_stats.best_streak }}</div>
+                                    <div class="card-label">Best Streak</div>
+                                    <div class="card-progress">
+                                        <div class="progress-ring">
+                                            <svg width="60" height="60">
+                                                <circle cx="30" cy="30" r="25" stroke="rgba(255,255,255,0.2)" stroke-width="4" fill="none"/>
+                                                <circle cx="30" cy="30" r="25" stroke="white" stroke-width="4" fill="none" 
+                                                        stroke-dasharray="157" stroke-dashoffset="{{ challenge_stats.best_streak|floatformat:0|add:'-100' }}" class="progress-circle"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Enhanced Challenge Progress Dashboard -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="enhanced-challenge-dashboard">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="enhanced-info-card">
+                                            <div class="info-card-header">
+                                                <i class="ri-time-line"></i>
+                                                <span>Challenge Timeline</span>
+                                            </div>
+                                            <div class="info-card-content">
+                                                <div class="info-item">
+                                                    <strong>Start Date:</strong> {{ challenge_stats.challenge_start_date|date:"M d, Y" }}
+                                                </div>
+                                                <div class="info-item">
+                                                    <strong><i class="ri-calendar-check-line me-1"></i>Current Day:</strong> {{ challenge_stats.current_day }} of 75
+                                                </div>
+                                                <div class="info-item">
+                                                    <strong>Days Remaining:</strong> {{ challenge_stats.days_remaining }} days
+                                                </div>
+                                                <div class="info-item">
+                                                    <strong>Progress:</strong> {{ challenge_stats.progress_percentage|floatformat:0 }}% Complete
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="enhanced-info-card">
+                                            <div class="info-card-header">
+                                                <i class="ri-calendar-check-line"></i>
+                                                <span>Weekly Progress</span>
+                                            </div>
+                                            <div class="info-card-content">
+                                                <div class="info-item">
+                                                    <strong>Current Week:</strong> {{ challenge_stats.current_week }} of 11
+                                                </div>
+                                                <div class="info-item">
+                                                    <strong>Week Days:</strong> {{ challenge_stats.week_start_day }}-{{ challenge_stats.week_end_day }}
+                                                </div>
+                                                <div class="info-item">
+                                                    <strong>Week Progress:</strong> {{ challenge_stats.current_week|floatformat:0 }}% Complete
+                                                </div>
+                                                <div class="info-item">
+                                                    <strong>Weeks Remaining:</strong> {{ 11|add:"-"|add:challenge_stats.current_week }} weeks
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="enhanced-info-card">
+                                            <div class="info-card-header">
+                                                <i class="ri-trophy-line"></i>
+                                                <span>Achievement Stats</span>
+                                            </div>
+                                            <div class="info-card-content">
+                                                <div class="info-item">
+                                                    <strong>Total Habits:</strong> {{ challenge_stats.total_habits_across_all }}
+                                                </div>
+                                                <div class="info-item">
+                                                    <strong>Days Completed:</strong> {{ challenge_stats.total_days_completed }}
+                                                </div>
+                                                <div class="info-item">
+                                                    <strong>Best Streak:</strong> {{ challenge_stats.best_streak }} days
+                                                </div>
+                                                <div class="info-item">
+                                                    <strong>Avg Completion:</strong> {{ challenge_stats.average_completion|floatformat:1 }}%
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="enhanced-info-card">
+                                            <div class="info-card-header">
+                                                <i class="ri-speed-line"></i>
+                                                <span>Performance Metrics</span>
+                                            </div>
+                                            <div class="info-card-content">
+                                                <div class="info-item">
+                                                    <strong>Daily Goal:</strong> 2+ activities per category
+                                                </div>
+                                                <div class="info-item">
+                                                    <strong>Weekly Goal:</strong> 7 days of consistency
+                                                </div>
+                                                <div class="info-item">
+                                                    <strong>Challenge Goal:</strong> 75 days of transformation
+                                                </div>
+                                                <div class="info-item">
+                                                    <strong>Success Rate:</strong> {{ challenge_stats.average_completion|floatformat:1 }}%
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced Ranking Section Styles -->
+            <div class="ranking-section">
+                <div class="section-header">
+                    <h4 class="section-title">
+                        <i class="ri-trophy-line me-2"></i>Leaderboard Rankings
+                    </h4>
+                    <p class="section-subtitle">Compare your progress across different timeframes</p>
+                </div>
+                
+                <!-- Enhanced Tab Navigation -->
+                <div class="enhanced-tab-navigation mb-4">
+                    <ul class="nav nav-pills enhanced-tabs" id="rankingTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="overall-tab" data-bs-toggle="pill" data-bs-target="#overall" type="button" role="tab">
+                                <div class="tab-content">
+                                    <i class="ri-trophy-line tab-icon"></i>
+                                    <span class="tab-label">Overall</span>
+                                    <small class="tab-description">75-Day Challenge</small>
+                                </div>
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="weekly-tab" data-bs-toggle="pill" data-bs-target="#weekly" type="button" role="tab">
+                                <div class="tab-content">
+                                    <i class="ri-calendar-line tab-icon"></i>
+                                    <span class="tab-label">Week {{ challenge_stats.current_week }}</span>
+                                    <small class="tab-description">Current Week</small>
+                                </div>
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="daily-tab" data-bs-toggle="pill" data-bs-target="#daily" type="button" role="tab">
+                                <div class="tab-content">
+                                    <i class="ri-sun-line tab-icon"></i>
+                                    <span class="tab-label">Day {{ challenge_stats.current_day }}</span>
+                                    <small class="tab-description">Today's Progress</small>
+                                </div>
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="streak-tab" data-bs-toggle="pill" data-bs-target="#streak" type="button" role="tab">
+                                <div class="tab-content">
+                                    <i class="ri-fire-line tab-icon"></i>
+                                    <span class="tab-label">Streaks</span>
+                                    <small class="tab-description">Consistency</small>
+                                </div>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Enhanced Tab Content -->
+                <div class="tab-content enhanced-tab-content" id="rankingTabsContent">
+                    <!-- Overall Rankings -->
+                    <div class="tab-pane fade show active" id="overall" role="tabpanel">
+                        <div class="ranking-header">
+                            <div class="ranking-title-section">
+                                <h5 class="ranking-title">
+                                    <i class="ri-medal-line me-2"></i>Overall Rankings
+                                </h5>
+                                <div class="ranking-subtitle">Complete 75-day challenge performance</div>
+                            </div>
+                            <div class="ranking-info">
+                                <i class="ri-information-line me-2"></i> 
+                                <strong>Scoring:</strong> Users get full points for each category where they completed 2+ activities per day.
+                            </div>
+                        </div>
+                        <div class="enhanced-table-container">
+                            <table class="table enhanced-table">
+                                <thead>
+                                    <tr>
+                                        <th><i class="ri-trophy-line me-1"></i>Rank</th>
+                                        <th><i class="ri-user-line me-1"></i>Participant</th>
+                                        <th><i class="ri-folder-line me-1"></i>Categories</th>
+                                        <th><i class="ri-check-line me-1"></i>Days</th>
+                                        <th><i class="ri-bar-chart-line me-1"></i>Overall %</th>
+                                        <th><i class="ri-fire-line me-1"></i>Streak</th>
+                                        <th><i class="ri-progress-line me-1"></i>Progress</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user_stat in overall_rankings %}
+                                    <tr class="ranking-row {% if forloop.first %}rank-1{% elif forloop.counter == 2 %}rank-2{% elif forloop.counter == 3 %}rank-3{% endif %} {% if user_stat.user == request.user %}current-user{% endif %}">
+                                        <td class="rank-cell">
+                                            {% if forloop.first %}
+                                                <div class="rank-badge rank-1">
+                                                    <i class="ri-crown-line"></i>
+                                                    <span>1st</span>
+                                                </div>
+                                            {% elif forloop.counter == 2 %}
+                                                <div class="rank-badge rank-2">
+                                                    <i class="ri-medal-line"></i>
+                                                    <span>2nd</span>
+                                                </div>
+                                            {% elif forloop.counter == 3 %}
+                                                <div class="rank-badge rank-3">
+                                                    <i class="ri-medal-line"></i>
+                                                    <span>3rd</span>
+                                                </div>
+                                            {% else %}
+                                                <div class="rank-badge rank-other">
+                                                    <span>#{{ forloop.counter }}</span>
+                                                </div>
+                                            {% endif %}
+                                        </td>
+                                        <td class="participant-cell">
+                                            <div class="participant-info">
+                                                <div class="user-avatar-small me-3">
+                                                    {% if user_stat.user.profile and user_stat.user.profile.profile_image %}
+                                                        <img src="{{ user_stat.user.profile.profile_image.url }}" 
+                                                             alt="{{ user_stat.user.username }}" 
+                                                             class="avatar-circle-small user-profile-image">
+                                                    {% else %}
+                                                        <div class="avatar-circle-small" style="background: var(--gradient-primary);">
+                                                            <i class="ri-user-line"></i>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="participant-details">
+                                                    <div class="participant-name">{{ user_stat.user.username }}</div>
+                                                    {% if user_stat.user == request.user %}
+                                                        <span class="current-user-badge">You</span>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="categories-cell">{{ user_stat.total_categories }}</td>
+                                        <td class="days-cell">{{ user_stat.total_completed_days }}</td>
+                                        <td class="percentage-cell">
+                                            <span class="percentage-badge {% if user_stat.overall_completion_percentage >= 80 %}excellent{% elif user_stat.overall_completion_percentage >= 60 %}good{% else %}needs-improvement{% endif %}">
+                                                {{ user_stat.overall_completion_percentage|floatformat:1 }}%
+                                            </span>
+                                        </td>
+                                        <td class="streak-cell">
+                                            <span class="streak-badge">{{ user_stat.current_streak }}</span>
+                                        </td>
+                                        <td class="progress-cell">
+                                            <div class="enhanced-progress">
+                                                <div class="progress" style="height: 10px;">
+                                                    <div class="progress-bar" role="progressbar" 
+                                                         style="width: {{ user_stat.overall_completion_percentage }}%"
+                                                         aria-valuenow="{{ user_stat.overall_completion_percentage }}" 
+                                                         aria-valuemin="0" aria-valuemax="100">
+                                                    </div>
+                                                </div>
+                                                <small class="progress-text">{{ user_stat.overall_completion_percentage|floatformat:1 }}%</small>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Weekly Rankings -->
+                    <div class="tab-pane fade" id="weekly" role="tabpanel">
+                        <div class="ranking-header">
+                            <div class="ranking-title-section">
+                                <h5 class="ranking-title">
+                                    <i class="ri-calendar-line me-2"></i>Week {{ challenge_stats.current_week }} Rankings
+                                </h5>
+                                <div class="ranking-subtitle">Days {{ challenge_stats.week_start_day }}-{{ challenge_stats.week_end_day }} performance</div>
+                            </div>
+                        </div>
+                        <div class="enhanced-table-container">
+                            <table class="table enhanced-table">
+                                <thead>
+                                    <tr>
+                                        <th><i class="ri-trophy-line me-1"></i>Rank</th>
+                                        <th><i class="ri-user-line me-1"></i>Participant</th>
+                                        <th><i class="ri-check-line me-1"></i>Weekly Completed</th>
+                                        <th><i class="ri-bar-chart-line me-1"></i>Weekly %</th>
+                                        <th><i class="ri-progress-line me-1"></i>Progress</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user_stat in weekly_rankings %}
+                                    <tr class="ranking-row {% if forloop.first %}rank-1{% elif forloop.counter == 2 %}rank-2{% elif forloop.counter == 3 %}rank-3{% endif %} {% if user_stat.user == request.user %}current-user{% endif %}">
+                                        <td class="rank-cell">
+                                            {% if forloop.first %}
+                                                <div class="rank-badge rank-1">
+                                                    <i class="ri-crown-line"></i>
+                                                    <span>1st</span>
+                                                </div>
+                                            {% elif forloop.counter == 2 %}
+                                                <div class="rank-badge rank-2">
+                                                    <i class="ri-medal-line"></i>
+                                                    <span>2nd</span>
+                                                </div>
+                                            {% elif forloop.counter == 3 %}
+                                                <div class="rank-badge rank-3">
+                                                    <i class="ri-medal-line"></i>
+                                                    <span>3rd</span>
+                                                </div>
+                                            {% else %}
+                                                <div class="rank-badge rank-other">
+                                                    <span>#{{ forloop.counter }}</span>
+                                                </div>
+                                            {% endif %}
+                                        </td>
+                                        <td class="participant-cell">
+                                            <div class="participant-info">
+                                                <div class="user-avatar-small me-3">
+                                                    {% if user_stat.user.profile and user_stat.user.profile.profile_image %}
+                                                        <img src="{{ user_stat.user.profile.profile_image.url }}" 
+                                                             alt="{{ user_stat.user.username }}" 
+                                                             class="avatar-circle-small user-profile-image">
+                                                    {% else %}
+                                                        <div class="avatar-circle-small" style="background: var(--gradient-primary);">
+                                                            <i class="ri-user-line"></i>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="participant-details">
+                                                    <div class="participant-name">{{ user_stat.user.username }}</div>
+                                                    {% if user_stat.user == request.user %}
+                                                        <span class="current-user-badge">You</span>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="days-cell">{{ user_stat.weekly_completed }}</td>
+                                        <td class="percentage-cell">
+                                            <span class="percentage-badge {% if user_stat.weekly_completion_percentage >= 80 %}excellent{% elif user_stat.weekly_completion_percentage >= 60 %}good{% else %}needs-improvement{% endif %}">
+                                                {{ user_stat.weekly_completion_percentage|floatformat:1 }}%
+                                            </span>
+                                        </td>
+                                        <td class="progress-cell">
+                                            <div class="enhanced-progress">
+                                                <div class="progress" style="height: 10px;">
+                                                    <div class="progress-bar" role="progressbar" 
+                                                         style="width: {{ user_stat.weekly_completion_percentage }}%"
+                                                         aria-valuenow="{{ user_stat.weekly_completion_percentage }}" 
+                                                         aria-valuemin="0" aria-valuemax="100">
+                                                    </div>
+                                                </div>
+                                                <small class="progress-text">{{ user_stat.weekly_completion_percentage|floatformat:1 }}%</small>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Daily Rankings -->
+                    <div class="tab-pane fade" id="daily" role="tabpanel">
+                        <div class="ranking-header">
+                            <div class="ranking-title-section">
+                                <h5 class="ranking-title">
+                                    <i class="ri-sun-line me-2"></i>Day {{ challenge_stats.current_day }} Rankings
+                                </h5>
+                                <div class="ranking-subtitle">{{ today|date:"M d, Y" }} performance</div>
+                            </div>
+                            <div class="ranking-info">
+                                <i class="ri-information-line me-2"></i> 
+                                <strong>Scoring:</strong> Users get full points for each category where they completed 2+ activities today.
+                            </div>
+                        </div>
+                        <div class="enhanced-table-container">
+                            <table class="table enhanced-table">
+                                <thead>
+                                    <tr>
+                                        <th><i class="ri-trophy-line me-1"></i>Rank</th>
+                                        <th><i class="ri-user-line me-1"></i>Participant</th>
+                                        <th><i class="ri-check-line me-1"></i>Categories Completed</th>
+                                        <th><i class="ri-bar-chart-line me-1"></i>Daily %</th>
+                                        <th><i class="ri-progress-line me-1"></i>Progress</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user_stat in daily_rankings %}
+                                    <tr class="ranking-row {% if forloop.first %}rank-1{% elif forloop.counter == 2 %}rank-2{% elif forloop.counter == 3 %}rank-3{% endif %} {% if user_stat.user == request.user %}current-user{% endif %}">
+                                        <td class="rank-cell">
+                                            {% if forloop.first %}
+                                                <div class="rank-badge rank-1">
+                                                    <i class="ri-crown-line"></i>
+                                                    <span>1st</span>
+                                                </div>
+                                            {% elif forloop.counter == 2 %}
+                                                <div class="rank-badge rank-2">
+                                                    <i class="ri-medal-line"></i>
+                                                    <span>2nd</span>
+                                                </div>
+                                            {% elif forloop.counter == 3 %}
+                                                <div class="rank-badge rank-3">
+                                                    <i class="ri-medal-line"></i>
+                                                    <span>3rd</span>
+                                                </div>
+                                            {% else %}
+                                                <div class="rank-badge rank-other">
+                                                    <span>#{{ forloop.counter }}</span>
+                                                </div>
+                                            {% endif %}
+                                        </td>
+                                        <td class="participant-cell">
+                                            <div class="participant-info">
+                                                <div class="user-avatar-small me-3">
+                                                    {% if user_stat.user.profile and user_stat.user.profile.profile_image %}
+                                                        <img src="{{ user_stat.user.profile.profile_image.url }}" 
+                                                             alt="{{ user_stat.user.username }}" 
+                                                             class="avatar-circle-small user-profile-image">
+                                                    {% else %}
+                                                        <div class="avatar-circle-small" style="background: var(--gradient-primary);">
+                                                            <i class="ri-user-line"></i>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="participant-details">
+                                                    <div class="participant-name">{{ user_stat.user.username }}</div>
+                                                    {% if user_stat.user == request.user %}
+                                                        <span class="current-user-badge">You</span>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="categories-cell">{{ user_stat.daily_completed }}/{{ user_stat.total_categories }} categories</td>
+                                        <td class="percentage-cell">
+                                            <span class="percentage-badge {% if user_stat.daily_completion_percentage >= 80 %}excellent{% elif user_stat.daily_completion_percentage >= 60 %}good{% else %}needs-improvement{% endif %}">
+                                                {{ user_stat.daily_completion_percentage|floatformat:1 }}%
+                                            </span>
+                                        </td>
+                                        <td class="progress-cell">
+                                            <div class="enhanced-progress">
+                                                <div class="progress" style="height: 10px;">
+                                                    <div class="progress-bar" role="progressbar" 
+                                                         style="width: {{ user_stat.daily_completion_percentage }}%"
+                                                         aria-valuenow="{{ user_stat.daily_completion_percentage }}" 
+                                                         aria-valuemin="0" aria-valuemax="100">
+                                                    </div>
+                                                </div>
+                                                <small class="progress-text">{{ user_stat.daily_completion_percentage|floatformat:1 }}%</small>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Streak Rankings -->
+                    <div class="tab-pane fade" id="streak" role="tabpanel">
+                        <div class="ranking-header">
+                            <div class="ranking-title-section">
+                                <h5 class="ranking-title">
+                                    <i class="ri-fire-line me-2"></i>Streak Rankings
+                                </h5>
+                                <div class="ranking-subtitle">Consistency and momentum tracking</div>
+                            </div>
+                        </div>
+                        <div class="enhanced-table-container">
+                            <table class="table enhanced-table">
+                                <thead>
+                                    <tr>
+                                        <th><i class="ri-trophy-line me-1"></i>Rank</th>
+                                        <th><i class="ri-user-line me-1"></i>Participant</th>
+                                        <th><i class="ri-fire-line me-1"></i>Current Streak</th>
+                                        <th><i class="ri-bar-chart-line me-1"></i>Overall %</th>
+                                        <th><i class="ri-progress-line me-1"></i>Progress</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user_stat in streak_rankings %}
+                                    <tr class="ranking-row {% if forloop.first %}rank-1{% elif forloop.counter == 2 %}rank-2{% elif forloop.counter == 3 %}rank-3{% endif %} {% if user_stat.user == request.user %}current-user{% endif %}">
+                                        <td class="rank-cell">
+                                            {% if forloop.first %}
+                                                <div class="rank-badge rank-1">
+                                                    <i class="ri-crown-line"></i>
+                                                    <span>1st</span>
+                                                </div>
+                                            {% elif forloop.counter == 2 %}
+                                                <div class="rank-badge rank-2">
+                                                    <i class="ri-medal-line"></i>
+                                                    <span>2nd</span>
+                                                </div>
+                                            {% elif forloop.counter == 3 %}
+                                                <div class="rank-badge rank-3">
+                                                    <i class="ri-medal-line"></i>
+                                                    <span>3rd</span>
+                                                </div>
+                                            {% else %}
+                                                <div class="rank-badge rank-other">
+                                                    <span>#{{ forloop.counter }}</span>
+                                                </div>
+                                            {% endif %}
+                                        </td>
+                                        <td class="participant-cell">
+                                            <div class="participant-info">
+                                                <div class="user-avatar-small me-3">
+                                                    {% if user_stat.user.profile and user_stat.user.profile.profile_image %}
+                                                        <img src="{{ user_stat.user.profile.profile_image.url }}" 
+                                                             alt="{{ user_stat.user.username }}" 
+                                                             class="avatar-circle-small user-profile-image">
+                                                    {% else %}
+                                                        <div class="avatar-circle-small" style="background: var(--gradient-primary);">
+                                                            <i class="ri-user-line"></i>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="participant-details">
+                                                    <div class="participant-name">{{ user_stat.user.username }}</div>
+                                                    {% if user_stat.user == request.user %}
+                                                        <span class="current-user-badge">You</span>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="streak-cell">
+                                            <span class="streak-badge">{{ user_stat.current_streak }} days</span>
+                                        </td>
+                                        <td class="percentage-cell">
+                                            <span class="percentage-badge {% if user_stat.overall_completion_percentage >= 80 %}excellent{% elif user_stat.overall_completion_percentage >= 60 %}good{% else %}needs-improvement{% endif %}">
+                                                {{ user_stat.overall_completion_percentage|floatformat:1 }}%
+                                            </span>
+                                        </td>
+                                        <td class="progress-cell">
+                                            <div class="enhanced-progress">
+                                                <div class="progress" style="height: 10px;">
+                                                    <div class="progress-bar" role="progressbar" 
+                                                         style="width: {{ user_stat.overall_completion_percentage }}%"
+                                                         aria-valuenow="{{ user_stat.overall_completion_percentage }}" 
+                                                         aria-valuemin="0" aria-valuemax="100">
+                                                    </div>
+                                                </div>
+                                                <small class="progress-text">{{ user_stat.overall_completion_percentage|floatformat:1 }}%</small>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Winners -->
+            {% if category_winners %}
+            <div class="row mt-5">
+                <div class="col-12">
+                    <h5 class="mb-4"><i class="ri-star-line icon-gradient me-2"></i>Category Champions</h5>
+                    <div class="row">
+                        {% for category, winner in category_winners.items %}
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100" style="border-left: 4px solid {{ category.color }};">
+                                <div class="card-body text-center">
+                                    <div class="mb-3">
+                                        <i class="ri-trophy-line achievement-star" style="color: {{ category.color }}; font-size: 2rem;"></i>
+                                    </div>
+                                    <h6 class="card-title">
+                                        {% if category.name == "Reading" %}📚
+                                        {% elif category.name == "Fitness" %}💪
+                                        {% elif category.name == "Nutrition" %}🥗
+                                        {% elif category.name == "Wealth" %}💰
+                                        {% elif category.name == "Spiritual" %}🧘
+                                        {% elif category.name == "Fun" %}🎉
+                                        {% else %}📋{% endif %}
+                                        {{ category.name }}
+                                    </h6>
+                                    <p class="card-text">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="user-avatar-small me-2">
+                                                {% if winner.user.profile and winner.user.profile.profile_image %}
+                                                    <img src="{{ winner.user.profile.profile_image.url }}" 
+                                                         alt="{{ winner.user.username }}" 
+                                                         class="avatar-circle-small user-profile-image">
+                                                {% else %}
+                                                    <div class="avatar-circle-small" style="background: var(--gradient-primary);">
+                                                        <i class="ri-user-line"></i>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <div>
+                                                <strong>{{ winner.user.username }}</strong>
+                                                {% if winner.user == request.user %}
+                                                    <span class="badge bg-primary">You</span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </p>
+                                    <div class="progress mb-2">
+                                        <div class="progress-bar" role="progressbar" 
+                                             style="width: {{ winner.percentage }}%; background-color: {{ category.color }};">
+                                        </div>
+                                    </div>
+                                    <small class="text-muted">Completion: {{ winner.percentage|floatformat:1 }}%</small>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Category Performance Overview - Enhanced Styles -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="section-header">
+                        <div class="section-icon-wrapper">
+                            <div class="section-icon">
+                                <i class="ri-bar-chart-line"></i>
+                            </div>
+                        </div>
+                        <h4 class="section-title">Category Performance Overview</h4>
+                        <p class="section-subtitle">Detailed breakdown of performance across all categories</p>
+                        
+                        <!-- Quick Stats -->
+                        <div class="section-stats">
+                            <div class="row">
+                                <div class="col-md-3 mb-3">
+                                    <div class="quick-stat">
+                                        <div class="quick-stat-icon">
+                                            <i class="ri-group-line"></i>
+                                        </div>
+                                        <div class="quick-stat-content">
+                                            <div class="quick-stat-number">{{ category_breakdown|length }}</div>
+                                            <div class="quick-stat-label">Categories</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <div class="quick-stat">
+                                        <div class="quick-stat-icon">
+                                            <i class="ri-user-line"></i>
+                                        </div>
+                                        <div class="quick-stat-content">
+                                            <div class="quick-stat-number">{{ challenge_stats.total_participants }}</div>
+                                            <div class="quick-stat-label">Participants</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <div class="quick-stat">
+                                        <div class="quick-stat-icon">
+                                            <i class="ri-trophy-line"></i>
+                                        </div>
+                                        <div class="quick-stat-content">
+                                            <div class="quick-stat-number">{{ challenge_stats.current_day }}</div>
+                                            <div class="quick-stat-label">Days Completed</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <div class="quick-stat">
+                                        <div class="quick-stat-icon">
+                                            <i class="ri-percent-line"></i>
+                                        </div>
+                                        <div class="quick-stat-content">
+                                            <div class="quick-stat-number">{{ challenge_stats.average_completion|floatformat:1 }}%</div>
+                                            <div class="quick-stat-label">Avg Progress</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Category Overview Cards -->
+                    <div class="row">
+                        {% for category, users in category_breakdown.items %}
+                        <div class="col-lg-6 col-xl-4 mb-4">
+                            <div class="category-overview-card">
+                                <div class="category-header">
+                                    <div class="category-header-content">
+                                        <div class="category-main-info">
+                                            <div class="category-icon-wrapper">
+                                                <div class="category-icon">
+                                                    {% if category.name == "Reading" %}📚
+                                                    {% elif category.name == "Fitness" %}💪
+                                                    {% elif category.name == "Nutrition" %}🥗
+                                                    {% elif category.name == "Wealth" %}💰
+                                                    {% elif category.name == "Spiritual" %}🧘
+                                                    {% elif category.name == "Fun" %}🎉
+                                                    {% else %}📋{% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="category-info">
+                                                <div class="category-name">{{ category.name }}</div>
+                                                <div class="category-meta">
+                                                    <div class="category-participants">
+                                                        <i class="ri-group-line me-1"></i>{{ users|length }} participants
+                                                    </div>
+                                                    <div class="category-difficulty">
+                                                        <i class="ri-bar-chart-line me-1"></i>Medium difficulty
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="category-overall-progress">
+                                            <div class="overall-progress-circle">
+                                                <div class="progress-ring">
+                                                    <svg width="60" height="60">
+                                                        <circle cx="30" cy="30" r="25" stroke="rgba(0,0,0,0.1)" stroke-width="4" fill="none"/>
+                                                        <circle cx="30" cy="30" r="25" stroke="var(--water-blue)" stroke-width="4" fill="none" 
+                                                                stroke-dasharray="157" stroke-dashoffset="78" class="progress-circle"/>
+                                                    </svg>
+                                                    <div class="progress-text">
+                                                        <div class="progress-percentage">50%</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="category-stats-section">
+                                    <!-- Top Performers -->
+                                    <div class="performers-header">
+                                        <h6 class="performers-title">
+                                            <i class="ri-trophy-line me-2"></i>Top Performers
+                                        </h6>
+                                        <p class="performers-subtitle">Best performers in this category</p>
+                                    </div>
+                                    
+                                    <div class="performers-list">
+                                        {% for user_stat in users|slice:":3" %}
+                                        <div class="performer-item {% if forloop.first %}rank-1{% elif forloop.counter == 2 %}rank-2{% elif forloop.counter == 3 %}rank-3{% endif %}">
+                                            <div class="rank-badge {% if forloop.first %}rank-gold{% elif forloop.counter == 2 %}rank-silver{% elif forloop.counter == 3 %}rank-bronze{% endif %}">
+                                                {% if forloop.first %}🥇{% elif forloop.counter == 2 %}🥈{% elif forloop.counter == 3 %}🥉{% endif %}
+                                            </div>
+                                            <div class="performer-info">
+                                                <div class="performer-name">{{ user_stat.user.username }}</div>
+                                                <div class="performer-details">
+                                                    <span class="performer-score">{{ user_stat.category_completion_percentage|floatformat:1 }}%</span>
+                                                    <span class="performer-days">{{ user_stat.category_completed_days }} days</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                    
+                                    <!-- Summary Stats -->
+                                    <div class="summary-grid">
+                                        <div class="summary-item">
+                                            <div class="summary-icon">
+                                                <i class="ri-user-line"></i>
+                                            </div>
+                                            <div class="summary-content">
+                                                <div class="summary-value">{{ users|length }}</div>
+                                                <div class="summary-label">Active</div>
+                                            </div>
+                                        </div>
+                                        <div class="summary-item">
+                                            <div class="summary-icon">
+                                                <i class="ri-check-line"></i>
+                                            </div>
+                                            <div class="summary-content">
+                                                <div class="summary-value">{{ users|length }}</div>
+                                                <div class="summary-label">Completed</div>
+                                            </div>
+                                        </div>
+                                        <div class="summary-item">
+                                            <div class="summary-icon">
+                                                <i class="ri-percent-line"></i>
+                                            </div>
+                                            <div class="summary-content">
+                                                <div class="summary-value">75%</div>
+                                                <div class="summary-label">Success</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Category Insights -->
+                                    <div class="category-insights">
+                                        <div class="insights-header">
+                                            <h6 class="insights-title">
+                                                <i class="ri-lightbulb-line me-2"></i>Category Insights
+                                            </h6>
+                                        </div>
+                                        <div class="insights-content">
+                                            <div class="insight-item">
+                                                <i class="ri-arrow-up-line"></i>
+                                                <span>Most participants find this category challenging but rewarding</span>
+                                            </div>
+                                            <div class="insight-item">
+                                                <i class="ri-time-line"></i>
+                                                <span>Average completion time: 45 minutes per day</span>
+                                            </div>
+                                            <div class="insight-item">
+                                                <i class="ri-trending-up-line"></i>
+                                                <span>Consistent improvement over the 75-day period</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="category-actions">
+                                    <button class="btn view-details-btn" onclick="showCategoryDetails('{{ category.name }}')">
+                                        <i class="ri-eye-line me-2"></i>View Details
+                                    </button>
+                                    <button class="btn view-details-btn" onclick="compareCategory('{{ category.name }}')">
+                                        <i class="ri-bar-chart-line me-2"></i>Compare
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Hero Section Styles */
+    .scoreboard-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 80px 0 60px;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 40px;
+    }
+
+    .hero-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+
+    .floating-shapes {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    .shape {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .shape-1 {
+        width: 80px;
+        height: 80px;
+        top: 20%;
+        left: 10%;
+        animation-delay: 0s;
+    }
+
+    .shape-2 {
+        width: 120px;
+        height: 120px;
+        top: 60%;
+        right: 15%;
+        animation-delay: 2s;
+    }
+
+    .shape-3 {
+        width: 60px;
+        height: 60px;
+        top: 40%;
+        left: 70%;
+        animation-delay: 4s;
+    }
+
+    .shape-4 {
+        width: 100px;
+        height: 100px;
+        bottom: 20%;
+        left: 20%;
+        animation-delay: 1s;
+    }
+
+    .shape-5 {
+        width: 90px;
+        height: 90px;
+        top: 80%;
+        right: 30%;
+        animation-delay: 3s;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-title h1 {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        animation: fadeInUp 1s ease-out;
+    }
+
+    .hero-icon {
+        font-size: 3rem;
+        animation: pulse 2s infinite;
+    }
+
+    .hero-stats {
+        margin-top: 40px;
+    }
+
+    .hero-stat-card {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 20px;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+        animation: fadeInUp 1s ease-out;
+    }
+
+    .hero-stat-card:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.25);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .hero-stat-icon {
+        font-size: 2rem;
+        color: white;
+        margin-bottom: 10px;
+    }
+
+    .hero-stat-number {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: white;
+        margin-bottom: 5px;
+    }
+
+    .hero-stat-label {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    /* Quick Actions Bar */
+    .quick-actions-bar {
+        background: var(--soft-white);
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .challenge-status .badge {
+        padding: 10px 15px;
+        border-radius: 25px;
+        font-weight: 600;
+    }
+
+    /* Section Headers */
+    .section-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .section-title {
+        color: var(--text-primary);
+        font-weight: 700;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .section-subtitle {
+        color: var(--text-secondary);
+        font-size: 1.1rem;
+        margin-bottom: 0;
+    }
+
+    /* Enhanced Progress Cards */
+    .enhanced-progress-card {
+        background: var(--soft-white);
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .enhanced-progress-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: var(--gradient-primary);
+    }
+
+    .enhanced-progress-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-medium);
+    }
+
+    .card-icon-wrapper {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: var(--gradient-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        color: white;
+        font-size: 1.5rem;
+        box-shadow: var(--shadow-soft);
+    }
+
+    .card-content {
+        text-align: center;
+    }
+
+    .card-number {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--text-primary);
+        margin-bottom: 8px;
+    }
+
+    .card-label {
+        color: var(--text-secondary);
+        font-weight: 500;
+        margin-bottom: 15px;
+    }
+
+    .card-progress {
+        display: flex;
+        justify-content: center;
+    }
+
+    .progress-ring {
+        position: relative;
+    }
+
+    .progress-circle {
+        transition: stroke-dashoffset 1s ease-in-out;
+        transform: rotate(-90deg);
+        transform-origin: 50% 50%;
+    }
+
+    /* Enhanced Info Cards */
+    .enhanced-info-card {
+        background: var(--soft-white);
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+    .enhanced-info-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-medium);
+    }
+
+    .info-card-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .info-card-header i {
+        font-size: 1.5rem;
+        color: var(--water-blue);
+        background: rgba(125, 211, 252, 0.1);
+        padding: 10px;
+        border-radius: 50%;
+    }
+
+    .info-card-header span {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 1.1rem;
+    }
+
+    .info-card-content {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .info-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        font-size: 0.95rem;
+    }
+
+    .info-item:last-child {
+        border-bottom: none;
+    }
+
+    .info-item strong {
+        color: var(--text-primary);
+        font-weight: 600;
+    }
+
+    /* Enhanced Challenge Dashboard */
+    .enhanced-challenge-dashboard {
+        background: var(--soft-white);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+
+    /* Updated Color Scheme Variables */
+    :root {
+        --water-blue: #7dd3fc;      /* Soft blue for wealth/water */
+        --air-green: #86efac;       /* Soft green for health/air */
+        --fire-red: #fca5a5;        /* Soft red for relationships/fire */
+        
+        --gradient-primary: linear-gradient(135deg, var(--water-blue) 0%, var(--air-green) 50%, var(--fire-red) 100%);
+        --gradient-secondary: linear-gradient(135deg, var(--air-green) 0%, var(--water-blue) 100%);
+        --gradient-tertiary: linear-gradient(135deg, var(--fire-red) 0%, var(--air-green) 100%);
+        
+        --soft-white: rgba(255, 255, 255, 0.95);
+        --text-primary: #374151;
+        --text-secondary: #6b7280;
+        
+        --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
+        --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.12);
+        --shadow-strong: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .table-hover tbody tr:hover {
+        background: linear-gradient(135deg, rgba(125, 211, 252, 0.1) 0%, rgba(134, 239, 172, 0.1) 100%);
+        transform: scale(1.01);
+        transition: all 0.3s ease;
+    }
+    
+    .progress {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+        height: 12px;
+    }
+    
+    .progress-bar {
+        background: var(--gradient-primary);
+        border-radius: 15px;
+        position: relative;
+    }
+    
+    .progress-bar::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        animation: shimmer 2s infinite;
+    }
+    
+    @keyframes shimmer {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+    }
+    
+    .badge {
+        font-size: 0.8rem;
+        border-radius: 15px;
+        font-weight: 500;
+        padding: 6px 12px;
+    }
+    
+    .text-bronze {
+        color: #cd7f32;
+    }
+
+    .text-purple {
+        color: #9c27b0;
+    }
+
+    .nav-tabs .nav-link {
+        border-radius: 15px 15px 0 0;
+        border: none;
+        color: var(--text-secondary);
+        font-weight: 600;
+        padding: 12px 20px;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.8);
+    }
+
+    .nav-tabs .nav-link:hover {
+        background: var(--gradient-secondary);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-soft);
+    }
+
+    .nav-tabs .nav-link.active {
+        background: var(--gradient-primary);
+        color: white;
+        border: none;
+        box-shadow: var(--shadow-medium);
+    }
+
+    .tab-content {
+        background: var(--soft-white);
+        border-radius: 0 15px 15px 15px;
+        padding: 20px;
+        backdrop-filter: blur(10px);
+        box-shadow: var(--shadow-soft);
+    }
+
+    /* Category Breakdown Header */
+    .category-breakdown-header {
+        background: var(--gradient-secondary);
+        padding: 20px;
+        border-radius: 15px;
+        border-left: 5px solid var(--water-blue);
+        color: white;
+    }
+
+    /* Category Performance Cards */
+    .category-performance-card {
+        background: var(--soft-white);
+        border-radius: 15px;
+        box-shadow: var(--shadow-soft);
+        overflow: hidden;
+        transition: all 0.3s ease;
+        height: 100%;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .category-performance-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-medium);
+    }
+
+    .category-header {
+        padding: 20px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        background: linear-gradient(135deg, rgba(125, 211, 252, 0.1) 0%, rgba(134, 239, 172, 0.1) 100%);
+    }
+
+    .category-icon {
+        font-size: 2rem;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--soft-white);
+        border-radius: 50%;
+        box-shadow: var(--shadow-soft);
+    }
+
+    .performance-badge {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+        border-radius: 20px;
+        font-weight: 600;
+        color: white;
+        background: var(--gradient-primary);
+    }
+
+    /* Top Performer for 75 Days */
+    .top-performer-75-days {
+        padding: 20px;
+        background: linear-gradient(135deg, rgba(125, 211, 252, 0.1) 0%, rgba(134, 239, 172, 0.05) 100%);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .top-performer-header h6 {
+        color: var(--text-primary);
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .champion-display {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        background: var(--soft-white);
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: var(--shadow-soft);
+        border: 2px solid rgba(125, 211, 252, 0.3);
+    }
+
+    .champion-avatar {
+        flex-shrink: 0;
+    }
+
+    .avatar-circle {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 2rem;
+        box-shadow: var(--shadow-medium);
+        position: relative;
+        background: var(--gradient-primary);
+    }
+
+    .avatar-circle::after {
+        content: '';
+        position: absolute;
+        top: -5px;
+        left: -5px;
+        right: -5px;
+        bottom: -5px;
+        border-radius: 50%;
+        background: var(--gradient-primary);
+        z-index: -1;
+        animation: pulse 2s infinite;
+        opacity: 0.3;
+    }
+
+    .champion-details {
+        flex-grow: 1;
+    }
+
+    .champion-name {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 10px;
+    }
+
+    .champion-stats {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 15px;
+    }
+
+    .stat-item {
+        text-align: center;
+    }
+
+    .stat-value {
+        display: block;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--water-blue);
+        line-height: 1;
+    }
+
+    .stat-label {
+        display: block;
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        margin-top: 5px;
+    }
+
+    .champion-progress {
+        margin-top: 10px;
+    }
+
+    .champion-progress .progress {
+        height: 12px;
+        border-radius: 6px;
+        background: rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .champion-progress .progress-bar {
+        border-radius: 6px;
+        position: relative;
+        background: var(--gradient-primary);
+    }
+
+    /* Category Statistics Summary */
+    .category-stats-summary {
+        padding: 20px;
+        background: rgba(248, 249, 250, 0.8);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-card {
+        text-align: center;
+        padding: 10px;
+        border-radius: 8px;
+        background: var(--soft-white);
+        transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-soft);
+    }
+
+    .stat-number {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: var(--water-blue);
+        line-height: 1;
+        margin-bottom: 5px;
+    }
+
+    .stat-text {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    /* Top Performers List */
+    .top-performers-list {
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.8);
+    }
+
+    .section-title {
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 15px;
+        font-size: 0.9rem;
+        text-align: center;
+    }
+
+    .performers-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .performer-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 12px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.9);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .performer-item:hover {
+        background: rgba(33, 150, 243, 0.1);
+        transform: translateX(5px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .performer-item.current-user {
+        background: rgba(13, 110, 253, 0.1);
+        border-left: 4px solid #0d6efd;
+    }
+
+    .performer-rank {
+        font-size: 1.5rem;
+        width: 40px;
+        text-align: center;
+        flex-shrink: 0;
+    }
+
+    .performer-info {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .performer-name {
+        font-weight: 600;
+        font-size: 1rem;
+        color: #333;
+    }
+
+    .performer-stats {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .performer-score {
+        font-weight: bold;
+        color: #d4af37;
+        font-size: 0.9rem;
+    }
+
+    .performer-days {
+        color: #666;
+        font-size: 0.8rem;
+    }
+
+    .performer-progress {
+        flex-shrink: 0;
+        width: 80px;
+    }
+
+    .performer-progress .progress {
+        height: 8px;
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+    }
+
+    /* Category Actions */
+    .category-actions {
+        padding: 15px 20px;
+        background: rgba(248, 249, 250, 0.8);
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .view-details-btn {
+        border-radius: 20px;
+        padding: 8px 16px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .view-details-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+    }
+
+    /* Category Comparison */
+    .category-comparison-card {
+        background: var(--soft-white);
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: var(--shadow-soft);
+    }
+
+    .comparison-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .comparison-item {
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .comparison-item:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-soft);
+    }
+
+    .comparison-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .comparison-icon {
+        font-size: 1.5rem;
+    }
+
+    .comparison-name {
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+
+    .comparison-stats {
+        display: flex;
+        justify-content: center;
+    }
+
+    .comparison-metric {
+        text-align: center;
+    }
+
+    .metric-circle {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 10px;
+        position: relative;
+        background: var(--gradient-primary);
+    }
+
+    .metric-inner {
+        width: 60px;
+        height: 60px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 0.9rem;
+        color: var(--text-primary);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .comparison-grid {
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .category-performance-card {
+            margin-bottom: 20px;
+        }
+
+        .champion-display {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .user-tabs-nav {
+            flex-wrap: wrap;
+        }
+
+        .user-tabs-nav .nav-link {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .user-performance-header {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .performance-metrics .row {
+            margin: 0;
+        }
+
+        .performance-metrics .col-6 {
+            padding: 0 5px;
+        }
+
+        .achievement-badges {
+            justify-content: center;
+        }
+    }
+
+    /* Animation Classes */
+    .emoji-pulse {
+        animation: pulse 2s infinite;
+    }
+
+    .emoji-bounce {
+        animation: bounce 1s infinite;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+        40% { transform: translateY(-10px); }
+        60% { transform: translateY(-5px); }
+    }
+
+    /* Legacy styles for compatibility */
+    .table-primary {
+        background: linear-gradient(135deg, rgba(125, 211, 252, 0.1) 0%, rgba(134, 239, 172, 0.1) 100%) !important;
+    }
+    
+    .table-hover .table-primary:hover {
+        background: linear-gradient(135deg, rgba(125, 211, 252, 0.2) 0%, rgba(134, 239, 172, 0.2) 100%) !important;
+    }
+    
+    .alert-success {
+        background: rgba(134, 239, 172, 0.2);
+        border: 1px solid rgba(134, 239, 172, 0.3);
+        color: var(--text-primary);
+    }
+    
+    .table-light {
+        background: rgba(248, 249, 250, 0.8);
+    }
+    
+    .table th {
+        font-weight: 600;
+        color: white;
+        background: var(--gradient-secondary);
+    }
+    
+    .table td {
+        vertical-align: middle;
+    }
+
+    /* User Performance Tabs */
+    .user-performance-tabs {
+        padding: 20px;
+        background: var(--soft-white);
+    }
+
+    .user-tabs-nav {
+        border-radius: 15px;
+        background: rgba(248, 249, 250, 0.8);
+        padding: 5px;
+        gap: 5px;
+    }
+
+    .user-tabs-nav .nav-link {
+        border-radius: 10px;
+        border: none;
+        color: var(--text-primary);
+        font-weight: 500;
+        padding: 8px 12px;
+        transition: all 0.3s ease;
+        background: var(--soft-white);
+        margin: 0;
+    }
+
+    .user-tabs-nav .nav-link:hover {
+        background: var(--gradient-secondary);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-soft);
+    }
+
+    .user-tabs-nav .nav-link.active {
+        background: var(--gradient-primary);
+        color: white;
+        box-shadow: var(--shadow-medium);
+    }
+
+    .user-tabs-nav .nav-link.current-user-tab {
+        border: 2px solid var(--water-blue);
+    }
+
+    .user-tab-content {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        min-width: 120px;
+        max-width: 150px;
+    }
+
+    .user-tab-name {
+        font-size: 0.85rem;
+        font-weight: 600;
+        line-height: 1.2;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .user-tab-score {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .user-tab-content .tab-content {
+        background: transparent;
+        border-radius: 15px;
+        padding: 0;
+        backdrop-filter: none;
+    }
+
+    /* User Performance Card */
+    .user-performance-card {
+        background: var(--soft-white);
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .user-performance-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .user-avatar .avatar-circle {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        box-shadow: var(--shadow-soft);
+        background: var(--gradient-primary);
+    }
+
+    .user-info {
+        flex-grow: 1;
+    }
+
+    .user-name {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 5px;
+    }
+
+    .user-rank {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .rank-badge {
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: white;
+    }
+
+    .rank-1 {
+        background: var(--gradient-primary);
+        color: white;
+    }
+
+    .rank-2 {
+        background: linear-gradient(135deg, #c0c0c0 0%, #e5e5e5 100%);
+        color: #666;
+    }
+
+    .rank-3 {
+        background: linear-gradient(135deg, #cd7f32 0%, #daa520 100%);
+        color: white;
+    }
+
+    .rank-other {
+        background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+        color: white;
+    }
+
+    /* Performance Metrics */
+    .performance-metrics {
+        margin-bottom: 20px;
+    }
+
+    .metric-card {
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 10px;
+        padding: 15px;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .metric-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-soft);
+    }
+
+    .metric-value {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--water-blue);
+        line-height: 1;
+        margin-bottom: 5px;
+    }
+
+    .metric-label {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    /* Progress Visualization */
+    .progress-visualization {
+        margin-bottom: 20px;
+    }
+
+    .progress-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .progress-title {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 0.9rem;
+    }
+
+    .progress-percentage {
+        font-weight: bold;
+        color: var(--water-blue);
+        font-size: 0.9rem;
+    }
+
+    .progress-container {
+        margin-bottom: 10px;
+    }
+
+    .progress-container .progress {
+        height: 15px;
+        border-radius: 8px;
+        background: rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .progress-container .progress-bar {
+        border-radius: 8px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--gradient-primary);
+    }
+
+    .progress-text {
+        color: white;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .progress-details {
+        text-align: center;
+    }
+
+    /* Achievement Badges */
+    .achievement-badges {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .achievement-badge {
+        padding: 8px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: white;
+        box-shadow: var(--shadow-soft);
+    }
+
+    .achievement-excellent {
+        background: var(--gradient-secondary);
+    }
+
+    .achievement-great {
+        background: linear-gradient(135deg, #17a2b8 0%, #0dcaf0 100%);
+    }
+
+    .achievement-good {
+        background: var(--gradient-tertiary);
+        color: white;
+    }
+
+    .achievement-improving {
+        background: linear-gradient(135deg, #fd7e14 0%, #ff8a65 100%);
+    }
+
+    .achievement-starting {
+        background: linear-gradient(135deg, #6c757d 0%, #adb5bd 100%);
+    }
+
+    /* Responsive Design for User Tabs */
+    @media (max-width: 768px) {
+        .user-tabs-nav {
+            flex-wrap: wrap;
+        }
+
+        .user-tabs-nav .nav-link {
+            flex: 1;
+            min-width: 120px;
+            max-width: none;
+        }
+
+        .user-breakdown-tabs .nav-link {
+            min-width: 120px;
+            max-width: 160px;
+            padding: 8px 12px;
+            gap: 8px;
+        }
+
+        .user-breakdown-tabs .user-tab-content {
+            gap: 8px;
+        }
+
+        .user-tab-name {
+            font-size: 0.8rem;
+        }
+
+        .user-tab-score {
+            font-size: 0.7rem;
+        }
+
+        .user-performance-header {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .performance-metrics .row {
+            margin: 0;
+        }
+
+        .performance-metrics .col-6 {
+            padding: 0 5px;
+        }
+
+        .achievement-badges {
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .user-breakdown-tabs .nav-link {
+            min-width: 100px;
+            max-width: 140px;
+            padding: 6px 10px;
+            gap: 6px;
+        }
+
+        .user-breakdown-tabs .avatar-circle {
+            width: 20px;
+            height: 20px;
+            font-size: 0.6rem;
+        }
+
+        .user-tab-name {
+            font-size: 0.75rem;
+        }
+
+        .user-tab-score {
+            font-size: 0.65rem;
+        }
+    }
+
+    /* New styles for user performance breakdown */
+    .user-performance-breakdown {
+        background: var(--soft-white);
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: var(--shadow-soft);
+    }
+
+    .user-breakdown-tabs .nav-link {
+        border-radius: 10px;
+        border: none;
+        color: var(--text-primary);
+        font-weight: 500;
+        padding: 10px 15px;
+        transition: all 0.3s ease;
+        background: var(--soft-white);
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 140px;
+        max-width: 180px;
+    }
+
+    .user-breakdown-tabs .nav-link:hover {
+        background: var(--gradient-secondary);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-soft);
+    }
+
+    .user-breakdown-tabs .nav-link.active {
+        background: var(--gradient-primary);
+        color: white;
+        box-shadow: var(--shadow-medium);
+    }
+
+    .user-breakdown-tabs .nav-link.current-user-tab {
+        border: 2px solid var(--water-blue);
+    }
+
+    .user-tab-content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .user-tab-avatar {
+        flex-shrink: 0;
+    }
+
+    .user-tab-info {
+        flex-grow: 1;
+        min-width: 0;
+    }
+
+    .user-tab-name {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.2;
+    }
+
+    .user-tab-score {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.1;
+    }
+
+    .user-overview-card {
+        background: var(--soft-white);
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    .user-overview-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .avatar-circle-large {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 2rem;
+        box-shadow: var(--shadow-medium);
+        background: var(--gradient-primary);
+    }
+
+    .user-overview-info {
+        flex-grow: 1;
+    }
+
+    .user-name-large {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 5px;
+    }
+
+    .user-rank-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .rank-badge-large {
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: white;
+    }
+
+    .user-overview-stats {
+        display: flex;
+        gap: 20px;
+        margin-top: 10px;
+    }
+
+    .stat-item-large {
+        text-align: center;
+    }
+
+    .stat-value-large {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--water-blue);
+        line-height: 1;
+    }
+
+    .stat-label-large {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    /* Category Comparison Analysis Styles */
+    .category-comparison-header {
+        background: var(--gradient-tertiary);
+        padding: 20px;
+        border-radius: 15px;
+        border-left: 5px solid var(--fire-red);
+        color: white;
+    }
+
+    .category-stat-card {
+        background: var(--soft-white);
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: var(--shadow-soft);
+        transition: all 0.3s ease;
+        height: 100%;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .category-stat-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-medium);
+    }
+
+    .category-stat-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .category-stat-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--gradient-primary);
+        color: white;
+        font-size: 1.5rem;
+        box-shadow: var(--shadow-soft);
+    }
+
+    .category-stat-title h6 {
+        color: var(--text-primary);
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .metric-item {
+        text-align: center;
+        padding: 10px;
+    }
+
+    .metric-number {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: var(--water-blue);
+        line-height: 1;
+        margin-bottom: 5px;
+    }
+
+    .metric-label {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    .category-avg-progress {
+        margin-top: 15px;
+    }
+
+    .progress-label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+        font-size: 0.85rem;
+        color: var(--text-primary);
+        font-weight: 500;
+    }
+
+    .progress-percentage {
+        font-weight: bold;
+        color: var(--water-blue);
+    }
+
+    /* Category Difficulty Analysis */
+    .category-difficulty-analysis {
+        background: var(--soft-white);
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .difficulty-card {
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 12px;
+        padding: 20px;
+        height: 100%;
+        transition: all 0.3s ease;
+    }
+
+    .difficulty-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-soft);
+    }
+
+    .difficulty-title {
+        color: var(--text-primary);
+        font-weight: 700;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+    }
+
+    .difficulty-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .difficulty-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 12px;
+        background: var(--soft-white);
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .difficulty-item:hover {
+        transform: translateX(5px);
+        box-shadow: var(--shadow-soft);
+    }
+
+    .difficulty-rank {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 0.9rem;
+        color: white;
+        background: var(--gradient-primary);
+    }
+
+    .difficulty-info {
+        flex-grow: 1;
+    }
+
+    .difficulty-name {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 3px;
+    }
+
+    .difficulty-stats {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+    }
+
+    .difficulty-icon {
+        font-size: 1.2rem;
+    }
+
+    /* Category Insights */
+    .category-insights {
+        background: var(--soft-white);
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .insight-card {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 20px;
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+    .insight-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-soft);
+    }
+
+    .insight-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--gradient-secondary);
+        color: white;
+        font-size: 1.5rem;
+        flex-shrink: 0;
+    }
+
+    .insight-content h6 {
+        color: var(--text-primary);
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .insight-content p {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+
+    /* Responsive Design for Category Comparison */
+    @media (max-width: 768px) {
+        .category-stat-header {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .difficulty-item {
+            flex-direction: column;
+            text-align: center;
+            gap: 10px;
+        }
+
+        .insight-card {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .metric-item {
+            padding: 5px;
+        }
+
+        .metric-number {
+            font-size: 1.5rem;
+        }
+    }
+
+    .user-profile-image {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid var(--water-blue);
+        box-shadow: var(--shadow-medium);
+        transition: all 0.3s ease;
+    }
+
+    .user-profile-image:hover {
+        transform: scale(1.05);
+        box-shadow: var(--shadow-strong);
+    }
+
+    /* Small User Avatar Styles for Ranking Tables */
+    .user-avatar-small {
+        flex-shrink: 0;
+    }
+
+    .avatar-circle-small {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.9rem;
+        box-shadow: var(--shadow-soft);
+        background: var(--gradient-primary);
+        border: 2px solid rgba(255, 255, 255, 0.8);
+        transition: all 0.3s ease;
+    }
+
+    .avatar-circle-small:hover {
+        transform: scale(1.1);
+        box-shadow: var(--shadow-medium);
+    }
+
+    .avatar-circle-small .user-profile-image {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        border: none;
+        box-shadow: none;
+    }
+
+    .avatar-circle-small .user-profile-image:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    /* Category Performance Breakdown - Smaller avatars for user tabs */
+    .user-breakdown-tabs .avatar-circle {
+        width: 28px;
+        height: 28px;
+        font-size: 0.8rem;
+    }
+
+    .user-breakdown-tabs .user-profile-image {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid rgba(255, 255, 255, 0.8);
+        box-shadow: var(--shadow-soft);
+    }
+
+    /* Table row hover effects with avatars */
+    .table-hover tbody tr:hover .avatar-circle-small {
+        transform: scale(1.1);
+        box-shadow: var(--shadow-medium);
+    }
+
+    /* Responsive design for small avatars */
+    @media (max-width: 768px) {
+        .avatar-circle-small {
+            width: 28px;
+            height: 28px;
+            font-size: 0.8rem;
+        }
+        
+        .user-avatar-small {
+            margin-right: 8px !important;
+        }
+
+        .user-breakdown-tabs .avatar-circle {
+            width: 24px;
+            height: 24px;
+            font-size: 0.7rem;
+        }
+    }
+
+    /* Enhanced 75-Day Habit Completion Viewer Styles */
+    .habit-completion-viewer {
+        background: var(--soft-white);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .viewer-header {
+        background: var(--gradient-secondary);
+        padding: 25px;
+        border-radius: 15px;
+        border-left: 5px solid var(--air-green);
+        color: white;
+    }
+
+    .viewer-header h4 {
+        color: white;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .viewer-controls {
+        display: flex;
+        gap: 10px;
+    }
+
+    .viewer-controls .btn {
+        border-radius: 20px;
+        padding: 8px 16px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .viewer-controls .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-medium);
+    }
+
+    /* Progress Overview Styles */
+    .progress-overview {
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 15px;
+        padding: 20px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .progress-stat-card {
+        background: var(--soft-white);
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .progress-stat-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-medium);
+    }
+
+    .progress-stat-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--gradient-primary);
+        color: white;
+        font-size: 1.5rem;
+        flex-shrink: 0;
+    }
+
+    .progress-stat-content {
+        flex-grow: 1;
+    }
+
+    .progress-stat-value {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: var(--water-blue);
+        line-height: 1;
+        margin-bottom: 5px;
+    }
+
+    .progress-stat-label {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    /* Enhanced Day Navigation */
+    .day-navigation {
+        background: rgba(248, 249, 250, 0.8);
+        padding: 20px;
+        border-radius: 15px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .week-indicator {
+        text-align: center;
+        flex-grow: 1;
+        margin: 0 20px;
+    }
+
+    .week-title {
+        font-size: 1.2rem;
+        color: var(--text-primary);
+        margin-bottom: 5px;
+    }
+
+    .week-dates {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+    }
+
+    .week-progress {
+        max-width: 200px;
+        margin: 0 auto;
+    }
+
+    .week-progress .progress {
+        height: 8px;
+        border-radius: 10px;
+        background: rgba(0, 0, 0, 0.1);
+        margin-bottom: 5px;
+    }
+
+    .week-progress .progress-bar {
+        border-radius: 10px;
+        background: var(--gradient-primary);
+    }
+
+    /* Enhanced Habit Grid */
+    .habit-grid-container {
+        background: var(--soft-white);
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .grid-header {
+        display: grid;
+        grid-template-columns: 80px 1fr 120px 100px;
+        background: var(--gradient-primary);
+        color: white;
+        font-weight: 600;
+        padding: 18px 20px;
+        gap: 20px;
+        align-items: center;
+    }
+
+    .grid-body {
+        max-height: 500px;
+        overflow-y: auto;
+    }
+
+    .grid-row {
+        display: grid;
+        grid-template-columns: 80px 1fr 120px 100px;
+        padding: 15px 20px;
+        gap: 20px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        align-items: center;
+    }
+
+    .grid-row:hover {
+        background: rgba(125, 211, 252, 0.1);
+        transform: translateX(5px);
+    }
+
+    .grid-row.completed {
+        background: rgba(134, 239, 172, 0.1);
+        border-left: 4px solid var(--air-green);
+    }
+
+    .grid-row.partial {
+        background: rgba(252, 165, 165, 0.1);
+        border-left: 4px solid var(--fire-red);
+    }
+
+    .grid-row.pending {
+        background: rgba(108, 117, 125, 0.05);
+        border-left: 4px solid #6c757d;
+    }
+
+    .day-number {
+        font-weight: bold;
+        color: var(--text-primary);
+        text-align: center;
+        font-size: 1.1rem;
+        background: rgba(125, 211, 252, 0.1);
+        padding: 8px;
+        border-radius: 10px;
+    }
+
+    .habits-categories {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .category-group {
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 8px;
+        padding: 8px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .category-name {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 0.85rem;
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .habits-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    .habit-badge {
+        padding: 3px 6px;
+        border-radius: 8px;
+        font-size: 0.7rem;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        color: white;
+        background: var(--gradient-primary);
+    }
+
+    .habit-badge.completed {
+        background: var(--gradient-secondary);
+    }
+
+    .habit-badge.pending {
+        background: rgba(108, 117, 125, 0.8);
+    }
+
+    .completion-info {
+        text-align: center;
+    }
+
+    .completion-percentage {
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: var(--water-blue);
+        margin-bottom: 5px;
+    }
+
+    .completion-bar {
+        width: 100%;
+        height: 8px;
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 5px;
+    }
+
+    .completion-fill {
+        height: 100%;
+        border-radius: 4px;
+        background: var(--gradient-primary);
+        transition: width 0.6s ease;
+    }
+
+    .completion-text {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+    }
+
+    .day-status {
+        text-align: center;
+        font-weight: 600;
+        font-size: 0.9rem;
+        padding: 8px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    .status-completed {
+        background: rgba(40, 167, 69, 0.1);
+        color: #28a745;
+        border: 1px solid rgba(40, 167, 69, 0.2);
+    }
+
+    .status-partial {
+        background: rgba(255, 193, 7, 0.1);
+        color: #ffc107;
+        border: 1px solid rgba(255, 193, 7, 0.2);
+    }
+
+    .status-pending {
+        background: rgba(108, 117, 125, 0.1);
+        color: #6c757d;
+        border: 1px solid rgba(108, 117, 125, 0.2);
+    }
+
+    /* Category Performance Chart */
+    .category-performance-chart {
+        background: var(--soft-white);
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .chart-title {
+        color: var(--text-primary);
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+    }
+
+    .chart-container {
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 12px;
+        padding: 20px;
+        min-height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .category-chart-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 12px;
+        background: var(--soft-white);
+        border-radius: 10px;
+        margin-bottom: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .category-chart-item:hover {
+        transform: translateX(5px);
+        box-shadow: var(--shadow-soft);
+    }
+
+    .chart-category-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--gradient-primary);
+        color: white;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+    }
+
+    .chart-category-info {
+        flex-grow: 1;
+    }
+
+    .chart-category-name {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 3px;
+    }
+
+    .chart-category-stats {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+    }
+
+    .chart-category-progress {
+        flex-shrink: 0;
+        width: 100px;
+    }
+
+    .chart-category-progress .progress {
+        height: 8px;
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        margin-bottom: 3px;
+    }
+
+    .chart-category-progress .progress-bar {
+        border-radius: 4px;
+        background: var(--gradient-primary);
+    }
+
+    /* Habit Insights */
+    .habit-insights {
+        background: var(--soft-white);
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .insights-title {
+        color: var(--text-primary);
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+    }
+
+    .insight-card {
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 12px;
+        padding: 20px;
+        height: 100%;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .insight-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-soft);
+        background: var(--soft-white);
+    }
+
+    .insight-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--gradient-secondary);
+        color: white;
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    .insight-title {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 10px;
+        font-size: 1rem;
+    }
+
+    .insight-description {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        line-height: 1.4;
+        margin-bottom: 10px;
+    }
+
+    .insight-metric {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: var(--water-blue);
+    }
+
+    .week-summary {
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 12px;
+        padding: 20px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .summary-card {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px;
+        background: var(--soft-white);
+        border-radius: 10px;
+        box-shadow: var(--shadow-soft);
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+    .summary-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-medium);
+    }
+
+    .summary-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--gradient-primary);
+        color: white;
+        font-size: 1.5rem;
+        flex-shrink: 0;
+    }
+
+    .summary-content {
+        flex-grow: 1;
+    }
+
+    .summary-value {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: var(--water-blue);
+        line-height: 1;
+        margin-bottom: 5px;
+    }
+
+    .summary-label {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    /* Responsive Design for Enhanced Viewer */
+    @media (max-width: 768px) {
+        .viewer-header {
+            flex-direction: column;
+            text-align: center;
+            gap: 15px;
+        }
+
+        .viewer-controls {
+            justify-content: center;
+        }
+
+        .grid-header,
+        .grid-row {
+            grid-template-columns: 60px 1fr 80px 70px;
+            gap: 10px;
+            padding: 10px 15px;
+        }
+
+        .day-number {
+            font-size: 1rem;
+            padding: 6px;
+        }
+
+        .habits-list {
+            gap: 3px;
+        }
+
+        .habit-badge {
+            font-size: 0.65rem;
+            padding: 2px 4px;
+        }
+
+        .completion-percentage {
+            font-size: 1rem;
+        }
+
+        .progress-stat-card {
+            flex-direction: column;
+            text-align: center;
+            gap: 10px;
+        }
+
+        .progress-stat-icon {
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+        }
+
+        .progress-stat-value {
+            font-size: 1.5rem;
+        }
+
+        .week-indicator {
+            margin: 0 10px;
+        }
+
+        .week-title {
+            font-size: 1rem;
+        }
+
+        .chart-container {
+            padding: 15px;
+        }
+
+        .category-chart-item {
+            flex-direction: column;
+            text-align: center;
+            gap: 10px;
+        }
+
+        .chart-category-progress {
+            width: 100%;
+        }
+    }
+
+    /* Enhanced Ranking Section Styles */
+    .ranking-section {
+        background: var(--soft-white);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        margin-bottom: 40px;
+    }
+
+    /* Enhanced Tab Navigation */
+    .enhanced-tab-navigation {
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 15px;
+        padding: 10px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .enhanced-tabs {
+        display: flex;
+        gap: 10px;
+        border: none;
+        background: transparent;
+    }
+
+    .enhanced-tabs .nav-item {
+        flex: 1;
+    }
+
+    .enhanced-tabs .nav-link {
+        border: none;
+        border-radius: 12px;
+        padding: 20px 15px;
+        background: var(--soft-white);
+        color: var(--text-primary);
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: var(--shadow-soft);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .enhanced-tabs .nav-link:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-medium);
+        background: var(--gradient-secondary);
+        color: white;
+    }
+
+    .enhanced-tabs .nav-link.active {
+        background: var(--gradient-primary);
+        color: white;
+        box-shadow: var(--shadow-medium);
+        transform: translateY(-3px);
+    }
+
+    .enhanced-tabs .nav-link.active::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .tab-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 8px;
+    }
+
+    .tab-icon {
+        font-size: 1.5rem;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .tab-label {
+        font-size: 1rem;
+        font-weight: 700;
+        display: block;
+        line-height: 1.2;
+    }
+
+    .tab-description {
+        font-size: 0.75rem;
+        opacity: 0.8;
+        display: block;
+        line-height: 1.2;
+    }
+
+    /* Enhanced Tab Content */
+    .enhanced-tab-content {
+        background: transparent;
+        border-radius: 15px;
+        padding: 0;
+        backdrop-filter: none;
+        box-shadow: none;
+    }
+
+    /* Ranking Header */
+    .ranking-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 25px;
+        padding: 20px;
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 15px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .ranking-title-section {
+        flex-grow: 1;
+    }
+
+    .ranking-title {
+        color: var(--text-primary);
+        font-weight: 700;
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+        font-size: 1.3rem;
+    }
+
+    .ranking-subtitle {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    .ranking-info {
+        background: rgba(125, 211, 252, 0.1);
+        padding: 12px 16px;
+        border-radius: 10px;
+        border-left: 4px solid var(--water-blue);
+        color: var(--text-primary);
+        font-size: 0.9rem;
+        max-width: 400px;
+        flex-shrink: 0;
+    }
+
+    /* Enhanced Table Container */
+    .enhanced-table-container {
+        background: var(--soft-white);
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .enhanced-table {
+        margin: 0;
+        background: transparent;
+    }
+
+    .enhanced-table thead th {
+        background: var(--gradient-primary);
+        color: white;
+        font-weight: 700;
+        padding: 18px 15px;
+        border: none;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .enhanced-table tbody tr {
+        transition: all 0.3s ease;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .enhanced-table tbody tr:hover {
+        background: rgba(125, 211, 252, 0.1);
+        transform: translateX(5px);
+    }
+
+    .enhanced-table tbody tr.current-user {
+        background: rgba(13, 110, 253, 0.1);
+        border-left: 4px solid #0d6efd;
+    }
+
+    .enhanced-table tbody tr.rank-1 {
+        background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 215, 0, 0.05) 100%);
+        border-left: 4px solid #ffd700;
+    }
+
+    .enhanced-table tbody tr.rank-2 {
+        background: linear-gradient(135deg, rgba(192, 192, 192, 0.1) 0%, rgba(192, 192, 192, 0.05) 100%);
+        border-left: 4px solid #c0c0c0;
+    }
+
+    .enhanced-table tbody tr.rank-3 {
+        background: linear-gradient(135deg, rgba(205, 127, 50, 0.1) 0%, rgba(205, 127, 50, 0.05) 100%);
+        border-left: 4px solid #cd7f32;
+    }
+
+    .enhanced-table tbody td {
+        padding: 15px;
+        vertical-align: middle;
+        border: none;
+    }
+
+    /* Rank Cell */
+    .rank-cell {
+        text-align: center;
+        width: 80px;
+    }
+
+    .rank-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        padding: 8px 12px;
+        border-radius: 20px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        color: white;
+        box-shadow: var(--shadow-soft);
+        min-width: 60px;
+    }
+
+    .rank-badge.rank-1 {
+        background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    }
+
+    .rank-badge.rank-2 {
+        background: linear-gradient(135deg, #c0c0c0 0%, #e5e5e5 100%);
+        color: #666;
+    }
+
+    .rank-badge.rank-3 {
+        background: linear-gradient(135deg, #cd7f32 0%, #daa520 100%);
+    }
+
+    .rank-badge.rank-other {
+        background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+    }
+
+    /* Participant Cell */
+    .participant-cell {
+        min-width: 200px;
+    }
+
+    .participant-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .participant-details {
+        flex-grow: 1;
+    }
+
+    .participant-name {
+        font-weight: 700;
+        color: var(--text-primary);
+        font-size: 1rem;
+        margin-bottom: 3px;
+    }
+
+    .current-user-badge {
+        background: var(--gradient-primary);
+        color: white;
+        padding: 3px 8px;
+        border-radius: 10px;
+        font-size: 0.7rem;
+        font-weight: 600;
+    }
+
+    /* Data Cells */
+    .categories-cell,
+    .days-cell,
+    .streak-cell {
+        text-align: center;
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+
+    /* Percentage Cell */
+    .percentage-cell {
+        text-align: center;
+    }
+
+    .percentage-badge {
+        padding: 6px 12px;
+        border-radius: 15px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        color: white;
+    }
+
+    .percentage-badge.excellent {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    }
+
+    .percentage-badge.good {
+        background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+    }
+
+    .percentage-badge.needs-improvement {
+        background: linear-gradient(135deg, #dc3545 0%, #e83e8c 100%);
+    }
+
+    .streak-badge {
+        background: linear-gradient(135deg, #dc3545 0%, #e83e8c 100%);
+        color: white;
+        padding: 6px 12px;
+        border-radius: 15px;
+        font-weight: 700;
+        font-size: 0.85rem;
+    }
+
+    /* Progress Cell */
+    .progress-cell {
+        width: 150px;
+    }
+
+    .enhanced-progress {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .enhanced-progress .progress {
+        height: 12px;
+        border-radius: 6px;
+        background: rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .enhanced-progress .progress-bar {
+        border-radius: 6px;
+        background: var(--gradient-primary);
+        position: relative;
+    }
+
+    .enhanced-progress .progress-bar::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        animation: shimmer 2s infinite;
+    }
+
+    .progress-text {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        font-weight: 600;
+        text-align: center;
+    }
+
+    /* Responsive Design for Ranking Section */
+    @media (max-width: 768px) {
+        .ranking-section {
+            padding: 20px;
+        }
+
+        .enhanced-tabs {
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .enhanced-tabs .nav-link {
+            padding: 15px 12px;
+        }
+
+        .tab-content {
+            flex-direction: row;
+            text-align: left;
+            gap: 12px;
+        }
+
+        .tab-icon {
+            font-size: 1.2rem;
+            margin-bottom: 0;
+        }
+
+        .ranking-header {
+            flex-direction: column;
+            gap: 15px;
+            text-align: center;
+        }
+
+        .ranking-info {
+            max-width: none;
+        }
+
+        .enhanced-table-container {
+            overflow-x: auto;
+        }
+
+        .enhanced-table {
+            min-width: 600px;
+        }
+
+        .participant-info {
+            flex-direction: column;
+            text-align: center;
+            gap: 8px;
+        }
+
+        .user-avatar-small {
+            margin-right: 0 !important;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .enhanced-table {
+            min-width: 500px;
+        }
+
+        .rank-badge {
+            padding: 6px 8px;
+            font-size: 0.75rem;
+            min-width: 50px;
+        }
+
+        .percentage-badge,
+        .streak-badge {
+            padding: 4px 8px;
+            font-size: 0.75rem;
+        }
+    }
+
+    /* Category Performance Overview Styles */
+    .section-header {
+        background: linear-gradient(135deg, rgba(125, 211, 252, 0.1) 0%, rgba(134, 239, 172, 0.1) 100%);
+        border-radius: 20px;
+        padding: 40px 30px;
+        margin-bottom: 40px;
+        border: 1px solid rgba(125, 211, 252, 0.2);
+    }
+
+    .section-icon-wrapper {
+        display: inline-block;
+    }
+
+    .section-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: var(--gradient-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 2rem;
+        margin: 0 auto;
+        box-shadow: var(--shadow-medium);
+        position: relative;
+    }
+
+    .section-icon::after {
+        content: '';
+        position: absolute;
+        top: -5px;
+        left: -5px;
+        right: -5px;
+        bottom: -5px;
+        border-radius: 50%;
+        background: var(--gradient-primary);
+        z-index: -1;
+        opacity: 0.3;
+        animation: pulse 2s infinite;
+    }
+
+    .section-title {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 10px;
+    }
+
+    .section-subtitle {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    /* Quick Stats */
+    .section-stats {
+        margin-top: 30px;
+    }
+
+    .quick-stat {
+        background: var(--soft-white);
+        border-radius: 15px;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        box-shadow: var(--shadow-soft);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .quick-stat:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-medium);
+    }
+
+    .quick-stat-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        background: var(--gradient-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.3rem;
+        flex-shrink: 0;
+    }
+
+    .quick-stat-content {
+        flex-grow: 1;
+    }
+
+    .quick-stat-number {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        line-height: 1;
+        margin-bottom: 5px;
+    }
+
+    .quick-stat-label {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    /* Category Overview Cards - Enhanced */
+    .category-overview-card {
+        background: var(--soft-white);
+        border-radius: 20px;
+        box-shadow: var(--shadow-soft);
+        overflow: hidden;
+        transition: all 0.3s ease;
+        height: 100%;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        position: relative;
+    }
+
+    .category-overview-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-medium);
+    }
+
+    .category-overview-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: var(--gradient-primary);
+        z-index: 1;
+    }
+
+    /* Category Header - Enhanced */
+    .category-header {
+        padding: 25px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        position: relative;
+    }
+
+    .category-header-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .category-main-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        flex-grow: 1;
+    }
+
+    .category-icon-wrapper {
+        flex-shrink: 0;
+    }
+
+    .category-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        color: var(--text-primary);
+        box-shadow: var(--shadow-soft);
+        transition: all 0.3s ease;
+    }
+
+    .category-overview-card:hover .category-icon {
+        transform: scale(1.1);
+    }
+
+    .category-info {
+        flex-grow: 1;
+    }
+
+    .category-name {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 8px;
+    }
+
+    .category-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .category-participants,
+    .category-difficulty {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+    }
+
+    /* Progress Ring */
+    .category-overall-progress {
+        flex-shrink: 0;
+    }
+
+    .overall-progress-circle {
+        position: relative;
+        width: 60px;
+        height: 60px;
+    }
+
+    .progress-ring {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .progress-ring svg {
+        transform: rotate(-90deg);
+    }
+
+    .progress-ring circle {
+        transition: stroke-dashoffset 0.5s ease;
+    }
+
+    .progress-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+
+    .progress-percentage {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--text-primary);
+    }
+
+    /* Category Stats Section */
+    .category-stats-section {
+        padding: 25px;
+    }
+
+    /* Performers Header */
+    .performers-header {
+        margin-bottom: 20px;
+    }
+
+    .performers-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+    }
+
+    .performers-subtitle {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        font-style: italic;
+    }
+
+    /* Performers List - Enhanced */
+    .performers-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .performer-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.9);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        position: relative;
+    }
+
+    .performer-item:hover {
+        background: rgba(125, 211, 252, 0.1);
+        transform: translateX(5px);
+        box-shadow: var(--shadow-soft);
+    }
+
+    .performer-item.rank-1 {
+        background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 215, 0, 0.05) 100%);
+        border-left: 4px solid #ffd700;
+    }
+
+    .performer-item.rank-2 {
+        background: linear-gradient(135deg, rgba(192, 192, 192, 0.1) 0%, rgba(192, 192, 192, 0.05) 100%);
+        border-left: 4px solid #c0c0c0;
+    }
+
+    .performer-item.rank-3 {
+        background: linear-gradient(135deg, rgba(205, 127, 50, 0.1) 0%, rgba(205, 127, 50, 0.05) 100%);
+        border-left: 4px solid #cd7f32;
+    }
+
+    /* Rank Badges */
+    .rank-badge {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+        box-shadow: var(--shadow-soft);
+    }
+
+    .rank-badge.rank-gold {
+        background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    }
+
+    .rank-badge.rank-silver {
+        background: linear-gradient(135deg, #c0c0c0 0%, #e5e5e5 100%);
+    }
+
+    .rank-badge.rank-bronze {
+        background: linear-gradient(135deg, #cd7f32 0%, #daa520 100%);
+    }
+
+    /* Performer Info - Enhanced */
+    .performer-info {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .performer-name {
+        font-weight: 600;
+        font-size: 1rem;
+        color: var(--text-primary);
+    }
+
+    .performer-details {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .performer-score {
+        font-weight: 700;
+        color: var(--water-blue);
+        font-size: 0.9rem;
+    }
+
+    .performer-days {
+        color: var(--text-secondary);
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    /* Summary Grid */
+    .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .summary-item {
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 12px;
+        padding: 15px;
+        text-align: center;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .summary-item:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-soft);
+        background: rgba(255, 255, 255, 0.9);
+    }
+
+    .summary-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: var(--gradient-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.1rem;
+        margin: 0 auto 10px;
+    }
+
+    .summary-content {
+        text-align: center;
+    }
+
+    .summary-value {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        line-height: 1;
+        margin-bottom: 5px;
+    }
+
+    .summary-label {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    /* Category Insights */
+    .category-insights {
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 12px;
+        padding: 20px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .insights-header {
+        margin-bottom: 15px;
+    }
+
+    .insights-title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0;
+        display: flex;
+        align-items: center;
+    }
+
+    .insights-content {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .insight-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        line-height: 1.4;
+    }
+
+    .insight-item i {
+        flex-shrink: 0;
+        margin-top: 2px;
+    }
+
+    /* Category Actions - Enhanced */
+    .category-actions {
+        padding: 20px 25px;
+        background: rgba(248, 249, 250, 0.8);
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .view-details-btn {
+        border-radius: 25px;
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        background: var(--gradient-primary);
+        border: none;
+        color: white;
+    }
+
+    .view-details-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-medium);
+        background: var(--gradient-primary);
+        color: white;
+    }
+
+    /* Responsive Design for Category Performance Overview */
+    @media (max-width: 768px) {
+        .section-header {
+            padding: 30px 20px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+        }
+
+        .section-subtitle {
+            font-size: 1rem;
+        }
+
+        .quick-stat {
+            padding: 15px;
+        }
+
+        .quick-stat-icon {
+            width: 40px;
+            height: 40px;
+            font-size: 1.1rem;
+        }
+
+        .quick-stat-number {
+            font-size: 1.5rem;
+        }
+
+        .category-header-content {
+            flex-direction: column;
+            text-align: center;
+            gap: 15px;
+        }
+
+        .category-main-info {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .category-meta {
+            flex-direction: row;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .summary-grid {
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        .performer-details {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 5px;
+        }
+
+        .category-actions {
+            flex-direction: column;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .section-icon {
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+        }
+
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+        }
+
+        .performer-item {
+            flex-direction: column;
+            text-align: center;
+            gap: 10px;
+        }
+
+        .performer-info {
+            text-align: center;
+        }
+
+        .performer-details {
+            justify-content: center;
+        }
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Enhanced 75-Day Habit Completion Viewer JavaScript
+    let currentWeek = 1;
+    const totalWeeks = 11; // 75 days = 11 weeks (10 full weeks + 1 partial week)
+    let viewMode = 'grid'; // 'grid' or 'list'
+    
+    // Get habit data from Django template context
+    const habitCompletionData = {{ habit_completion_data|safe }};
+    const currentUserId = {{ request.user.id }};
+    
+    // Get current user's habit data
+    const userHabitData = habitCompletionData[currentUserId] || {
+        habits: [],
+        daily_completions: {}
+    };
+    
+    // Initialize the viewer
+    updateWeekDisplay();
+    updateOverallStats();
+    renderCategoryChart();
+    renderHabitInsights();
+    
+    function updateWeekDisplay() {
+        const weekStart = (currentWeek - 1) * 7 + 1;
+        const weekEnd = Math.min(weekStart + 6, 75);
+        
+        document.getElementById('currentWeek').textContent = currentWeek;
+        document.getElementById('weekStart').textContent = weekStart;
+        document.getElementById('weekEnd').textContent = weekEnd;
+        
+        renderHabitGrid(weekStart, weekEnd);
+        updateWeekSummary(weekStart, weekEnd);
+        updateWeekProgress(weekStart, weekEnd);
+    }
+    
+    function updateOverallStats() {
+        let totalCompletedDays = 0;
+        let currentStreak = 0;
+        let bestStreak = 0;
+        let overallProgress = 0;
+        
+        for (let day = 1; day <= 75; day++) {
+            const completedHabits = userHabitData.daily_completions[day] || [];
+            const totalHabits = userHabitData.habits.length;
+            const completionPercentage = totalHabits > 0 ? (completedHabits.length / totalHabits) * 100 : 0;
+            
+            if (completionPercentage >= 80) {
+                totalCompletedDays++;
+                currentStreak++;
+                bestStreak = Math.max(bestStreak, currentStreak);
+            } else {
+                currentStreak = 0;
+            }
+            
+            overallProgress += completionPercentage;
+        }
+        
+        overallProgress = Math.round(overallProgress / 75);
+        
+        document.getElementById('totalCompletedDays').textContent = totalCompletedDays;
+        document.getElementById('currentStreak').textContent = currentStreak;
+        document.getElementById('bestStreak').textContent = bestStreak;
+        document.getElementById('overallProgress').textContent = overallProgress + '%';
+    }
+    
+    function renderHabitGrid(weekStart, weekEnd) {
+        const gridBody = document.getElementById('habitGrid');
+        gridBody.innerHTML = '';
+        
+        for (let day = weekStart; day <= weekEnd; day++) {
+            const completedHabits = userHabitData.daily_completions[day] || [];
+            const totalHabits = userHabitData.habits.length;
+            const completionPercentage = totalHabits > 0 ? (completedHabits.length / totalHabits) * 100 : 0;
+            
+            let statusClass = 'pending';
+            let statusText = 'Pending';
+            let statusIcon = 'ri-time-line';
+            
+            if (completionPercentage >= 80) {
+                statusClass = 'completed';
+                statusText = 'Completed';
+                statusIcon = 'ri-check-double-line';
+            } else if (completionPercentage >= 30) {
+                statusClass = 'partial';
+                statusText = 'Partial';
+                statusIcon = 'ri-check-line';
+            }
+            
+            const row = document.createElement('div');
+            row.className = `grid-row ${statusClass}`;
+            
+            // Group habits by category
+            const habitsByCategory = {};
+            userHabitData.habits.forEach(habit => {
+                if (!habitsByCategory[habit.category]) {
+                    habitsByCategory[habit.category] = [];
+                }
+                habitsByCategory[habit.category].push(habit);
+            });
+            
+            const categoryGroups = Object.entries(habitsByCategory).map(([category, habits]) => {
+                const categoryHabits = habits.map(habit => {
+                    const isCompleted = completedHabits.find(h => h.id === habit.id);
+                    return `<span class="habit-badge ${isCompleted ? 'completed' : 'pending'}">
+                        <i class="ri-${isCompleted ? 'check-line' : 'time-line'}"></i>
+                        ${habit.name}
+                    </span>`;
+                }).join('');
+                
+                return `<div class="category-group">
+                    <div class="category-name">
+                        <i class="ri-folder-line"></i>${category}
+                    </div>
+                    <div class="habits-list">${categoryHabits}</div>
+                </div>`;
+            }).join('');
+            
+            row.innerHTML = `
+                <div class="day-number">Day ${day}</div>
+                <div class="habits-categories">${categoryGroups}</div>
+                <div class="completion-info">
+                    <div class="completion-percentage">${Math.round(completionPercentage)}%</div>
+                    <div class="completion-bar">
+                        <div class="completion-fill" style="width: ${completionPercentage}%"></div>
+                    </div>
+                    <div class="completion-text">${completedHabits.length}/${totalHabits} habits</div>
+                </div>
+                <div class="day-status status-${statusClass}">
+                    <i class="${statusIcon}"></i>
+                    ${statusText}
+                </div>
+            `;
+            
+            gridBody.appendChild(row);
+        }
+    }
+    
+    function updateWeekSummary(weekStart, weekEnd) {
+        let completedDays = 0;
+        let currentStreak = 0;
+        let totalCompletion = 0;
+        
+        for (let day = weekStart; day <= weekEnd; day++) {
+            const completedHabits = userHabitData.daily_completions[day] || [];
+            const totalHabits = userHabitData.habits.length;
+            const completionPercentage = totalHabits > 0 ? (completedHabits.length / totalHabits) * 100 : 0;
+            
+            if (completionPercentage >= 80) {
+                completedDays++;
+                currentStreak++;
+            } else {
+                currentStreak = 0;
+            }
+            
+            totalCompletion += completionPercentage;
+        }
+        
+        const weekProgress = Math.round(totalCompletion / (weekEnd - weekStart + 1));
+        
+        document.getElementById('weekCompleted').textContent = completedDays;
+        document.getElementById('weekStreak').textContent = currentStreak;
+        document.getElementById('weekPercentage').textContent = `${weekProgress}%`;
+        document.getElementById('weekGoal').textContent = `${completedDays}/${weekEnd - weekStart + 1}`;
+    }
+    
+    function updateWeekProgress(weekStart, weekEnd) {
+        let totalCompletion = 0;
+        
+        for (let day = weekStart; day <= weekEnd; day++) {
+            const completedHabits = userHabitData.daily_completions[day] || [];
+            const totalHabits = userHabitData.habits.length;
+            const completionPercentage = totalHabits > 0 ? (completedHabits.length / totalHabits) * 100 : 0;
+            totalCompletion += completionPercentage;
+        }
+        
+        const weekProgress = Math.round(totalCompletion / (weekEnd - weekStart + 1));
+        
+        const progressBar = document.getElementById('weekProgressBar');
+        const progressText = document.getElementById('weekProgressText');
+        
+        progressBar.style.width = `${weekProgress}%`;
+        progressText.textContent = `${weekProgress}% Complete`;
+    }
+    
+    function renderCategoryChart() {
+        const chartContainer = document.getElementById('categoryChart');
+        
+        // Group habits by category and calculate completion rates
+        const categoryStats = {};
+        userHabitData.habits.forEach(habit => {
+            if (!categoryStats[habit.category]) {
+                categoryStats[habit.category] = {
+                    total: 0,
+                    completed: 0,
+                    habits: []
+                };
+            }
+            categoryStats[habit.category].total++;
+            categoryStats[habit.category].habits.push(habit);
+        });
+        
+        // Calculate completion for current week
+        const weekStart = (currentWeek - 1) * 7 + 1;
+        const weekEnd = Math.min(weekStart + 6, 75);
+        
+        for (let day = weekStart; day <= weekEnd; day++) {
+            const completedHabits = userHabitData.daily_completions[day] || [];
+            Object.keys(categoryStats).forEach(category => {
+                const categoryHabits = categoryStats[category].habits;
+                const completedInCategory = categoryHabits.filter(habit => 
+                    completedHabits.find(h => h.id === habit.id)
+                ).length;
+                
+                if (completedInCategory >= 2) { // 2+ activities per category
+                    categoryStats[category].completed++;
+                }
+            });
+        }
+        
+        const chartHTML = Object.entries(categoryStats).map(([category, stats]) => {
+            const percentage = stats.total > 0 ? Math.round((stats.completed / 7) * 100) : 0;
+            const categoryIcon = getCategoryIcon(category);
+            
+            return `<div class="category-chart-item">
+                <div class="chart-category-icon">
+                    <i class="${categoryIcon}"></i>
+                </div>
+                <div class="chart-category-info">
+                    <div class="chart-category-name">${category}</div>
+                    <div class="chart-category-stats">${stats.completed}/7 days completed</div>
+                </div>
+                <div class="chart-category-progress">
+                    <div class="progress">
+                        <div class="progress-bar" style="width: ${percentage}%"></div>
+                    </div>
+                    <small>${percentage}%</small>
+                </div>
+            </div>`;
+        }).join('');
+        
+        chartContainer.innerHTML = chartHTML || '<p class="text-muted text-center">No category data available</p>';
+    }
+    
+    function renderHabitInsights() {
+        const insightsContainer = document.getElementById('habitInsights');
+        
+        // Calculate insights
+        const totalHabits = userHabitData.habits.length;
+        const totalDays = 75;
+        let totalCompletions = 0;
+        let bestDay = 0;
+        let bestDayCompletions = 0;
+        
+        for (let day = 1; day <= totalDays; day++) {
+            const completedHabits = userHabitData.daily_completions[day] || [];
+            totalCompletions += completedHabits.length;
+            
+            if (completedHabits.length > bestDayCompletions) {
+                bestDayCompletions = completedHabits.length;
+                bestDay = day;
+            }
+        }
+        
+        const averageCompletions = totalHabits > 0 ? Math.round(totalCompletions / totalDays) : 0;
+        const completionRate = totalHabits > 0 ? Math.round((totalCompletions / (totalHabits * totalDays)) * 100) : 0;
+        
+        const insights = [
+            {
+                icon: 'ri-target-line',
+                title: 'Average Daily Completions',
+                description: 'Your typical daily habit completion rate',
+                metric: averageCompletions + ' habits'
+            },
+            {
+                icon: 'ri-fire-line',
+                title: 'Best Performance Day',
+                description: `Day ${bestDay} was your most productive day`,
+                metric: bestDayCompletions + ' habits'
+            },
+            {
+                icon: 'ri-percent-line',
+                title: 'Overall Completion Rate',
+                description: 'Percentage of possible habit completions achieved',
+                metric: completionRate + '%'
+            },
+            {
+                icon: 'ri-trending-up-line',
+                title: 'Consistency Score',
+                description: 'How consistently you complete your habits',
+                metric: Math.min(100, Math.round(completionRate * 1.2)) + '%'
+            }
+        ];
+        
+        const insightsHTML = insights.map(insight => `
+            <div class="col-md-6 col-lg-3 mb-3">
+                <div class="insight-card">
+                    <div class="insight-icon">
+                        <i class="${insight.icon}"></i>
+                    </div>
+                    <div class="insight-title">${insight.title}</div>
+                    <div class="insight-description">${insight.description}</div>
+                    <div class="insight-metric">${insight.metric}</div>
+                </div>
+            </div>
+        `).join('');
+        
+        insightsContainer.innerHTML = insightsHTML;
+    }
+    
+    function getCategoryIcon(category) {
+        const iconMap = {
+            'Reading': 'ri-book-line',
+            'Fitness': 'ri-heart-pulse-line',
+            'Nutrition': 'ri-restaurant-line',
+            'Wealth': 'ri-money-dollar-circle-line',
+            'Spiritual': 'ri-mental-health-line',
+            'Fun': 'ri-gamepad-line'
+        };
+        return iconMap[category] || 'ri-file-list-line';
+    }
+    
+    // Event listeners for navigation
+    document.getElementById('prevWeek').addEventListener('click', function() {
+        if (currentWeek > 1) {
+            currentWeek--;
+            updateWeekDisplay();
+            renderCategoryChart();
+        }
+    });
+    
+    document.getElementById('nextWeek').addEventListener('click', function() {
+        if (currentWeek < totalWeeks) {
+            currentWeek++;
+            updateWeekDisplay();
+            renderCategoryChart();
+        }
+    });
+    
+    // View mode toggle
+    document.getElementById('viewModeToggle').addEventListener('click', function() {
+        viewMode = viewMode === 'grid' ? 'list' : 'grid';
+        this.innerHTML = viewMode === 'grid' ? 
+            '<i class="ri-grid-line me-1"></i>Toggle View' : 
+            '<i class="ri-list-check me-1"></i>Toggle View';
+        
+        // Update grid display based on view mode
+        const gridContainer = document.querySelector('.habit-grid-container');
+        if (viewMode === 'list') {
+            gridContainer.style.gridTemplateColumns = '1fr';
+        } else {
+            gridContainer.style.gridTemplateColumns = '80px 1fr 120px 100px';
+        }
+    });
+    
+    // Export data functionality
+    document.getElementById('exportData').addEventListener('click', function() {
+        const data = {
+            user: currentUserId,
+            habits: userHabitData.habits,
+            completions: userHabitData.daily_completions,
+            week: currentWeek,
+            exportDate: new Date().toISOString()
+        };
+        
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `habit-data-week-${currentWeek}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    });
+
+    // Category Performance Overview Functions
+    function showCategoryDetails(categoryName) {
+        // This function will show detailed category information
+        console.log('Showing details for category:', categoryName);
+        // You can implement a modal or redirect to a detailed view
+        alert(`Detailed view for ${categoryName} category coming soon!`);
+    }
+
+    function compareCategory(categoryName) {
+        // This function will show category comparison
+        console.log('Comparing category:', categoryName);
+        // You can implement a comparison view
+        alert(`Comparison view for ${categoryName} category coming soon!`);
+    }
+
+    // Initialize category performance overview
+    function initializeCategoryOverview() {
+        // Add any initialization logic for the category overview
+        console.log('Category Performance Overview initialized');
+    }
+
+    // Call initialization
+    initializeCategoryOverview();
+});
+</script>
+{% endblock %} 
