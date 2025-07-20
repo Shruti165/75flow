@@ -147,6 +147,9 @@ if ENVIRONMENT == 'production':
     try:
         import whitenoise
         STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+        # Add WhiteNoise configuration
+        WHITENOISE_USE_FINDERS = True
+        WHITENOISE_AUTOREFRESH = True
     except ImportError:
         pass
 

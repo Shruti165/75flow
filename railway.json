@@ -4,7 +4,7 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "python manage.py migrate && gunicorn flow75.wsgi:application",
+    "startCommand": "python manage.py migrate && python manage.py setup_railway && python manage.py collectstatic --noinput && gunicorn flow75.wsgi:application",
     "healthcheckPath": "/health/",
     "healthcheckTimeout": 100,
     "restartPolicyType": "ON_FAILURE",
