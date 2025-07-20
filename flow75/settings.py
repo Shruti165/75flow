@@ -26,6 +26,10 @@ SECRET_KEY = os.getenv('SECRET_KEY', get_random_secret_key())
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1,healthcheck.railway.app,.railway.app,.up.railway.app,testserver').split(',')
 CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', 'http://localhost:8000,http://127.0.0.1:8000,https://*.railway.app,https://*.up.railway.app').split(',')
 
+# Ensure healthcheck.railway.app is always in ALLOWED_HOSTS
+if 'healthcheck.railway.app' not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append('healthcheck.railway.app')
+
 # Database configuration
 DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite:///db.sqlite3')
 
@@ -195,10 +199,6 @@ if ENVIRONMENT == 'production':
     # Trust Railway's proxy headers
     USE_X_FORWARDED_HOST = True
     USE_X_FORWARDED_PORT = True
-    
-    # Allow Railway's internal health checks
-    if 'healthcheck.railway.app' not in ALLOWED_HOSTS:
-        ALLOWED_HOSTS.append('healthcheck.railway.app')
 
 # Logging configuration
 LOGGING = {
