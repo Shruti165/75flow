@@ -24,14 +24,22 @@ railway login
 echo "🚂 Creating new Railway project..."
 railway init
 
+echo "🗄️  Adding PostgreSQL database..."
+echo "   Please select 'Database' → 'PostgreSQL' when prompted"
+railway add
+
 echo "⚙️  Setting environment variables..."
-railway variables set SECRET_KEY=$(python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())")
-railway variables set DEBUG=False
 railway variables set ENVIRONMENT=production
+railway variables set DEBUG=False
+railway variables set SECRET_KEY=$(python3 -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())")
 railway variables set ALLOWED_HOSTS=*.railway.app
+railway variables set CSRF_TRUSTED_ORIGINS=https://*.railway.app
 
 echo "📤 Deploying to Railway..."
 railway up
+
+echo "🔄 Running database migrations..."
+railway run python manage.py migrate_to_postgres
 
 echo "✅ Deployment complete!"
 echo "🌐 Your app is now live at: $(railway domain)"
@@ -42,5 +50,13 @@ echo "1. Visit the admin panel: $(railway domain)/admin/"
 echo "2. Create a superuser: railway run python manage.py createsuperuser"
 echo "3. Share the URL with Sid and Sanju!"
 echo ""
-echo "🔧 To view logs: railway logs"
-echo "🔧 To open the app: railway open" 
+echo "🔧 Useful commands:"
+echo "   - View logs: railway logs"
+echo "   - Open app: railway open"
+echo "   - Connect to database: railway connect"
+echo "   - Check status: railway status"
+echo ""
+echo "🗄️  Database info:"
+echo "   - PostgreSQL is automatically configured"
+echo "   - DATABASE_URL is auto-provided by Railway"
+echo "   - Local development continues to use SQLite" 
