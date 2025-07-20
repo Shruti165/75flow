@@ -1,1 +1,1 @@
-web: gunicorn flow75.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120 --log-file - 
+web: gunicorn flow75.wsgi:application --bind 0.0.0.0:$PORT --workers 1 --timeout 120 --log-file - --access-logfile - --error-logfile - --preload 

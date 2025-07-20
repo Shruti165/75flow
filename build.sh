@@ -1,18 +1,17 @@
 #!/bin/bash
-# Build script for Railway deployment
 
-echo "🚀 Starting 75Flow build process..."
+echo "🔨 Building 75Flow for Railway deployment..."
 
-# Install dependencies
-echo "📦 Installing Python dependencies..."
+# Exit on any error
+set -e
+
+echo "📦 Installing dependencies..."
 pip install -r requirements.txt
 
-# Collect static files
+echo "🗄️  Running database migrations..."
+python manage.py migrate --noinput
+
 echo "📁 Collecting static files..."
 python manage.py collectstatic --noinput
-
-# Run database migrations
-echo "🗄️ Running database migrations..."
-python manage.py migrate
 
 echo "✅ Build completed successfully!" 

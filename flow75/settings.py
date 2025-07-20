@@ -34,12 +34,6 @@ if 'healthcheck.railway.app' not in ALLOWED_HOSTS:
 if 'flow75.up.railway.app' not in ALLOWED_HOSTS:
     ALLOWED_HOSTS.append('flow75.up.railway.app')
 
-# Debug logging for ALLOWED_HOSTS in production
-if ENVIRONMENT == 'production':
-    print(f"DEBUG: ALLOWED_HOSTS = {ALLOWED_HOSTS}")
-    print(f"DEBUG: ENVIRONMENT = {ENVIRONMENT}")
-    print(f"DEBUG: DEBUG = {DEBUG}")
-
 # Database configuration
 DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite:///db.sqlite3')
 
