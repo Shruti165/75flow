@@ -6,11 +6,15 @@ from django.contrib.auth.models import User
 from django.db.models import Count, Sum, Q
 from django.utils import timezone
 from datetime import datetime, timedelta, date
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from .models import Habit, HabitDay, Category, Profile
 from .forms import CategoryForm, HabitForm, ProfileForm
 
 # Create your views here.
+
+def health_check(request):
+    """Health check endpoint for Railway"""
+    return HttpResponse("OK", content_type="text/plain")
 
 @login_required
 def home(request):
