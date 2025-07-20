@@ -34,7 +34,7 @@
                     <div class="col-md-2 col-6 mb-3">
                         <div class="hero-stat-card">
                             <div class="hero-stat-icon">
-                                <i class="ri-target-line"></i>
+                                <i class="ri-flag-line"></i>
                             </div>
                             <div class="hero-stat-number">{{ challenge_stats.current_day }}/75</div>
                             <div class="hero-stat-label">Challenge Day</div>
@@ -122,7 +122,7 @@
                         <div class="col-lg-3 col-md-6 mb-4">
                             <div class="enhanced-progress-card">
                                 <div class="card-icon-wrapper">
-                                    <i class="ri-target-line"></i>
+                                    <i class="ri-flag-line"></i>
                                 </div>
                                 <div class="card-content">
                                     <div class="card-number">{{ challenge_stats.current_day }}/75</div>
@@ -132,7 +132,7 @@
                                             <svg width="60" height="60">
                                                 <circle cx="30" cy="30" r="25" stroke="rgba(255,255,255,0.2)" stroke-width="4" fill="none"/>
                                                 <circle cx="30" cy="30" r="25" stroke="white" stroke-width="4" fill="none" 
-                                                        stroke-dasharray="157" stroke-dashoffset="{{ challenge_stats.current_day|floatformat:0|add:'-100' }}" class="progress-circle"/>
+                                                        stroke-dasharray="157" stroke-dashoffset="0" class="progress-circle"/>
                                             </svg>
                                         </div>
                                     </div>
@@ -152,7 +152,7 @@
                                             <svg width="60" height="60">
                                                 <circle cx="30" cy="30" r="25" stroke="rgba(255,255,255,0.2)" stroke-width="4" fill="none"/>
                                                 <circle cx="30" cy="30" r="25" stroke="white" stroke-width="4" fill="none" 
-                                                        stroke-dasharray="157" stroke-dashoffset="{{ challenge_stats.current_week|floatformat:0|add:'-100' }}" class="progress-circle"/>
+                                                        stroke-dasharray="157" stroke-dashoffset="0" class="progress-circle"/>
                                             </svg>
                                         </div>
                                     </div>
@@ -172,7 +172,7 @@
                                             <svg width="60" height="60">
                                                 <circle cx="30" cy="30" r="25" stroke="rgba(255,255,255,0.2)" stroke-width="4" fill="none"/>
                                                 <circle cx="30" cy="30" r="25" stroke="white" stroke-width="4" fill="none" 
-                                                        stroke-dasharray="157" stroke-dashoffset="{{ challenge_stats.best_streak|floatformat:0|add:'-100' }}" class="progress-circle"/>
+                                                        stroke-dasharray="157" stroke-dashoffset="0" class="progress-circle"/>
                                             </svg>
                                         </div>
                                     </div>
@@ -225,7 +225,7 @@
                                                     <strong>Week Progress:</strong> {{ challenge_stats.current_week|floatformat:0 }}% Complete
                                                 </div>
                                                 <div class="info-item">
-                                                    <strong>Weeks Remaining:</strong> {{ 11|add:"-"|add:challenge_stats.current_week }} weeks
+                                                    <strong>Weeks Remaining:</strong> 11 weeks
                                                 </div>
                                             </div>
                                         </div>
@@ -844,7 +844,7 @@
                     
                     <!-- Category Overview Cards -->
                     <div class="row">
-                        {% for category, users in category_breakdown.items %}
+                        {% for category_data in category_breakdown %}
                         <div class="col-lg-6 col-xl-4 mb-4">
                             <div class="category-overview-card">
                                 <div class="category-header">
@@ -852,20 +852,20 @@
                                         <div class="category-main-info">
                                             <div class="category-icon-wrapper">
                                                 <div class="category-icon">
-                                                    {% if category.name == "Reading" %}📚
-                                                    {% elif category.name == "Fitness" %}💪
-                                                    {% elif category.name == "Nutrition" %}🥗
-                                                    {% elif category.name == "Wealth" %}💰
-                                                    {% elif category.name == "Spiritual" %}🧘
-                                                    {% elif category.name == "Fun" %}🎉
+                                                    {% if category_data.category.name == "Reading" %}📚
+                                                    {% elif category_data.category.name == "Fitness" %}💪
+                                                    {% elif category_data.category.name == "Nutrition" %}🥗
+                                                    {% elif category_data.category.name == "Wealth" %}💰
+                                                    {% elif category_data.category.name == "Spiritual" %}🧘
+                                                    {% elif category_data.category.name == "Fun" %}🎉
                                                     {% else %}📋{% endif %}
                                                 </div>
                                             </div>
                                             <div class="category-info">
-                                                <div class="category-name">{{ category.name }}</div>
+                                                <div class="category-name">{{ category_data.category.name }}</div>
                                                 <div class="category-meta">
                                                     <div class="category-participants">
-                                                        <i class="ri-group-line me-1"></i>{{ users|length }} participants
+                                                        <i class="ri-group-line me-1"></i>{{ category_data.users|length }} participants
                                                     </div>
                                                     <div class="category-difficulty">
                                                         <i class="ri-bar-chart-line me-1"></i>Medium difficulty
@@ -900,7 +900,7 @@
                                     </div>
                                     
                                     <div class="performers-list">
-                                        {% for user_stat in users|slice:":3" %}
+                                        {% for user_stat in category_data.users|slice:":3" %}
                                         <div class="performer-item {% if forloop.first %}rank-1{% elif forloop.counter == 2 %}rank-2{% elif forloop.counter == 3 %}rank-3{% endif %}">
                                             <div class="rank-badge {% if forloop.first %}rank-gold{% elif forloop.counter == 2 %}rank-silver{% elif forloop.counter == 3 %}rank-bronze{% endif %}">
                                                 {% if forloop.first %}🥇{% elif forloop.counter == 2 %}🥈{% elif forloop.counter == 3 %}🥉{% endif %}
@@ -908,8 +908,8 @@
                                             <div class="performer-info">
                                                 <div class="performer-name">{{ user_stat.user.username }}</div>
                                                 <div class="performer-details">
-                                                    <span class="performer-score">{{ user_stat.category_completion_percentage|floatformat:1 }}%</span>
-                                                    <span class="performer-days">{{ user_stat.category_completed_days }} days</span>
+                                                    <span class="performer-score">{{ user_stat.percentage|floatformat:1 }}%</span>
+                                                    <span class="performer-days">{{ user_stat.completed }} days</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -923,7 +923,7 @@
                                                 <i class="ri-user-line"></i>
                                             </div>
                                             <div class="summary-content">
-                                                <div class="summary-value">{{ users|length }}</div>
+                                                <div class="summary-value">{{ category_data.users|length }}</div>
                                                 <div class="summary-label">Active</div>
                                             </div>
                                         </div>
@@ -932,7 +932,7 @@
                                                 <i class="ri-check-line"></i>
                                             </div>
                                             <div class="summary-content">
-                                                <div class="summary-value">{{ users|length }}</div>
+                                                <div class="summary-value">{{ category_data.total_completed }}</div>
                                                 <div class="summary-label">Completed</div>
                                             </div>
                                         </div>
@@ -972,10 +972,10 @@
                                 </div>
                                 
                                 <div class="category-actions">
-                                    <button class="btn view-details-btn" onclick="showCategoryDetails('{{ category.name }}')">
+                                    <button class="btn view-details-btn" onclick="showCategoryDetails('{{ category_data.category.name }}')">
                                         <i class="ri-eye-line me-2"></i>View Details
                                     </button>
-                                    <button class="btn view-details-btn" onclick="compareCategory('{{ category.name }}')">
+                                    <button class="btn view-details-btn" onclick="compareCategory('{{ category_data.category.name }}')">
                                         <i class="ri-bar-chart-line me-2"></i>Compare
                                     </button>
                                 </div>
@@ -4759,4 +4759,4 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeCategoryOverview();
 });
 </script>
-{% endblock %} 
+{% endblock %}

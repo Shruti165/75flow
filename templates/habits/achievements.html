@@ -1,0 +1,747 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Achievements Hero Section -->
+<div class="achievements-hero">
+    <div class="hero-background">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="hero-content text-center">
+            <div class="hero-title">
+                <h1 class="display-4 fw-bold text-white mb-3">
+                    <i class="ri-medal-line me-3 hero-icon"></i>
+                    Achievements
+                </h1>
+                <p class="lead text-white-50 mb-4">Unlock badges and celebrate your progress milestones</p>
+            </div>
+            <div class="hero-stats">
+                <div class="row justify-content-center">
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="hero-stat-card">
+                            <div class="hero-stat-icon">
+                                <i class="ri-medal-line"></i>
+                            </div>
+                            <div class="hero-stat-number">{{ user_achievements|length }}</div>
+                            <div class="hero-stat-label">Earned</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="hero-stat-card">
+                            <div class="hero-stat-icon">
+                                <i class="ri-flag-line"></i>
+                            </div>
+                            <div class="hero-stat-number">{{ achievement_progress|length }}</div>
+                            <div class="hero-stat-label">Total</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="hero-stat-card">
+                            <div class="hero-stat-icon">
+                                <i class="ri-percent-line"></i>
+                            </div>
+                            <div class="hero-stat-number">{{ user_stats.overall_completion_percentage|floatformat:1 }}%</div>
+                            <div class="hero-stat-label">Progress</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="hero-stat-card">
+                            <div class="hero-stat-icon">
+                                <i class="ri-fire-line"></i>
+                            </div>
+                            <div class="hero-stat-number">{{ user_stats.current_streak }}</div>
+                            <div class="hero-stat-label">Streak</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Achievements Content -->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <!-- Achievement Categories -->
+            <div class="achievement-categories mb-4">
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <div class="category-card active" data-category="all">
+                            <div class="category-icon">
+                                <i class="ri-medal-line"></i>
+                            </div>
+                            <div class="category-info">
+                                <h6 class="mb-1">All Achievements</h6>
+                                <small class="text-muted">{{ achievement_progress|length }} total</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="category-card" data-category="streak">
+                            <div class="category-icon streak">
+                                <i class="ri-fire-line"></i>
+                            </div>
+                            <div class="category-info">
+                                <h6 class="mb-1">Streak</h6>
+                                <small class="text-muted">{{ achievement_progress|dictsort:"achievement.achievement_type"|length }} available</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="category-card" data-category="completion">
+                            <div class="category-icon completion">
+                                <i class="ri-check-double-line"></i>
+                            </div>
+                            <div class="category-info">
+                                <h6 class="mb-1">Completion</h6>
+                                <small class="text-muted">{{ achievement_progress|dictsort:"achievement.achievement_type"|length }} available</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="category-card" data-category="milestone">
+                            <div class="category-icon milestone">
+                                <i class="ri-flag-line"></i>
+                            </div>
+                            <div class="category-info">
+                                <h6 class="mb-1">Milestone</h6>
+                                <small class="text-muted">{{ achievement_progress|dictsort:"achievement.achievement_type"|length }} available</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Achievements Grid -->
+            <div class="achievements-grid">
+                <div class="row">
+                    {% for progress in achievement_progress %}
+                    <div class="col-lg-4 col-md-6 mb-4 achievement-item" data-type="{{ progress.achievement.achievement_type }}">
+                        <div class="achievement-card {% if progress.earned %}earned{% else %}locked{% endif %}">
+                            <div class="achievement-header">
+                                <div class="achievement-icon">
+                                    <i class="{{ progress.achievement.icon }}" style="color: {{ progress.achievement.color }};"></i>
+                                </div>
+                                {% if progress.earned %}
+                                <div class="achievement-badge">
+                                    <i class="ri-check-line"></i>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="achievement-content">
+                                <h5 class="achievement-title">{{ progress.achievement.name }}</h5>
+                                <p class="achievement-description">{{ progress.achievement.description }}</p>
+                                
+                                <!-- Progress Bar -->
+                                <div class="achievement-progress">
+                                    <div class="progress-info">
+                                        <span class="progress-text">
+                                            {% if progress.achievement.requirement_type == 'days' %}
+                                                {{ user_stats.total_completed_days }}/{{ progress.achievement.requirement_value }} days
+                                            {% elif progress.achievement.requirement_type == 'streak' %}
+                                                {{ user_stats.current_streak }}/{{ progress.achievement.requirement_value }} days
+                                            {% elif progress.achievement.requirement_type == 'completion_percentage' %}
+                                                {{ user_stats.overall_completion_percentage|floatformat:1 }}%/{{ progress.achievement.requirement_value }}%
+                                            {% elif progress.achievement.requirement_type == 'categories_completed' %}
+                                                {{ user_stats.completed_categories }}/{{ progress.achievement.requirement_value }} categories
+                                            {% endif %}
+                                        </span>
+                                        <span class="progress-percentage">{{ progress.progress|floatformat:1 }}%</span>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" 
+                                             style="width: {{ progress.progress }}%; background-color: {{ progress.achievement.color }};"
+                                             aria-valuenow="{{ progress.progress }}" aria-valuemin="0" aria-valuemax="100">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Achievement Status -->
+                                <div class="achievement-status">
+                                    {% if progress.earned %}
+                                        <span class="status-badge earned">
+                                            <i class="ri-check-line me-1"></i>
+                                            Unlocked
+                                        </span>
+                                    {% else %}
+                                        <span class="status-badge locked">
+                                            <i class="ri-lock-line me-1"></i>
+                                            Locked
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Recent Achievements -->
+            {% if user_achievements %}
+            <div class="recent-achievements mt-5">
+                <h3 class="section-title mb-4">
+                    <i class="ri-trophy-line me-2"></i>
+                    Recently Earned
+                </h3>
+                <div class="row">
+                    {% for achievement in user_achievements|slice:":3" %}
+                    <div class="col-md-4 mb-3">
+                        <div class="recent-achievement-card">
+                            <div class="recent-achievement-icon">
+                                <i class="{{ achievement.icon }}" style="color: {{ achievement.color }};"></i>
+                            </div>
+                            <div class="recent-achievement-info">
+                                <h6 class="mb-1">{{ achievement.name }}</h6>
+                                <small class="text-muted">{{ achievement.description }}</small>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Achievement Unlock Animation -->
+<div class="achievement-popup" id="achievementPopup">
+    <div class="achievement-popup-content">
+        <div class="achievement-popup-icon">
+            <i class="ri-medal-line"></i>
+        </div>
+        <h4 class="achievement-popup-title">Achievement Unlocked!</h4>
+        <p class="achievement-popup-message">Congratulations! You've earned a new achievement.</p>
+        <button class="btn btn-primary" onclick="closeAchievementPopup()">Continue</button>
+    </div>
+</div>
+
+<style>
+/* Achievements Hero Section */
+.achievements-hero {
+    position: relative;
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    padding: 80px 0;
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
+.floating-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.shape {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.shape-1 {
+    width: 60px;
+    height: 60px;
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.shape-2 {
+    width: 40px;
+    height: 40px;
+    top: 60%;
+    right: 15%;
+    animation-delay: 2s;
+}
+
+.shape-3 {
+    width: 80px;
+    height: 80px;
+    top: 30%;
+    right: 30%;
+    animation-delay: 4s;
+}
+
+.shape-4 {
+    width: 50px;
+    height: 50px;
+    bottom: 20%;
+    left: 30%;
+    animation-delay: 1s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-icon {
+    font-size: 2.5rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.hero-stat-card {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 1.5rem;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.hero-stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.hero-stat-icon {
+    font-size: 2rem;
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+.hero-stat-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 0.25rem;
+}
+
+.hero-stat-label {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+}
+
+/* Achievement Categories */
+.achievement-categories {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.category-card {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.category-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.category-card.active {
+    border-color: #ffd700;
+    background: linear-gradient(135deg, #fff9c4 0%, #fff59d 100%);
+}
+
+.category-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: 1.5rem;
+    background: rgba(33, 150, 243, 0.1);
+    color: #2196f3;
+}
+
+.category-icon.streak {
+    background: rgba(244, 67, 54, 0.1);
+    color: #f44336;
+}
+
+.category-icon.completion {
+    background: rgba(76, 175, 80, 0.1);
+    color: #4caf50;
+}
+
+.category-icon.milestone {
+    background: rgba(156, 39, 176, 0.1);
+    color: #9c27b0;
+}
+
+.category-info h6 {
+    margin: 0;
+    font-weight: 600;
+}
+
+/* Achievement Cards */
+.achievements-grid {
+    margin-top: 2rem;
+}
+
+.achievement-card {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.achievement-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.achievement-card.earned {
+    border: 2px solid #4caf50;
+    background: linear-gradient(135deg, #f1f8e9 0%, #e8f5e8 100%);
+}
+
+.achievement-card.locked {
+    opacity: 0.7;
+    filter: grayscale(30%);
+}
+
+.achievement-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.achievement-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    background: rgba(255, 215, 0, 0.1);
+}
+
+.achievement-badge {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #4caf50;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.achievement-title {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.achievement-description {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+/* Progress Bar */
+.achievement-progress {
+    margin-bottom: 1rem;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.progress-text {
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+.progress-percentage {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.progress {
+    height: 8px;
+    border-radius: 4px;
+    background: #e9ecef;
+    overflow: hidden;
+}
+
+.progress-bar {
+    transition: width 0.6s ease;
+}
+
+/* Achievement Status */
+.achievement-status {
+    text-align: center;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.status-badge.earned {
+    background: #4caf50;
+    color: white;
+}
+
+.status-badge.locked {
+    background: #6c757d;
+    color: white;
+}
+
+/* Recent Achievements */
+.recent-achievements {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.recent-achievement-card {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 10px;
+    background: #f8f9fa;
+    transition: all 0.3s ease;
+}
+
+.recent-achievement-card:hover {
+    transform: translateX(5px);
+    background: #e9ecef;
+}
+
+.recent-achievement-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: 1.25rem;
+    background: rgba(255, 215, 0, 0.1);
+}
+
+.recent-achievement-info h6 {
+    margin: 0;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+/* Achievement Popup */
+.achievement-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease;
+}
+
+.achievement-popup-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    max-width: 400px;
+    animation: slideIn 0.3s ease;
+}
+
+.achievement-popup-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 2.5rem;
+    color: white;
+    animation: bounce 1s infinite;
+}
+
+.achievement-popup-title {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.achievement-popup-message {
+    color: #6c757d;
+    margin-bottom: 1.5rem;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-stat-card {
+        padding: 1rem;
+    }
+    
+    .hero-stat-number {
+        font-size: 1.25rem;
+    }
+    
+    .category-card {
+        padding: 0.75rem;
+    }
+    
+    .achievement-card {
+        padding: 1rem;
+    }
+    
+    .achievement-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Category filtering
+    document.querySelectorAll('.category-card').forEach(card => {
+        card.addEventListener('click', function() {
+            const category = this.dataset.category;
+            
+            // Update active category
+            document.querySelectorAll('.category-card').forEach(c => c.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Filter achievements
+            document.querySelectorAll('.achievement-item').forEach(item => {
+                if (category === 'all' || item.dataset.type === category) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    // Add animation to achievement cards
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.achievement-item').forEach(item => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(30px)';
+        item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(item);
+    });
+
+    // Check for newly earned achievements
+    const earnedAchievements = document.querySelectorAll('.achievement-card.earned');
+    earnedAchievements.forEach((achievement, index) => {
+        setTimeout(() => {
+            achievement.style.animation = 'bounce 0.6s ease';
+            setTimeout(() => {
+                achievement.style.animation = '';
+            }, 600);
+        }, index * 200);
+    });
+});
+
+// Achievement popup functions
+function showAchievementPopup(achievementName) {
+    const popup = document.getElementById('achievementPopup');
+    const title = popup.querySelector('.achievement-popup-title');
+    title.textContent = `Achievement Unlocked: ${achievementName}`;
+    popup.style.display = 'flex';
+}
+
+function closeAchievementPopup() {
+    const popup = document.getElementById('achievementPopup');
+    popup.style.display = 'none';
+}
+
+// Close popup when clicking outside
+document.getElementById('achievementPopup').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeAchievementPopup();
+    }
+});
+</script>
+
+{% endblock %} 

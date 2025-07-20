@@ -329,13 +329,22 @@
         }
 
         .icon-gradient {
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
             color: var(--water-blue);
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(125, 211, 252, 0.1), rgba(134, 239, 172, 0.1));
+            padding: 4px 8px;
+            border-radius: 8px;
+            border: 1px solid rgba(125, 211, 252, 0.3);
+            box-shadow: 0 2px 8px rgba(125, 211, 252, 0.2);
+        }
+
+        /* Fallback for browsers that don't support background-clip: text */
+        @supports not (-webkit-background-clip: text) {
+            .icon-gradient {
+                -webkit-text-fill-color: var(--water-blue);
+                background: none;
+            }
         }
 
         /* Animation Classes */

@@ -1,0 +1,50 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Deploy to shrubuilds.in
+      uses: appleboy/ssh-action@v0.1.5
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+          echo "🚀 Starting deployment for 75Flow..."
+          
+          # Navigate to project directory
+          cd /var/www/75flow
+          
+          # Pull latest changes
+          git pull origin main
+          
+          # Activate virtual environment
+          source venv/bin/activate
+          
+          # Install/update dependencies
+          pip install -r requirements.txt
+          
+          # Run database migrations
+          python manage.py migrate --settings=flow75.settings_production
+          
+          # Collect static files
+          python manage.py collectstatic --noinput --settings=flow75.settings_production
+          
+          # Set proper permissions
+          sudo chown -R www-data:www-data /var/www/75flow
+          sudo chmod -R 755 /var/www/75flow
+          
+          # Restart the application
+          sudo systemctl restart 75flow
+          
+          # Test the application
+          curl -f https://shrubuilds.in/flow75/health/ || echo "Health check failed"
+          
+          echo "✅ Deployment completed successfully!"
+          echo "🌐 App available at: https://shrubuilds.in/flow75/" 

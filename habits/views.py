@@ -17,9 +17,21 @@ def home(request):
     """Home page view for logged in users"""
     user_categories = Category.objects.all()
     user_habits = Habit.objects.filter(user=request.user)
+    
+    # Organize habits by category for the current user
+    categories_with_habits = []
+    for category in user_categories:
+        category_habits = user_habits.filter(category=category)
+        categories_with_habits.append({
+            'category': category,
+            'habits': category_habits,
+            'habit_count': category_habits.count()
+        })
+    
     context = {
         'categories': user_categories,
         'habits': user_habits,
+        'categories_with_habits': categories_with_habits,
         'user': request.user
     }
     return render(request, 'habits/home.html', context)
@@ -269,7 +281,9 @@ def scoreboard(request):
         'current_week': current_week,
         'week_start_day': week_start_day,
         'week_end_day': week_end_day,
-        'challenge_start_date': challenge_start_date
+        'challenge_start_date': challenge_start_date,
+        'days_remaining': max(0, 75 - current_day),
+        'progress_percentage': (current_day / 75 * 100) if current_day > 0 else 0
     }
     
     # Add category statistics to each user for the new breakdown

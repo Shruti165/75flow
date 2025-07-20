@@ -1,0 +1,536 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Notifications Hero Section -->
+<div class="notifications-hero">
+    <div class="hero-background">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="hero-content text-center">
+            <div class="hero-title">
+                <h1 class="display-4 fw-bold text-white mb-3">
+                    <i class="ri-notification-4-line me-3 hero-icon"></i>
+                    Notifications
+                </h1>
+                <p class="lead text-white-50 mb-4">Stay updated with your progress, achievements, and milestones</p>
+            </div>
+            <div class="hero-stats">
+                <div class="row justify-content-center">
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="hero-stat-card">
+                            <div class="hero-stat-icon">
+                                <i class="ri-notification-line"></i>
+                            </div>
+                            <div class="hero-stat-number">{{ notifications.count }}</div>
+                            <div class="hero-stat-label">Total Notifications</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="hero-stat-card">
+                            <div class="hero-stat-icon">
+                                <i class="ri-eye-off-line"></i>
+                            </div>
+                            <div class="hero-stat-number">{{ unread_count }}</div>
+                            <div class="hero-stat-label">Unread</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="hero-stat-card">
+                            <div class="hero-stat-icon">
+                                <i class="ri-medal-line"></i>
+                            </div>
+                            <div class="hero-stat-number">{{ notifications|dictsort:"notification_type"|length }}</div>
+                            <div class="hero-stat-label">Achievements</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="hero-stat-card">
+                            <div class="hero-stat-icon">
+                                <i class="ri-fire-line"></i>
+                            </div>
+                            <div class="hero-stat-number">{{ notifications|dictsort:"notification_type"|length }}</div>
+                            <div class="hero-stat-label">Streaks</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Notifications Content -->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <!-- Notifications Header -->
+            <div class="notifications-header mb-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0">
+                        <i class="ri-notification-4-line me-2"></i>
+                        Your Notifications
+                    </h3>
+                    {% if unread_count > 0 %}
+                    <form method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-primary btn-sm">
+                            <i class="ri-check-double-line me-1"></i>
+                            Mark All as Read
+                        </button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Notifications List -->
+            <div class="notifications-list">
+                {% if notifications %}
+                    {% for notification in notifications %}
+                    <div class="notification-card {% if not notification.is_read %}unread{% endif %}" 
+                         data-notification-id="{{ notification.id }}">
+                        <div class="notification-icon">
+                            {% if notification.notification_type == 'achievement' %}
+                                <i class="ri-medal-line text-warning"></i>
+                            {% elif notification.notification_type == 'streak' %}
+                                <i class="ri-fire-line text-danger"></i>
+                            {% elif notification.notification_type == 'milestone' %}
+                                <i class="ri-flag-line text-success"></i>
+                            {% elif notification.notification_type == 'weekly_report' %}
+                                <i class="ri-bar-chart-line text-info"></i>
+                            {% else %}
+                                <i class="ri-notification-line text-primary"></i>
+                            {% endif %}
+                        </div>
+                        <div class="notification-content">
+                            <div class="notification-header">
+                                <h6 class="notification-title mb-1">{{ notification.title }}</h6>
+                                <small class="notification-time text-muted">{{ notification.time_ago }}</small>
+                            </div>
+                            <p class="notification-message mb-0">{{ notification.message }}</p>
+                        </div>
+                        <div class="notification-actions">
+                            {% if not notification.is_read %}
+                            <button class="btn btn-sm btn-outline-primary mark-read-btn" 
+                                    data-notification-id="{{ notification.id }}">
+                                <i class="ri-check-line"></i>
+                            </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-state text-center py-5">
+                        <div class="empty-state-icon mb-3">
+                            <i class="ri-notification-off-line"></i>
+                        </div>
+                        <h5 class="text-muted mb-2">No notifications yet</h5>
+                        <p class="text-muted mb-4">Start tracking your habits to receive notifications about your progress and achievements!</p>
+                        <a href="{% url 'habits:daily_tracking' %}" class="btn btn-primary">
+                            <i class="ri-check-line me-1"></i>
+                            Start Tracking
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Load More Button -->
+            {% if notifications.count > 50 %}
+            <div class="text-center mt-4">
+                <button class="btn btn-outline-primary load-more-btn">
+                    <i class="ri-arrow-down-line me-1"></i>
+                    Load More Notifications
+                </button>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Notification Types Filter -->
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="notification-filters">
+                <h6 class="mb-3">Filter by Type:</h6>
+                <div class="filter-buttons">
+                    <button class="btn btn-sm btn-outline-primary filter-btn active" data-filter="all">
+                        <i class="ri-notification-line me-1"></i>
+                        All
+                    </button>
+                    <button class="btn btn-sm btn-outline-warning filter-btn" data-filter="achievement">
+                        <i class="ri-medal-line me-1"></i>
+                        Achievements
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger filter-btn" data-filter="streak">
+                        <i class="ri-fire-line me-1"></i>
+                        Streaks
+                    </button>
+                    <button class="btn btn-sm btn-outline-success filter-btn" data-filter="milestone">
+                        <i class="ri-flag-line me-1"></i>
+                        Milestones
+                    </button>
+                    <button class="btn btn-sm btn-outline-info filter-btn" data-filter="weekly_report">
+                        <i class="ri-bar-chart-line me-1"></i>
+                        Reports
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Notifications Hero Section */
+.notifications-hero {
+    position: relative;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 80px 0;
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
+.floating-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.shape {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.shape-1 {
+    width: 80px;
+    height: 80px;
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.shape-2 {
+    width: 60px;
+    height: 60px;
+    top: 60%;
+    right: 15%;
+    animation-delay: 2s;
+}
+
+.shape-3 {
+    width: 40px;
+    height: 40px;
+    top: 30%;
+    right: 30%;
+    animation-delay: 4s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-icon {
+    font-size: 2.5rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.hero-stat-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 1.5rem;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.hero-stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.hero-stat-icon {
+    font-size: 2rem;
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+.hero-stat-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 0.25rem;
+}
+
+.hero-stat-label {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+}
+
+/* Notifications List */
+.notifications-header {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.notifications-list {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.notification-card {
+    display: flex;
+    align-items: flex-start;
+    padding: 1.5rem;
+    border-bottom: 1px solid #f1f3f4;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.notification-card:last-child {
+    border-bottom: none;
+}
+
+.notification-card:hover {
+    background-color: #f8f9fa;
+    transform: translateX(5px);
+}
+
+.notification-card.unread {
+    background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+    border-left: 4px solid #2196f3;
+}
+
+.notification-card.unread:hover {
+    background: linear-gradient(135deg, #bbdefb 0%, #e1bee7 100%);
+}
+
+.notification-icon {
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    background: rgba(33, 150, 243, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: 1.5rem;
+}
+
+.notification-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+}
+
+.notification-title {
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.notification-time {
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
+
+.notification-message {
+    color: #6c757d;
+    line-height: 1.5;
+}
+
+.notification-actions {
+    flex-shrink: 0;
+    margin-left: 1rem;
+}
+
+.mark-read-btn {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.notification-card:hover .mark-read-btn {
+    opacity: 1;
+}
+
+/* Empty State */
+.empty-state {
+    padding: 3rem 1rem;
+}
+
+.empty-state-icon {
+    font-size: 4rem;
+    color: #dee2e6;
+}
+
+/* Filter Buttons */
+.notification-filters {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.filter-btn {
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.filter-btn.active {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-stat-card {
+        padding: 1rem;
+    }
+    
+    .hero-stat-number {
+        font-size: 1.25rem;
+    }
+    
+    .notification-card {
+        padding: 1rem;
+    }
+    
+    .notification-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .notification-time {
+        margin-top: 0.25rem;
+    }
+    
+    .filter-buttons {
+        justify-content: center;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Mark notification as read
+    document.querySelectorAll('.mark-read-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const notificationId = this.dataset.notificationId;
+            const notificationCard = this.closest('.notification-card');
+            
+            fetch(`/flow75/notifications/mark-read/${notificationId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    notificationCard.classList.remove('unread');
+                    this.remove();
+                    
+                    // Update unread count
+                    const unreadCount = document.querySelectorAll('.notification-card.unread').length;
+                    const unreadElement = document.querySelector('.hero-stat-number');
+                    if (unreadElement) {
+                        unreadElement.textContent = unreadCount;
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error marking notification as read:', error);
+            });
+        });
+    });
+
+    // Filter notifications
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const filter = this.dataset.filter;
+            
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Filter notifications
+            document.querySelectorAll('.notification-card').forEach(card => {
+                const notificationType = card.querySelector('.notification-icon i').className;
+                
+                if (filter === 'all' || notificationType.includes(filter)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    // Add animation to notification cards
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.notification-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        observer.observe(card);
+    });
+});
+</script>
+
+{% endblock %} 

@@ -60,7 +60,7 @@
                     </div>
                 </div>
             </div>
-            <div class="mt-4">
+            <!-- <div class="mt-4">
                 <a href="{% url 'habits:daily_tracking' %}" class="btn btn-primary btn-lg me-2">
                     <i class="ri-check-line me-1"></i>Track Today
                 </a>
@@ -70,11 +70,11 @@
                 <a href="{% url 'habits:profile' %}" class="btn btn-outline-light btn-lg">
                     <i class="ri-user-settings-line me-1"></i>Edit Profile
                 </a>
-            </div>
+            </div> -->
             <div class="mt-4">
                 <blockquote class="blockquote text-white-50 mb-0">
                     <p class="mb-0">“Small daily improvements are the key to staggering long-term results.”</p>
-                    <footer class="blockquote-footer text-white-50">James Clear</footer>
+                    <!-- <footer class="blockquote-footer text-white-50">James Clear</footer> -->
                 </blockquote>
             </div>
         </div>
@@ -109,24 +109,24 @@
                             <div class="col-12">
                                 <h5 class="mb-3"><i class="ri-folder-line me-2"></i>All Habit Categories</h5>
                                 <div class="row">
-                                    {% for category in categories %}
+                                    {% for cat_data in categories_with_habits %}
                                     <div class="col-md-4 col-lg-3 mb-3">
-                                        <div class="card h-100 category-card" style="border-left: 4px solid {{ category.color }};">
+                                        <div class="card h-100 category-card" style="border-left: 4px solid {{ cat_data.category.color }};">
                                             <div class="card-body text-center p-3">
                                                 <div class="category-icon emoji-bounce mb-2">
-                                                    {% if category.name == "Reading" %}<i class="ri-book-line icon-large"></i>
-                                                    {% elif category.name == "Fitness" %}<i class="ri-heart-pulse-line icon-large"></i>
-                                                    {% elif category.name == "Nutrition" %}<i class="ri-restaurant-line icon-large"></i>
-                                                    {% elif category.name == "Wealth" %}<i class="ri-money-dollar-circle-line icon-large"></i>
-                                                    {% elif category.name == "Spiritual" %}<i class="ri-mental-health-line icon-large"></i>
-                                                    {% elif category.name == "Fun" %}<i class="ri-gamepad-line icon-large"></i>
+                                                    {% if cat_data.category.name == "Reading" %}<i class="ri-book-line icon-large"></i>
+                                                    {% elif cat_data.category.name == "Fitness" %}<i class="ri-heart-pulse-line icon-large"></i>
+                                                    {% elif cat_data.category.name == "Nutrition" %}<i class="ri-restaurant-line icon-large"></i>
+                                                    {% elif cat_data.category.name == "Wealth" %}<i class="ri-money-dollar-circle-line icon-large"></i>
+                                                    {% elif cat_data.category.name == "Spiritual" %}<i class="ri-mental-health-line icon-large"></i>
+                                                    {% elif cat_data.category.name == "Fun" %}<i class="ri-gamepad-line icon-large"></i>
                                                     {% else %}<i class="ri-file-list-line icon-large"></i>{% endif %}
                                                 </div>
-                                                <h6 class="card-title mb-1">{{ category.name }}</h6>
-                                                <small class="text-muted">{{ category.habits.count }} habits</small>
+                                                <h6 class="card-title mb-1">{{ cat_data.category.name }}</h6>
+                                                <small class="text-muted">{{ cat_data.habit_count }} habits</small>
                                                 <div class="mt-2">
                                                     <span class="badge fun-badge">
-                                                        <i class="ri-check-double-line me-1"></i>{{ category.habits.count }} Active
+                                                        <i class="ri-check-double-line me-1"></i>{{ cat_data.habit_count }} Active
                                                     </span>
                                                 </div>
                                             </div>
@@ -144,36 +144,36 @@
                             <div class="col-12">
                                 <h5 class="mb-3"><i class="ri-list-check me-2"></i>All Habits by Category</h5>
                                 <div class="accordion" id="habitsAccordion">
-                                    {% for category in categories %}
+                                    {% for cat_data in categories_with_habits %}
                                     <div class="accordion-item">
-                                        <h2 class="accordion-header" id="heading{{ category.id }}">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ category.id }}" aria-expanded="false" aria-controls="collapse{{ category.id }}">
+                                        <h2 class="accordion-header" id="heading{{ cat_data.category.id }}">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ cat_data.category.id }}" aria-expanded="false" aria-controls="collapse{{ cat_data.category.id }}">
                                                 <div class="d-flex align-items-center w-100">
                                                     <div class="me-3">
-                                                        {% if category.name == "Reading" %}<i class="ri-book-line icon-medium"></i>
-                                                        {% elif category.name == "Fitness" %}<i class="ri-heart-pulse-line icon-medium"></i>
-                                                        {% elif category.name == "Nutrition" %}<i class="ri-restaurant-line icon-medium"></i>
-                                                        {% elif category.name == "Wealth" %}<i class="ri-money-dollar-circle-line icon-medium"></i>
-                                                        {% elif category.name == "Spiritual" %}<i class="ri-mental-health-line icon-medium"></i>
-                                                        {% elif category.name == "Fun" %}<i class="ri-gamepad-line icon-medium"></i>
+                                                        {% if cat_data.category.name == "Reading" %}<i class="ri-book-line icon-medium"></i>
+                                                        {% elif cat_data.category.name == "Fitness" %}<i class="ri-heart-pulse-line icon-medium"></i>
+                                                        {% elif cat_data.category.name == "Nutrition" %}<i class="ri-restaurant-line icon-medium"></i>
+                                                        {% elif cat_data.category.name == "Wealth" %}<i class="ri-money-dollar-circle-line icon-medium"></i>
+                                                        {% elif cat_data.category.name == "Spiritual" %}<i class="ri-mental-health-line icon-medium"></i>
+                                                        {% elif cat_data.category.name == "Fun" %}<i class="ri-gamepad-line icon-medium"></i>
                                                         {% else %}<i class="ri-file-list-line icon-medium"></i>{% endif %}
                                                     </div>
                                                     <div class="flex-grow-1">
-                                                        <strong>{{ category.name }}</strong>
-                                                        <small class="text-muted ms-2">({{ category.habits.count }} habits)</small>
+                                                        <strong>{{ cat_data.category.name }}</strong>
+                                                        <small class="text-muted ms-2">({{ cat_data.habit_count }} habits)</small>
                                                     </div>
-                                                    <span class="badge" style="background-color: {{ category.color }}; color: white;">
-                                                        <i class="ri-check-double-line me-1"></i>{{ category.habits.count }} Active
+                                                    <span class="badge" style="background-color: {{ cat_data.category.color }}; color: white;">
+                                                        <i class="ri-check-double-line me-1"></i>{{ cat_data.habit_count }} Active
                                                     </span>
                                                 </div>
                                             </button>
                                         </h2>
-                                        <div id="collapse{{ category.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ category.id }}" data-bs-parent="#habitsAccordion">
+                                        <div id="collapse{{ cat_data.category.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ cat_data.category.id }}" data-bs-parent="#habitsAccordion">
                                             <div class="accordion-body">
                                                 <div class="row">
-                                                    {% for habit in category.habits.all %}
+                                                    {% for habit in cat_data.habits %}
                                                     <div class="col-md-6 col-lg-4 mb-3">
-                                                        <div class="habit-card p-3 border rounded" style="border-left: 3px solid {{ category.color }} !important;">
+                                                        <div class="habit-card p-3 border rounded" style="border-left: 3px solid {{ cat_data.category.color }} !important;">
                                                             <div class="d-flex justify-content-between align-items-start mb-2">
                                                                 <h6 class="mb-0 habit-title">
                                                                     {% if "Swim" in habit.name %}<i class="ri-swimming-line me-1"></i>
@@ -213,7 +213,7 @@
                                                             <div class="d-flex justify-content-between align-items-center">
                                                                 <small class="text-muted"><i class="ri-calendar-line me-1"></i>{{ habit.start_date|date:"M d" }}</small>
                                                                 <div class="progress flex-grow-1 mx-2" style="height: 6px;">
-                                                                    <div class="progress-bar" role="progressbar" style="width: 0%; background-color: {{ category.color }};"></div>
+                                                                    <div class="progress-bar" role="progressbar" style="width: 0%; background-color: {{ cat_data.category.color }};"></div>
                                                                 </div>
                                                                 <small class="text-muted">0/75</small>
                                                             </div>
