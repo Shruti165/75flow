@@ -66,6 +66,7 @@ if ENVIRONMENT == 'production':
         import whitenoise
         MIDDLEWARE.append('whitenoise.middleware.WhiteNoiseMiddleware')
     except ImportError:
+        # If whitenoise is not available, skip it
         pass
 
 # Add remaining middleware
