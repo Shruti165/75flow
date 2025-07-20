@@ -1,184 +1,161 @@
 # Railway Deployment Troubleshooting Guide
 
-## Common Railway Deployment Errors
+## Common Issues and Solutions
 
-### 1. "There was an error deploying from source"
+### 1. Bad Request (400) Error
 
-**Possible Causes:**
-- Missing dependencies
-- Python version incompatibility
-- Build script errors
-- Static files collection issues
+**Symptoms:** Getting "Bad Request" when accessing the app URL
 
 **Solutions:**
+- Check CSRF_TRUSTED_ORIGINS in Railway environment variables
+- Ensure ALLOWED_HOSTS includes your Railway domain
+- Verify SSL settings are properly configured
 
-#### A. Check Railway Logs
+**Quick Fix:**
 ```bash
-railway logs
+# Set these environment variables in Railway dashboard
+ALLOWED_HOSTS=flow75.up.railway.app,*.railway.app
+CSRF_TRUSTED_ORIGINS=https://flow75.up.railway.app,https://*.railway.app
 ```
-
-#### B. Verify Environment Variables
-Make sure these are set in Railway:
-```
-ENVIRONMENT=production
-DEBUG=False
-SECRET_KEY=your-secret-key
-ALLOWED_HOSTS=*.railway.app
-CSRF_TRUSTED_ORIGINS=https://*.railway.app
-```
-
-#### C. Check Build Process
-1. **Static Files**: Ensure `python manage.py collectstatic --noinput` runs
-2. **Migrations**: Ensure `python manage.py migrate` runs
-3. **Dependencies**: Check if all packages install correctly
 
 ### 2. Database Connection Issues
 
-**Symptoms:**
-- App starts but shows database errors
-- Migration failures
+**Symptoms:** Database errors or migration failures
 
 **Solutions:**
-```bash
-# Check if PostgreSQL is connected
-railway run python manage.py dbshell
-
-# Run migrations manually
-railway run python manage.py migrate
-
-# Check database status
-railway run python manage.py check --database default
-```
+- Ensure PostgreSQL is added to your Railway project
+- Check DATABASE_URL environment variable
+- Run migrations: `railway run python manage.py migrate`
 
 ### 3. Static Files Not Loading
 
-**Symptoms:**
-- CSS/JS not loading
-- 404 errors for static files
+**Symptoms:** CSS/JS files not loading, broken styling
 
 **Solutions:**
-1. **Check WhiteNoise**: Ensure whitenoise is installed
-2. **Collect Static**: Run `python manage.py collectstatic --noinput`
-3. **Check STATIC_ROOT**: Verify static files are in the correct directory
+- Ensure WhiteNoise is in requirements.txt
+- Check STATIC_ROOT and STATIC_URL settings
+- Run: `railway run python manage.py collectstatic --noinput`
 
-### 4. Port Binding Issues
+### 4. Environment Variables
 
-**Symptoms:**
-- App won't start
-- Port already in use errors
-
-**Solutions:**
-1. **Check Procfile**: Ensure it uses `$PORT` environment variable
-2. **Verify Gunicorn**: Check gunicorn configuration
-
-## Manual Deployment Steps
-
-### Step 1: Prepare Your Code
-```bash
-# Ensure all changes are committed
-git add .
-git commit -m "Fix deployment issues"
-git push
-```
-
-### Step 2: Railway Dashboard Setup
-1. Go to Railway dashboard
-2. Create new project
-3. Connect your GitHub repository
-4. Add PostgreSQL service
-5. Set environment variables
-
-### Step 3: Environment Variables
-Set these in Railway dashboard:
+**Required Railway Environment Variables:**
 ```
 ENVIRONMENT=production
 DEBUG=False
 SECRET_KEY=your-secret-key-here
-ALLOWED_HOSTS=*.railway.app
-CSRF_TRUSTED_ORIGINS=https://*.railway.app
+DATABASE_URL=postgresql://... (auto-provided by Railway)
+ALLOWED_HOSTS=flow75.up.railway.app,*.railway.app
+CSRF_TRUSTED_ORIGINS=https://flow75.up.railway.app,https://*.railway.app
 ```
 
-### Step 4: Deploy
-1. Railway will automatically detect Django
-2. It will run the build process
-3. Check logs for any errors
+### 5. Health Check Endpoint
 
-## Debugging Commands
-
-### Check Railway Status
+**Test the deployment:**
 ```bash
-railway status
+curl https://flow75.up.railway.app/health/
 ```
 
-### View Logs
+**Expected response:** `{"status": "healthy", "timestamp": "..."}`
+
+### 6. Common Commands
+
+**View logs:**
 ```bash
 railway logs
 ```
 
-### Connect to Database
+**Check status:**
+```bash
+railway status
+```
+
+**Run Django commands:**
+```bash
+railway run python manage.py migrate
+railway run python manage.py createsuperuser
+railway run python manage.py collectstatic
+```
+
+**Connect to database:**
 ```bash
 railway connect
 ```
 
-### Run Commands
+### 7. Deployment Process
+
+**Manual deployment:**
 ```bash
+# 1. Commit changes
+git add .
+git commit -m "Deploy update"
+git push origin main
+
+# 2. Deploy to Railway
+railway up
+
+# 3. Run migrations
 railway run python manage.py migrate
-railway run python manage.py createsuperuser
+
+# 4. Collect static files
 railway run python manage.py collectstatic --noinput
 ```
 
-### Check App Health
+**Using the deployment script:**
 ```bash
-curl https://your-app.railway.app/health/
+./deploy_railway.sh
 ```
 
-## Common Fixes
+### 8. Performance Issues
 
-### 1. Update Requirements.txt
-If you get dependency errors, update requirements.txt:
+**Symptoms:** Slow loading times
+
+**Solutions:**
+- Check Railway plan (free tier has limitations)
+- Optimize database queries
+- Use caching where appropriate
+- Monitor Railway metrics
+
+### 9. SSL/HTTPS Issues
+
+**Symptoms:** Mixed content warnings or SSL errors
+
+**Solutions:**
+- Ensure all external resources use HTTPS
+- Check SECURE_SSL_REDIRECT setting
+- Verify Railway's automatic SSL configuration
+
+### 10. Memory Issues
+
+**Symptoms:** App crashes or timeouts
+
+**Solutions:**
+- Check Railway logs for memory usage
+- Optimize Django settings for production
+- Consider upgrading Railway plan if needed
+
+## Getting Help
+
+1. **Check Railway logs:** `railway logs`
+2. **Test locally:** Ensure app works locally first
+3. **Railway documentation:** https://docs.railway.app/
+4. **Django deployment guide:** https://docs.djangoproject.com/en/5.1/howto/deployment/
+
+## Quick Health Check
+
+Run this to verify everything is working:
+
+```bash
+# Test health endpoint
+curl -s https://flow75.up.railway.app/health/
+
+# Test main page (should redirect to login)
+curl -s -o /dev/null -w "%{http_code}" https://flow75.up.railway.app/
+
+# Check Railway status
+railway status
 ```
-Django==5.1.0
-Pillow==10.1.0
-python-decouple==3.8
-gunicorn==21.2.0
-whitenoise==6.6.0
-psycopg2-binary==2.9.9
-dj-database-url==2.1.0
-```
 
-### 2. Fix Procfile
-Ensure Procfile contains:
-```
-web: gunicorn flow75.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120 --log-file -
-```
-
-### 3. Add Runtime.txt
-Create runtime.txt with:
-```
-python-3.10.10
-```
-
-### 4. Check Settings
-Ensure settings.py handles:
-- Environment variables properly
-- Database configuration
-- Static files configuration
-- Security settings
-
-## Still Having Issues?
-
-1. **Check Railway Status**: Visit https://status.railway.app/
-2. **Review Logs**: Look for specific error messages
-3. **Test Locally**: Ensure app works locally first
-4. **Contact Support**: Use Railway's support if needed
-
-## Success Checklist
-
-- [ ] App deploys without errors
-- [ ] Health check endpoint responds
-- [ ] Database migrations run successfully
-- [ ] Static files load properly
-- [ ] Admin panel accessible
-- [ ] All features working
-- [ ] HTTPS enabled
-- [ ] Environment variables set correctly 
+Expected results:
+- Health endpoint: `{"status": "healthy", "timestamp": "..."}`
+- Main page: `302` (redirect to login)
+- Railway status: `Deployed` or `Building` 
