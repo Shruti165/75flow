@@ -1,8 +1,7 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
 from django.conf import settings
-from django.db import connection
-from .models import Category, Habit, Profile
+from habits.models import Category, Habit, Profile
 
 class Command(BaseCommand):
     help = 'Check deployment status and database setup'
