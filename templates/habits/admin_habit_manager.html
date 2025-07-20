@@ -1,0 +1,373 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-fluid mt-4">
+    <!-- Admin Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3><i class="ri-admin-line me-2"></i>Admin Habit Manager - Excel View</h3>
+                        <div class="admin-stats">
+                            <span class="badge bg-light text-dark me-2">
+                                <i class="ri-user-line me-1"></i>{{ users.count }} Users
+                            </span>
+                            <span class="badge bg-light text-dark me-2">
+                                <i class="ri-check-double-line me-1"></i>{{ total_habits }} Habits
+                            </span>
+                            <span class="badge bg-light text-dark me-2">
+                                <i class="ri-calendar-check-line me-1"></i>Day {{ current_day }}/75
+                            </span>
+                            <span class="badge bg-light text-dark">
+                                <i class="ri-percent-line me-1"></i>{{ overall_completion|floatformat:1 }}% Complete
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <div class="stat-icon bg-success">
+                                    <i class="ri-check-line"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-number">{{ total_completions }}</div>
+                                    <div class="stat-label">Total Completions</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <div class="stat-icon bg-info">
+                                    <i class="ri-target-line"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-number">{{ total_possible }}</div>
+                                    <div class="stat-label">Total Possible</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <div class="stat-icon bg-warning">
+                                    <i class="ri-percent-line"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-number">{{ overall_completion|floatformat:1 }}%</div>
+                                    <div class="stat-label">Overall Progress</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <div class="stat-icon bg-primary">
+                                    <i class="ri-calendar-line"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-number">{{ current_day }}</div>
+                                    <div class="stat-label">Current Day</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Excel-like Table -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-light">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5><i class="ri-table-line me-2"></i>Habit Completion Matrix</h5>
+                        <div>
+                            <button type="submit" form="habit-form" class="btn btn-success btn-sm">
+                                <i class="ri-save-line me-1"></i>Save Changes
+                            </button>
+                            <a href="{% url 'habits:scoreboard' %}" class="btn btn-outline-primary btn-sm ms-2">
+                                <i class="ri-trophy-line me-1"></i>View Scoreboard
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <form id="habit-form" method="POST">
+                            {% csrf_token %}
+                            <table class="table table-bordered table-hover mb-0 excel-table">
+                                <thead class="table-dark sticky-top">
+                                    <tr>
+                                        <th class="sticky-col" style="min-width: 200px;">
+                                            <i class="ri-user-line me-1"></i>User / Habit
+                                        </th>
+                                        <th class="sticky-col" style="min-width: 150px;">
+                                            <i class="ri-folder-line me-1"></i>Category
+                                        </th>
+                                        {% for day in days_range %}
+                                            <th class="text-center" style="min-width: 40px;">
+                                                {% if day == current_day %}
+                                                    <span class="badge bg-warning text-dark">{{ day }}</span>
+                                                {% else %}
+                                                    {{ day }}
+                                                {% endif %}
+                                            </th>
+                                        {% endfor %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for row in excel_data %}
+                                        <tr class="{% cycle 'table-light' 'table-white' %}">
+                                            <td class="sticky-col">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="user-avatar me-2">
+                                                        {% if row.user.profile.profile_image %}
+                                                            <img src="{{ row.user.profile.profile_image.url }}" 
+                                                                 alt="{{ row.user.username }}" 
+                                                                 class="avatar-small">
+                                                        {% else %}
+                                                            <div class="avatar-fallback-small">
+                                                                {{ row.user.username|first|upper }}
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div>
+                                                        <div class="fw-bold text-primary">{{ row.user.username }}</div>
+                                                        <div class="small text-muted">{{ row.habit.name }}</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="sticky-col">
+                                                <span class="badge" style="background-color: {{ row.category.color }}; color: white;">
+                                                    {{ row.category.name }}
+                                                </span>
+                                            </td>
+                                            {% for day in days_range %}
+                                                <td class="text-center">
+                                                    <div class="form-check d-flex justify-content-center">
+                                                        <input class="form-check-input habit-checkbox" 
+                                                               type="checkbox" 
+                                                               name="habit_{{ row.habit.id }}_{{ day }}"
+                                                               id="habit_{{ row.habit.id }}_{{ day }}"
+                                                               {% if row.completions|get_item:day %}checked{% endif %}
+                                                               {% if day > current_day %}disabled{% endif %}>
+                                                    </div>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h6><i class="ri-tools-line me-2"></i>Quick Actions</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-2">
+                            <button class="btn btn-outline-primary btn-sm w-100" onclick="selectAllToday()">
+                                <i class="ri-check-double-line me-1"></i>Select All Today
+                            </button>
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <button class="btn btn-outline-secondary btn-sm w-100" onclick="clearAllToday()">
+                                <i class="ri-close-line me-1"></i>Clear All Today
+                            </button>
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <button class="btn btn-outline-info btn-sm w-100" onclick="toggleUser('Shruti')">
+                                <i class="ri-user-line me-1"></i>Toggle Shruti
+                            </button>
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <button class="btn btn-outline-warning btn-sm w-100" onclick="toggleUser('Sid')">
+                                <i class="ri-user-line me-1"></i>Toggle Sid
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .excel-table {
+        font-size: 0.85rem;
+    }
+    
+    .sticky-col {
+        position: sticky;
+        background: white;
+        z-index: 1;
+    }
+    
+    .sticky-top {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+    }
+    
+    .habit-checkbox {
+        transform: scale(1.2);
+        cursor: pointer;
+    }
+    
+    .habit-checkbox:checked {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+    
+    .habit-checkbox:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    
+    .stat-card {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, rgba(125, 211, 252, 0.1) 0%, rgba(134, 239, 172, 0.1) 100%);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    .stat-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        color: white;
+        font-size: 1.5rem;
+    }
+    
+    .stat-content {
+        flex: 1;
+    }
+    
+    .stat-number {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--text-primary);
+    }
+    
+    .stat-label {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+    }
+    
+    .avatar-small {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    
+    .avatar-fallback-small {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: var(--gradient-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.8rem;
+        font-weight: bold;
+    }
+    
+    .table-responsive {
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+    
+    .table th {
+        background: #343a40;
+        color: white;
+        border-color: #495057;
+        font-weight: 600;
+        text-align: center;
+        vertical-align: middle;
+    }
+    
+    .table td {
+        border-color: #dee2e6;
+        vertical-align: middle;
+    }
+    
+    .table-hover tbody tr:hover {
+        background-color: rgba(0, 123, 255, 0.1);
+    }
+    
+    @media (max-width: 768px) {
+        .excel-table {
+            font-size: 0.75rem;
+        }
+        
+        .sticky-col {
+            min-width: 150px;
+        }
+    }
+</style>
+
+<script>
+    // Quick action functions
+    function selectAllToday() {
+        const currentDay = {{ current_day }};
+        const checkboxes = document.querySelectorAll(`input[name*="_${currentDay}"]:not(:disabled)`);
+        checkboxes.forEach(checkbox => checkbox.checked = true);
+    }
+    
+    function clearAllToday() {
+        const currentDay = {{ current_day }};
+        const checkboxes = document.querySelectorAll(`input[name*="_${currentDay}"]:not(:disabled)`);
+        checkboxes.forEach(checkbox => checkbox.checked = false);
+    }
+    
+    function toggleUser(username) {
+        const rows = document.querySelectorAll('tr');
+        rows.forEach(row => {
+            const userCell = row.querySelector('.fw-bold.text-primary');
+            if (userCell && userCell.textContent.trim() === username) {
+                row.style.display = row.style.display === 'none' ? '' : 'none';
+            }
+        });
+    }
+    
+    // Auto-save functionality
+    let saveTimeout;
+    document.querySelectorAll('.habit-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(() => {
+                document.getElementById('habit-form').submit();
+            }, 2000); // Auto-save after 2 seconds of inactivity
+        });
+    });
+    
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && e.key === 's') {
+            e.preventDefault();
+            document.getElementById('habit-form').submit();
+        }
+    });
+</script>
+
+{% endblock %} 

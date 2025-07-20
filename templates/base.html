@@ -413,6 +413,13 @@
                                 <i class="ri-checkbox-multiple-line"></i>Daily Tracking
                             </a>
                         </li>
+                        {% if user.username == 'Shruti' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'habits:admin_habit_manager' %}">
+                                <i class="ri-admin-line"></i>Admin Manager
+                            </a>
+                        </li>
+                        {% endif %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'habits:profile' %}">
                                 <i class="ri-user-settings-line"></i>Profile

@@ -579,6 +579,99 @@ def create_habit(request):
     }
     return render(request, 'habits/habit_form.html', context)
 
+@login_required
+def admin_habit_manager(request):
+    """Admin-only page for Shruti to manage habit completions in Excel-like format"""
+    # Check if user is Shruti (admin)
+    if request.user.username != 'Shruti':
+        messages.error(request, '❌ Access denied. Admin only.')
+        return redirect('habits:home')
+    
+    today = timezone.now().date()
+    challenge_start_date = date(2025, 7, 15)  # July 15th, 2025
+    
+    # Calculate current day of the challenge
+    if today >= challenge_start_date:
+        current_day = (today - challenge_start_date).days + 1
+        if current_day > 75:
+            current_day = 75  # Cap at 75 days
+    else:
+        current_day = 0  # Challenge hasn't started yet
+    
+    # Handle form submission
+    if request.method == 'POST':
+        # Get all habit completions from form
+        for key, value in request.POST.items():
+            if key.startswith('habit_'):
+                # Parse habit_id and day from key (format: habit_<habit_id>_<day>)
+                parts = key.split('_')
+                if len(parts) == 3:
+                    habit_id = int(parts[1])
+                    day = int(parts[2])
+                    
+                    try:
+                        habit = Habit.objects.get(id=habit_id)
+                        # Delete existing completion for this habit and day
+                        HabitDay.objects.filter(habit=habit, day=day).delete()
+                        
+                        # If checkbox was checked, create new completion
+                        if value == 'on':
+                            HabitDay.objects.create(
+                                habit=habit,
+                                day=day,
+                                completed=True
+                            )
+                    except Habit.DoesNotExist:
+                        pass
+        
+        messages.success(request, '✅ Habit completions updated successfully!')
+        return redirect('habits:admin_habit_manager')
+    
+    # Get all users and their habits
+    users = User.objects.all().order_by('username')
+    categories = Category.objects.all().order_by('name')
+    
+    # Create Excel-like data structure
+    excel_data = []
+    
+    for user in users:
+        user_habits = Habit.objects.filter(user=user).order_by('category__name', 'name')
+        
+        for habit in user_habits:
+            habit_row = {
+                'user': user,
+                'habit': habit,
+                'category': habit.category,
+                'completions': {}
+            }
+            
+            # Get completion status for each day (1-75)
+            for day in range(1, 76):
+                completion = HabitDay.objects.filter(habit=habit, day=day, completed=True).first()
+                habit_row['completions'][day] = completion is not None
+            
+            excel_data.append(habit_row)
+    
+    # Calculate summary statistics
+    total_habits = sum(len(Habit.objects.filter(user=user)) for user in users)
+    total_completions = HabitDay.objects.filter(completed=True).count()
+    total_possible = total_habits * min(current_day, 75)
+    overall_completion = (total_completions / total_possible * 100) if total_possible > 0 else 0
+    
+    context = {
+        'excel_data': excel_data,
+        'users': users,
+        'categories': categories,
+        'current_day': current_day,
+        'challenge_start_date': challenge_start_date,
+        'total_habits': total_habits,
+        'total_completions': total_completions,
+        'total_possible': total_possible,
+        'overall_completion': overall_completion,
+        'days_range': range(1, 76)
+    }
+    return render(request, 'habits/admin_habit_manager.html', context)
+
 def logout_view(request):
     """Logout view"""
     logout(request)
