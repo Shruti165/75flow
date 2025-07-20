@@ -57,13 +57,27 @@ if ENVIRONMENT == 'production':
     # Use WhiteNoise for static files
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
     
-    # For media files in production, we'll use a cloud storage solution
-    # For now, we'll configure it to work with Railway's file system
+    # For media files in production, configure for Railway
     MEDIA_ROOT = BASE_DIR / 'media'
     MEDIA_URL = '/media/'
     
-    # Ensure media directory exists
+    # Ensure media directory exists with proper permissions
     MEDIA_ROOT.mkdir(exist_ok=True)
+    
+    # Set proper permissions for media directory
+    import stat
+    MEDIA_ROOT.chmod(stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)  # 777 permissions
+    
+    # Create profile_images subdirectory with proper permissions
+    profile_images_dir = MEDIA_ROOT / 'profile_images'
+    profile_images_dir.mkdir(exist_ok=True)
+    profile_images_dir.chmod(stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)  # 777 permissions
+    
+    # File upload settings for production
+    FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
+    DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
+    FILE_UPLOAD_PERMISSIONS = 0o666  # Read/write for all
+    FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0o777  # Full permissions for directories
 
 # Application definition
 INSTALLED_APPS = [

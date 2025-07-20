@@ -3,12 +3,27 @@ from django.contrib.auth.models import User
 from datetime import date
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+import os
+from django.conf import settings
 
 # Create your models here.
 
+def profile_image_path(instance, filename):
+    """Generate file path for profile images"""
+    # Get file extension
+    ext = filename.split('.')[-1]
+    # Create filename: username_timestamp.extension
+    filename = f"{instance.user.username}_{instance.user.id}.{ext}"
+    return os.path.join('profile_images', filename)
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
+    profile_image = models.ImageField(
+        upload_to=profile_image_path, 
+        null=True, 
+        blank=True,
+        help_text="Upload a profile picture (JPG, PNG, GIF up to 5MB)"
+    )
     bio = models.TextField(max_length=500, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
     email = models.EmailField(blank=True, null=True, help_text="Email for weekly stats notifications")
@@ -22,6 +37,19 @@ class Profile(models.Model):
         if self.profile_image and hasattr(self.profile_image, 'url'):
             return self.profile_image.url
         return None
+    
+    def save(self, *args, **kwargs):
+        # Ensure media directory exists before saving
+        if settings.ENVIRONMENT == 'production':
+            media_root = settings.MEDIA_ROOT
+            profile_images_dir = media_root / 'profile_images'
+            profile_images_dir.mkdir(parents=True, exist_ok=True)
+            
+            # Set proper permissions
+            import stat
+            profile_images_dir.chmod(stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)
+        
+        super().save(*args, **kwargs)
     
     @property
     def notification_email(self):
