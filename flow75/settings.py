@@ -55,24 +55,28 @@ INSTALLED_APPS = [
     'habits',
 ]
 
+# Create middleware list conditionally
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+]
+
+# Add WhiteNoise only in production
+if ENVIRONMENT == 'production':
+    try:
+        import whitenoise
+        MIDDLEWARE.append('whitenoise.middleware.WhiteNoiseMiddleware')
+    except ImportError:
+        pass
+
+# Add remaining middleware
+MIDDLEWARE.extend([
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
-
-# Add WhiteNoise only in production and when available
-if ENVIRONMENT == 'production':
-    try:
-        import whitenoise
-        # Insert WhiteNoise after SecurityMiddleware
-        MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
-    except ImportError:
-        pass
+])
 
 ROOT_URLCONF = 'flow75.urls'
 

@@ -12,6 +12,17 @@ if [ ! -d ".git" ]; then
     exit 1
 fi
 
+# Check for uncommitted changes
+if [ -n "$(git status --porcelain)" ]; then
+    echo "📝 Committing changes to GitHub..."
+    git add .
+    git commit -m "🚀 Auto-deploy: $(date '+%Y-%m-%d %H:%M:%S')"
+    git push origin main
+    echo "✅ Changes pushed to GitHub!"
+else
+    echo "✅ No changes to commit"
+fi
+
 # Generate secret key
 SECRET_KEY=$(python3 -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())")
 
