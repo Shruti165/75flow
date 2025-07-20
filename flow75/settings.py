@@ -65,10 +65,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# Add WhiteNoise only in production
+# Add WhiteNoise only in production and when available
 if ENVIRONMENT == 'production':
-    # Insert WhiteNoise after SecurityMiddleware
-    MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+    try:
+        import whitenoise
+        # Insert WhiteNoise after SecurityMiddleware
+        MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+    except ImportError:
+        pass
 
 ROOT_URLCONF = 'flow75.urls'
 
@@ -136,7 +140,11 @@ STATICFILES_DIRS = [
 
 # WhiteNoise configuration for static files (production only)
 if ENVIRONMENT == 'production':
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    try:
+        import whitenoise
+        STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    except ImportError:
+        pass
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
