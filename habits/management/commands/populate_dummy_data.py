@@ -53,7 +53,7 @@ class Command(BaseCommand):
                 }
             )
             if created:
-                user.set_password(user_data['username'])  # Password same as username
+                user.set_password(user_data['username'].lower())  # Password same as username in lowercase
                 user.save()
                 # Create profile if it doesn't exist
                 Profile.objects.get_or_create(user=user)

@@ -12,9 +12,9 @@ class Command(BaseCommand):
         
         # Create users if they don't exist
         users_data = [
-            {'username': 'Shruti', 'password': 'shruti123'},
-            {'username': 'Sid', 'password': 'sid123'},
-            {'username': 'Sanju', 'password': 'sanju123'},
+            {'username': 'Shruti', 'password': 'shruti'},
+            {'username': 'Sid', 'password': 'sid'},
+            {'username': 'Sanju', 'password': 'sanju'},
         ]
         
         for user_data in users_data:
