@@ -722,6 +722,6 @@ def admin_habit_manager(request):
     return render(request, 'habits/admin_habit_manager.html', context)
 
 def logout_view(request):
-    """Logout view"""
+    """Logout view that handles both GET and POST requests"""
     logout(request)
     return redirect('login')
