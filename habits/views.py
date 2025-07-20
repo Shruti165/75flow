@@ -567,21 +567,59 @@ def create_category(request):
 def create_habit(request):
     """Create a new habit"""
     if request.method == 'POST':
-        form = HabitForm(request.POST, user=request.user)
+        form = HabitForm(request.POST)
         if form.is_valid():
             habit = form.save(commit=False)
             habit.user = request.user
             habit.save()
-            messages.success(request, f'Habit "{habit.name}" created successfully!')
+            messages.success(request, '✅ Habit created successfully!')
             return redirect('habits:home')
     else:
-        form = HabitForm(user=request.user)
+        form = HabitForm()
     
     context = {
         'form': form,
-        'title': 'Create Habit'
+        'user': request.user
     }
-    return render(request, 'habits/habit_form.html', context)
+    return render(request, 'habits/create_habit.html', context)
+
+@login_required
+def edit_habit(request, habit_id):
+    """Edit an existing habit"""
+    habit = get_object_or_404(Habit, id=habit_id, user=request.user)
+    
+    if request.method == 'POST':
+        form = HabitForm(request.POST, instance=habit)
+        if form.is_valid():
+            form.save()
+            messages.success(request, '✅ Habit updated successfully!')
+            return redirect('habits:home')
+    else:
+        form = HabitForm(instance=habit)
+    
+    context = {
+        'form': form,
+        'habit': habit,
+        'user': request.user
+    }
+    return render(request, 'habits/edit_habit.html', context)
+
+@login_required
+def delete_habit(request, habit_id):
+    """Delete a habit"""
+    habit = get_object_or_404(Habit, id=habit_id, user=request.user)
+    
+    if request.method == 'POST':
+        habit_name = habit.name
+        habit.delete()
+        messages.success(request, f'✅ Habit "{habit_name}" deleted successfully!')
+        return redirect('habits:home')
+    
+    context = {
+        'habit': habit,
+        'user': request.user
+    }
+    return render(request, 'habits/delete_habit.html', context)
 
 @login_required
 def admin_habit_manager(request):

@@ -11,6 +11,8 @@ urlpatterns = [
     path('toggle-habit/<int:habit_id>/', views.toggle_habit, name='toggle_habit'),
     path('category/create/', views.create_category, name='create_category'),
     path('habit/create/', views.create_habit, name='create_habit'),
+    path('habit/edit/<int:habit_id>/', views.edit_habit, name='edit_habit'),
+    path('habit/delete/<int:habit_id>/', views.delete_habit, name='delete_habit'),
     path('profile/', views.profile, name='profile'),
     path('logout/', views.logout_view, name='logout'),
 ] 

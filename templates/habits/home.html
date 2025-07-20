@@ -206,6 +206,14 @@
                                                                     {% else %}<i class="ri-check-line me-1"></i>{% endif %}
                                                                     {{ habit.name }}
                                                                 </h6>
+                                                                <div class="habit-actions">
+                                                                    <a href="{% url 'habits:edit_habit' habit.id %}" class="btn btn-sm btn-outline-primary me-1" title="Edit habit">
+                                                                        <i class="ri-edit-line"></i>
+                                                                    </a>
+                                                                    <a href="{% url 'habits:delete_habit' habit.id %}" class="btn btn-sm btn-outline-danger" title="Delete habit">
+                                                                        <i class="ri-delete-bin-line"></i>
+                                                                    </a>
+                                                                </div>
                                                             </div>
                                                             {% if habit.description %}
                                                                 <p class="text-muted small mb-2">{{ habit.description|truncatechars:60 }}</p>
@@ -371,9 +379,40 @@
     }
 
     .hero-stat-label {
-        color: rgba(255, 255, 255, 0.8);
-        font-size: 0.9rem;
-        font-weight: 500;
+        font-size: 0.8rem;
+        opacity: 0.8;
+    }
+
+    /* Habit Actions Styling */
+    .habit-actions {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .habit-card:hover .habit-actions {
+        opacity: 1;
+    }
+
+    .habit-actions .btn {
+        padding: 4px 8px;
+        font-size: 0.8rem;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+
+    .habit-actions .btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .habit-actions .btn-outline-primary:hover {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-color: #667eea;
+    }
+
+    .habit-actions .btn-outline-danger:hover {
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+        border-color: #ff6b6b;
     }
 
     /* Animations */

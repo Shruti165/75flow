@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-gradient-danger text-white">
+                    <div class="d-flex align-items-center">
+                        <i class="ri-delete-bin-line me-3 icon-large"></i>
+                        <div>
+                            <h4 class="mb-0">Delete Habit</h4>
+                            <small class="text-white-50">Remove this habit permanently</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-4 text-center">
+                    <div class="mb-4">
+                        <i class="ri-error-warning-line text-warning icon-large mb-3"></i>
+                        <h5 class="text-danger mb-3">Are you sure?</h5>
+                        <p class="text-muted mb-4">
+                            You're about to delete the habit <strong>"{{ habit.name }}"</strong>. 
+                            This action cannot be undone and will remove all associated progress data.
+                        </p>
+                    </div>
+
+                    <div class="habit-preview mb-4 p-3 bg-light rounded">
+                        <div class="d-flex align-items-center">
+                            <div class="me-3">
+                                {% if "Swim" in habit.name %}<i class="ri-swimming-line icon-medium"></i>
+                                {% elif "Run" in habit.name %}<i class="ri-run-line icon-medium"></i>
+                                {% elif "Dance" in habit.name %}<i class="ri-dance-line icon-medium"></i>
+                                {% elif "Yoga" in habit.name %}<i class="ri-mental-health-line icon-medium"></i>
+                                {% elif "Gym" in habit.name %}<i class="ri-heart-pulse-line icon-medium"></i>
+                                {% elif "Walk" in habit.name %}<i class="ri-walk-line icon-medium"></i>
+                                {% elif "Drink" in habit.name %}<i class="ri-cup-line icon-medium"></i>
+                                {% elif "Water" in habit.name %}<i class="ri-water-flash-line icon-medium"></i>
+                                {% elif "Meditate" in habit.name %}<i class="ri-mental-health-line icon-medium"></i>
+                                {% elif "Read" in habit.name %}<i class="ri-book-line icon-medium"></i>
+                                {% else %}<i class="ri-check-line icon-medium"></i>{% endif %}
+                            </div>
+                            <div class="text-start">
+                                <h6 class="mb-1">{{ habit.name }}</h6>
+                                <small class="text-muted">{{ habit.category.name }}</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'habits:home' %}" class="btn btn-outline-secondary">
+                                <i class="ri-arrow-left-line me-1"></i>Cancel
+                            </a>
+                            <button type="submit" class="btn btn-danger">
+                                <i class="ri-delete-bin-line me-1"></i>Delete Habit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-gradient-danger {
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+    }
+    
+    .icon-large {
+        font-size: 2rem;
+    }
+    
+    .icon-medium {
+        font-size: 1.5rem;
+    }
+    
+    .btn {
+        border-radius: 10px;
+        padding: 10px 20px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-danger {
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+        border: none;
+    }
+    
+    .btn-danger:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+    }
+    
+    .card {
+        border-radius: 15px;
+        overflow: hidden;
+    }
+    
+    .habit-preview {
+        border-left: 4px solid {{ habit.category.color }};
+    }
+</style>
+
+{% endblock %} 
