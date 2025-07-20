@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Icon Test Page</h4>
+                </div>
+                <div class="card-body">
+                    <h5>Testing Remix Icons:</h5>
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <i class="ri-checkbox-multiple-line icon-large"></i>
+                            <p>ri-checkbox-multiple-line</p>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <i class="ri-home-4-line icon-large"></i>
+                            <p>ri-home-4-line</p>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <i class="ri-trophy-line icon-large"></i>
+                            <p>ri-trophy-line</p>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <i class="ri-calendar-line icon-large"></i>
+                            <p>ri-calendar-line</p>
+                        </div>
+                    </div>
+                    
+                    <h5>Testing with different sizes:</h5>
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <i class="ri-checkbox-multiple-line icon-small"></i>
+                            <p>Small</p>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <i class="ri-checkbox-multiple-line icon-medium"></i>
+                            <p>Medium</p>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <i class="ri-checkbox-multiple-line icon-large"></i>
+                            <p>Large</p>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <i class="ri-checkbox-multiple-line" style="font-size: 3rem;"></i>
+                            <p>Custom Size</p>
+                        </div>
+                    </div>
+                    
+                    <h5>Testing in buttons:</h5>
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <button class="btn btn-primary">
+                                <i class="ri-home-4-line me-2"></i>Home
+                            </button>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <button class="btn btn-success">
+                                <i class="ri-trophy-line me-2"></i>Scoreboard
+                            </button>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <button class="btn btn-info">
+                                <i class="ri-checkbox-multiple-line me-2"></i>Daily Tracking
+                            </button>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <button class="btn btn-warning">
+                                <i class="ri-user-settings-line me-2"></i>Profile
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

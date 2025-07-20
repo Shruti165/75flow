@@ -1,0 +1,91 @@
+.excel-table {
+    font-size: 0.85rem;
+}
+
+.sticky-col {
+    position: sticky;
+    background: white;
+    z-index: 1;
+}
+
+.sticky-top {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.habit-checkbox {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.habit-checkbox:checked {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.habit-checkbox:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(125, 211, 252, 0.1) 0%, rgba(134, 239, 172, 0.1) 100%);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.stat-content {
+    flex: 1;
+}
+
+.stat-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-primary);
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.avatar-small {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.avatar-fallback-small {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.table-responsive {
+    max-height: 70vh;
+    overflow-y: auto;
+} 

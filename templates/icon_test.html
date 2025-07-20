@@ -1,0 +1,235 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icon Test - 75Flow</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        .icon-test {
+            font-size: 2rem;
+            margin: 10px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            display: inline-block;
+            text-align: center;
+            min-width: 120px;
+        }
+        .icon-test:hover {
+            background-color: #f8f9fa;
+            transform: scale(1.1);
+            transition: all 0.3s ease;
+        }
+        .icon-name {
+            font-size: 0.8rem;
+            margin-top: 5px;
+            color: #666;
+        }
+        .diagnostic-panel {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .diagnostic-panel h4 {
+            color: #495057;
+            margin-bottom: 10px;
+        }
+        .diagnostic-panel button {
+            margin-right: 10px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">
+            <i class="ri-water-flash-line text-primary"></i>
+            Remix Icons Test
+        </h1>
+        
+        <!-- Diagnostic Panel -->
+        <div class="diagnostic-panel">
+            <h4><i class="ri-tools-line me-2"></i>Icon Diagnostics</h4>
+            <p class="text-muted">Use these tools to diagnose icon loading issues:</p>
+            <button class="btn btn-primary btn-sm" onclick="window.iconDiagnostics.run()">
+                <i class="ri-refresh-line me-1"></i>Run Full Diagnostics
+            </button>
+            <button class="btn btn-info btn-sm" onclick="window.iconDiagnostics.checkCSS()">
+                <i class="ri-file-list-line me-1"></i>Check CSS Loading
+            </button>
+            <button class="btn btn-success btn-sm" onclick="window.iconDiagnostics.checkRendering()">
+                <i class="ri-eye-line me-1"></i>Check Icon Rendering
+            </button>
+            <button class="btn btn-warning btn-sm" onclick="window.iconDiagnostics.checkConflicts()">
+                <i class="ri-error-warning-line me-1"></i>Check CSS Conflicts
+            </button>
+            <button class="btn btn-secondary btn-sm" onclick="window.iconDiagnostics.checkCDN()">
+                <i class="ri-global-line me-1"></i>Check CDN Connectivity
+            </button>
+            <div class="mt-3">
+                <small class="text-muted">
+                    <i class="ri-information-line me-1"></i>
+                    Open browser console (F12) to see diagnostic results
+                </small>
+            </div>
+        </div>
+        
+        <div class="alert alert-info">
+            <i class="ri-information-line me-2"></i>
+            This page tests if Remix icons are loading correctly. If you can see the icons below, they are working properly.
+        </div>
+
+        <div class="row">
+            <div class="col-12 text-center">
+                <h3>Daily Tracking Icons</h3>
+                <div class="icon-test">
+                    <i class="ri-checkbox-multiple-line text-success"></i>
+                    <div class="icon-name">checkbox-multiple-line</div>
+                </div>
+                <div class="icon-test">
+                    <i class="ri-home-4-line text-primary"></i>
+                    <div class="icon-name">home-4-line</div>
+                </div>
+                <div class="icon-test">
+                    <i class="ri-trophy-line text-warning"></i>
+                    <div class="icon-name">trophy-line</div>
+                </div>
+                <div class="icon-test">
+                    <i class="ri-calendar-line text-info"></i>
+                    <div class="icon-name">calendar-line</div>
+                </div>
+                <div class="icon-test">
+                    <i class="ri-flag-line text-danger"></i>
+                    <div class="icon-name">flag-line</div>
+                </div>
+                <div class="icon-test">
+                    <i class="ri-check-line text-success"></i>
+                    <div class="icon-name">check-line</div>
+                </div>
+                <div class="icon-test">
+                    <i class="ri-bar-chart-line text-primary"></i>
+                    <div class="icon-name">bar-chart-line</div>
+                </div>
+                <div class="icon-test">
+                    <i class="ri-information-line text-info"></i>
+                    <div class="icon-name">information-line</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <h3>Habit Category Icons</h3>
+                <div class="icon-test">
+                    <i class="ri-book-line text-primary"></i>
+                    <div class="icon-name">book-line (Reading)</div>
+                </div>
+                <div class="icon-test">
+                    <i class="ri-heart-pulse-line text-danger"></i>
+                    <div class="icon-name">heart-pulse-line (Fitness)</div>
+                </div>
+                <div class="icon-test">
+                    <i class="ri-restaurant-line text-warning"></i>
+                    <div class="icon-name">restaurant-line (Nutrition)</div>
+                </div>
+                <div class="icon-test">
+                    <i class="ri-money-dollar-circle-line text-success"></i>
+                    <div class="icon-name">money-dollar-circle-line (Wealth)</div>
+                </div>
+                <div class="icon-test">
+                    <i class="ri-mental-health-line text-info"></i>
+                    <div class="icon-name">mental-health-line (Spiritual)</div>
+                </div>
+                <div class="icon-test">
+                    <i class="ri-gamepad-line text-secondary"></i>
+                    <div class="icon-name">gamepad-line (Fun)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <h3>Activity Icons</h3>
+                <div class="icon-test">
+                    <i class="ri-run-line text-primary"></i>
+                    <div class="icon-name">run-line</div>
+                </div>
+                <div class="icon-test">
+                    <i class="ri-swimming-line text-info"></i>
+                    <div class="icon-name">swimming-line</div>
+                </div>
+                <div class="icon-test">
+                    <i class="ri-dance-line text-warning"></i>
+                    <div class="icon-name">dance-line</div>
+                </div>
+                <div class="icon-test">
+                    <i class="ri-walk-line text-success"></i>
+                    <div class="icon-name">walk-line</div>
+                </div>
+                <div class="icon-test">
+                    <i class="ri-football-line text-danger"></i>
+                    <div class="icon-name">football-line</div>
+                </div>
+                <div class="icon-test">
+                    <i class="ri-water-flash-line text-primary"></i>
+                    <div class="icon-name">water-flash-line</div>
+                </div>
+                <div class="icon-test">
+                    <i class="ri-apple-line text-success"></i>
+                    <div class="icon-name">apple-line</div>
+                </div>
+                <div class="icon-test">
+                    <i class="ri-briefcase-line text-secondary"></i>
+                    <div class="icon-name">briefcase-line</div>
+                </div>
+                <div class="icon-test">
+                    <i class="ri-linkedin-box-line text-primary"></i>
+                    <div class="icon-name">linkedin-box-line</div>
+                </div>
+                <div class="icon-test">
+                    <i class="ri-robot-line text-info"></i>
+                    <div class="icon-name">robot-line</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <h3>Status Icons</h3>
+                <div class="icon-test">
+                    <i class="ri-check-double-line text-success"></i>
+                    <div class="icon-name">check-double-line</div>
+                </div>
+                <div class="icon-test">
+                    <i class="ri-error-warning-line text-warning"></i>
+                    <div class="icon-name">error-warning-line</div>
+                </div>
+                <div class="icon-test">
+                    <i class="ri-list-check text-primary"></i>
+                    <div class="icon-name">list-check</div>
+                </div>
+                <div class="icon-test">
+                    <i class="ri-save-line text-success"></i>
+                    <div class="icon-name">save-line</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <a href="http://127.0.0.1:8000/" class="btn btn-primary">
+                    <i class="ri-arrow-left-line me-2"></i>Back to App
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load diagnostic script -->
+    <script src="{% static 'js/icon-diagnostic.js' %}"></script>
+</body>
+</html> 

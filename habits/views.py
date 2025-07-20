@@ -225,10 +225,17 @@ def scoreboard(request):
                     best_percentage = cat_stat['percentage']
                     best_user = user_stat['user']
         
+        # Include all categories, even if no user has habits in them
         if best_user:
             category_winners[category] = {
                 'user': best_user,
                 'percentage': best_percentage
+            }
+        else:
+            # If no user has habits in this category, show it with 0% completion
+            category_winners[category] = {
+                'user': None,
+                'percentage': 0
             }
     
     # Create category breakdown data structure

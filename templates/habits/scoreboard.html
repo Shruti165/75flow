@@ -744,6 +744,7 @@
                                         {{ category.name }}
                                     </h6>
                                     <p class="card-text">
+                                        {% if winner.user %}
                                         <div class="d-flex align-items-center justify-content-center">
                                             <div class="user-avatar-small me-2">
                                                 {% if winner.user.profile and winner.user.profile.profile_image %}
@@ -763,6 +764,18 @@
                                                 {% endif %}
                                             </div>
                                         </div>
+                                        {% else %}
+                                        <div class="text-center">
+                                            <div class="user-avatar-small mx-auto mb-2">
+                                                <div class="avatar-circle-small" style="background: var(--gradient-primary);">
+                                                    <i class="ri-user-line"></i>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <strong class="text-muted">No participants yet</strong>
+                                            </div>
+                                        </div>
+                                        {% endif %}
                                     </p>
                                     <div class="progress mb-2">
                                         <div class="progress-bar" role="progressbar" 
