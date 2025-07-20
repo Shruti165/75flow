@@ -1,62 +1,66 @@
 #!/bin/bash
 
-echo "🚀 75Flow Deployment Script for Railway"
-echo "========================================"
+echo "🚀 Starting Railway deployment for 75Flow..."
 
-# Check if git is initialized
-if [ ! -d ".git" ]; then
-    echo "❌ Git repository not found. Please initialize git first:"
-    echo "   git init"
-    echo "   git add ."
-    echo "   git commit -m 'Initial commit'"
+# Check if we're in the right directory
+if [ ! -f "manage.py" ]; then
+    echo "❌ Error: Please run this script from the project root directory"
     exit 1
 fi
 
-# Check if railway CLI is installed
-if ! command -v railway &> /dev/null; then
-    echo "📦 Installing Railway CLI..."
-    npm install -g @railway/cli
+# Check if git is clean
+if [ -n "$(git status --porcelain)" ]; then
+    echo "⚠️  Warning: You have uncommitted changes. Please commit them first."
+    echo "   Run: git add . && git commit -m 'Your commit message'"
+    read -p "   Continue anyway? (y/N): " -n 1 -r
+    echo
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        exit 1
+    fi
 fi
 
-echo "🔐 Logging into Railway..."
-railway login
+# Check if Railway CLI is installed
+if ! command -v railway &> /dev/null; then
+    echo "❌ Railway CLI is not installed. Please install it first:"
+    echo "   npm install -g @railway/cli"
+    echo "   Then run: railway login"
+    exit 1
+fi
 
-echo "🚂 Creating new Railway project..."
-railway init
+echo "📦 Committing and pushing changes to GitHub..."
 
-echo "🗄️  Adding PostgreSQL database..."
-echo "   Please select 'Database' → 'PostgreSQL' when prompted"
-railway add
+# Add all changes
+git add .
 
-echo "⚙️  Setting environment variables..."
-railway variables set ENVIRONMENT=production
-railway variables set DEBUG=False
-railway variables set SECRET_KEY=$(python3 -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())")
-railway variables set ALLOWED_HOSTS=*.railway.app
-railway variables set CSRF_TRUSTED_ORIGINS=https://*.railway.app
+# Commit with timestamp
+TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
+git commit -m "Deploy update: $TIMESTAMP"
 
-echo "📤 Deploying to Railway..."
+# Push to GitHub
+git push origin main
+
+echo "✅ Changes pushed to GitHub"
+
+echo "🚂 Deploying to Railway..."
+
+# Deploy to Railway
 railway up
 
-echo "🔄 Running database migrations..."
-railway run python manage.py migrate_to_postgres
+echo "✅ Deployment completed!"
+echo "🌐 Your app should be available at: https://flow75.up.railway.app"
+echo "🔍 Check the deployment status at: https://railway.app/dashboard"
 
-echo "✅ Deployment complete!"
-echo "🌐 Your app is now live at: $(railway domain)"
+# Test the deployment
+echo "🧪 Testing deployment..."
+sleep 10  # Wait for deployment to complete
 
-echo ""
-echo "📋 Next steps:"
-echo "1. Visit the admin panel: $(railway domain)/admin/"
-echo "2. Create a superuser: railway run python manage.py createsuperuser"
-echo "3. Share the URL with Sid and Sanju!"
-echo ""
-echo "🔧 Useful commands:"
-echo "   - View logs: railway logs"
-echo "   - Open app: railway open"
-echo "   - Connect to database: railway connect"
-echo "   - Check status: railway status"
-echo ""
-echo "🗄️  Database info:"
-echo "   - PostgreSQL is automatically configured"
-echo "   - DATABASE_URL is auto-provided by Railway"
-echo "   - Local development continues to use SQLite" 
+# Test health endpoint
+HEALTH_RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" https://flow75.up.railway.app/health/)
+if [ "$HEALTH_RESPONSE" = "200" ]; then
+    echo "✅ Health check passed! App is running correctly."
+else
+    echo "⚠️  Health check returned status: $HEALTH_RESPONSE"
+    echo "   Check the Railway logs for more details."
+fi
+
+echo "🎉 Deployment process completed!" 
