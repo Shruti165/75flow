@@ -207,12 +207,14 @@
                                                                     {{ habit.name }}
                                                                 </h6>
                                                                 <div class="habit-actions">
-                                                                    <a href="{% url 'habits:edit_habit' habit.id %}" class="btn btn-sm btn-outline-primary me-1" title="Edit habit">
-                                                                        <i class="ri-edit-line"></i>
-                                                                    </a>
-                                                                    <a href="{% url 'habits:delete_habit' habit.id %}" class="btn btn-sm btn-outline-danger" title="Delete habit">
-                                                                        <i class="ri-delete-bin-line"></i>
-                                                                    </a>
+                                                                    <div class="btn-group" role="group">
+                                                                        <a href="{% url 'habits:edit_habit' habit.id %}" class="btn btn-sm btn-outline-primary" title="Edit habit">
+                                                                            <i class="ri-edit-line"></i>
+                                                                        </a>
+                                                                        <a href="{% url 'habits:delete_habit' habit.id %}" class="btn btn-sm btn-outline-danger" title="Delete habit">
+                                                                            <i class="ri-delete-bin-line"></i>
+                                                                        </a>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             {% if habit.description %}
@@ -246,6 +248,94 @@
                             </a>
                         </div>
                     {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Manage Habits Section -->
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-gradient-primary text-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">
+                            <i class="ri-settings-3-line me-2"></i>
+                            Manage Your Habits
+                        </h4>
+                        <span class="badge bg-light text-dark">
+                            <i class="ri-tools-line me-1"></i>
+                            Quick Actions
+                        </span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 mb-3">
+                            <div class="management-card text-center p-3 border rounded h-100">
+                                <div class="management-icon mb-3">
+                                    <i class="ri-add-circle-line"></i>
+                                </div>
+                                <h6 class="mb-2">Create New Habit</h6>
+                                <p class="text-muted small mb-3">Add a new habit to your 75-day challenge</p>
+                                <a href="{% url 'habits:create_habit' %}" class="btn btn-primary btn-sm w-100">
+                                    <i class="ri-add-line me-1"></i>Add Habit
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-3">
+                            <div class="management-card text-center p-3 border rounded h-100">
+                                <div class="management-icon mb-3">
+                                    <i class="ri-folder-add-line"></i>
+                                </div>
+                                <h6 class="mb-2">Create Category</h6>
+                                <p class="text-muted small mb-3">Organize habits into categories</p>
+                                <a href="{% url 'habits:create_category' %}" class="btn btn-success btn-sm w-100">
+                                    <i class="ri-folder-add-line me-1"></i>Add Category
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-3">
+                            <div class="management-card text-center p-3 border rounded h-100">
+                                <div class="management-icon mb-3">
+                                    <i class="ri-edit-line"></i>
+                                </div>
+                                <h6 class="mb-2">Edit Habits</h6>
+                                <p class="text-muted small mb-3">Modify existing habits and details</p>
+                                <button class="btn btn-info btn-sm w-100" onclick="scrollToHabits()">
+                                    <i class="ri-edit-line me-1"></i>Edit Habits
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-3">
+                            <div class="management-card text-center p-3 border rounded h-100">
+                                <div class="management-icon mb-3">
+                                    <i class="ri-delete-bin-line"></i>
+                                </div>
+                                <h6 class="mb-2">Delete Habits</h6>
+                                <p class="text-muted small mb-3">Remove habits you no longer need</p>
+                                <button class="btn btn-danger btn-sm w-100" onclick="scrollToHabits()">
+                                    <i class="ri-delete-bin-line me-1"></i>Delete Habits
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Tips -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="alert alert-info border-0">
+                                <div class="d-flex align-items-center">
+                                    <i class="ri-lightbulb-line me-3 text-info"></i>
+                                    <div>
+                                        <strong>Pro Tip:</strong> Hover over any habit card above to see edit and delete buttons. You can also use the buttons above to quickly navigate to habit management.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -385,34 +475,109 @@
 
     /* Habit Actions Styling */
     .habit-actions {
-        opacity: 0;
-        transition: opacity 0.3s ease;
+        opacity: 0.7;
+        transition: all 0.3s ease;
     }
 
     .habit-card:hover .habit-actions {
         opacity: 1;
     }
 
+    .habit-actions .btn-group {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
     .habit-actions .btn {
-        padding: 4px 8px;
-        font-size: 0.8rem;
-        border-radius: 6px;
+        padding: 6px 10px;
+        font-size: 0.85rem;
+        border-radius: 0;
+        border: none;
         transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .habit-actions .btn:first-child {
+        border-radius: 8px 0 0 8px;
+    }
+
+    .habit-actions .btn:last-child {
+        border-radius: 0 8px 8px 0;
     }
 
     .habit-actions .btn:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        z-index: 2;
+    }
+
+    .habit-actions .btn-outline-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: 1px solid #667eea;
     }
 
     .habit-actions .btn-outline-primary:hover {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-color: #667eea;
+        background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        border-color: #5a6fd8;
+        color: white;
+    }
+
+    .habit-actions .btn-outline-danger {
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+        color: white;
+        border: 1px solid #ff6b6b;
     }
 
     .habit-actions .btn-outline-danger:hover {
-        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
-        border-color: #ff6b6b;
+        background: linear-gradient(135deg, #ff5252 0%, #e53935 100%);
+        border-color: #ff5252;
+        color: white;
+    }
+
+    .habit-actions .btn i {
+        transition: transform 0.3s ease;
+    }
+
+    .habit-actions .btn:hover i {
+        transform: scale(1.1);
+    }
+
+    /* Management Cards Styling */
+    .management-card {
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .management-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        border-color: rgba(102, 126, 234, 0.3) !important;
+    }
+
+    .management-icon {
+        font-size: 2.5rem;
+        color: #667eea;
+        transition: all 0.3s ease;
+    }
+
+    .management-card:hover .management-icon {
+        transform: scale(1.1);
+        color: #764ba2;
+    }
+
+    .management-card .btn {
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .management-card .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
 
     /* Animations */
@@ -569,4 +734,37 @@
         }
     }
 </style>
+
+<script>
+function scrollToHabits() {
+    const habitsSection = document.querySelector('#habitsAccordion');
+    if (habitsSection) {
+        habitsSection.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start' 
+        });
+        
+        // Add a subtle highlight effect
+        habitsSection.style.transition = 'all 0.3s ease';
+        habitsSection.style.boxShadow = '0 0 20px rgba(102, 126, 234, 0.3)';
+        setTimeout(() => {
+            habitsSection.style.boxShadow = '';
+        }, 2000);
+    }
+}
+
+// Add hover effect to make habit actions more visible on mobile
+document.addEventListener('DOMContentLoaded', function() {
+    const habitCards = document.querySelectorAll('.habit-card');
+    
+    habitCards.forEach(card => {
+        card.addEventListener('touchstart', function() {
+            const actions = this.querySelector('.habit-actions');
+            if (actions) {
+                actions.style.opacity = '1';
+            }
+        });
+    });
+});
+</script>
 {% endblock %} 

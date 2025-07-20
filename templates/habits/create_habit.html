@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-gradient-primary text-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">
+                            <i class="ri-add-circle-line me-2"></i>
+                            Create New Habit
+                        </h4>
+                        <a href="{% url 'habits:home' %}" class="btn btn-outline-light btn-sm">
+                            <i class="ri-home-line me-1"></i>
+                            Back to Home
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    <div class="text-center mb-4">
+                        <div class="display-4 mb-2">✨</div>
+                        <h5 class="text-muted">Start your journey to a better you!</h5>
+                        <p class="text-muted small">Create a new habit to track in your 75-day challenge</p>
+                    </div>
+                    
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        
+                        <div class="mb-4">
+                            <label for="{{ form.name.id_for_label }}" class="form-label fw-bold">
+                                <i class="ri-target-line me-2"></i>
+                                Habit Name
+                            </label>
+                            {{ form.name }}
+                            {% if form.name.errors %}
+                                <div class="text-danger mt-2">
+                                    {% for error in form.name.errors %}
+                                        <small><i class="ri-error-warning-line me-1"></i>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">
+                                <i class="ri-information-line me-1"></i>
+                                Choose a clear, actionable habit name
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="{{ form.category.id_for_label }}" class="form-label fw-bold">
+                                <i class="ri-folder-line me-2"></i>
+                                Category
+                            </label>
+                            {{ form.category }}
+                            {% if form.category.errors %}
+                                <div class="text-danger mt-2">
+                                    {% for error in form.category.errors %}
+                                        <small><i class="ri-error-warning-line me-1"></i>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">
+                                <i class="ri-information-line me-1"></i>
+                                Select the category that best fits your habit
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="{{ form.description.id_for_label }}" class="form-label fw-bold">
+                                <i class="ri-file-text-line me-2"></i>
+                                Description (Optional)
+                            </label>
+                            {{ form.description }}
+                            {% if form.description.errors %}
+                                <div class="text-danger mt-2">
+                                    {% for error in form.description.errors %}
+                                        <small><i class="ri-error-warning-line me-1"></i>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">
+                                <i class="ri-information-line me-1"></i>
+                                Add details about your habit to help you stay motivated
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="ri-rocket-line me-2"></i>
+                                Create Habit
+                            </button>
+                            <a href="{% url 'habits:home' %}" class="btn btn-outline-secondary">
+                                <i class="ri-arrow-left-line me-2"></i>
+                                Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Motivational section -->
+            <div class="card mt-4 border-0 bg-light">
+                <div class="card-body text-center">
+                    <h6 class="text-muted mb-2">
+                        <i class="ri-lightbulb-line me-2"></i>
+                        Pro Tips
+                    </h6>
+                    <div class="row text-muted small">
+                        <div class="col-md-4">
+                            <i class="ri-check-line text-success me-1"></i>
+                            Start small
+                        </div>
+                        <div class="col-md-4">
+                            <i class="ri-check-line text-success me-1"></i>
+                            Be specific
+                        </div>
+                        <div class="col-md-4">
+                            <i class="ri-check-line text-success me-1"></i>
+                            Track daily
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.form-control, .form-select {
+    border-radius: 10px;
+    border: 2px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.display-4 {
+    font-size: 3rem;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+</style>
+{% endblock %} 

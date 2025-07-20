@@ -23,8 +23,8 @@ DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
 SECRET_KEY = os.getenv('SECRET_KEY', get_random_secret_key())
 
 # Security settings
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1,healthcheck.railway.app,.railway.app,.up.railway.app,testserver').split(',')
-CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', 'http://localhost:8000,http://127.0.0.1:8000,https://*.railway.app,https://*.up.railway.app').split(',')
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1,healthcheck.railway.app,.railway.app,.up.railway.app,testserver,flow75.up.railway.app').split(',')
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', 'http://localhost:8000,http://127.0.0.1:8000,https://flow75.up.railway.app,https://*.railway.app,https://*.up.railway.app').split(',')
 
 # Ensure healthcheck.railway.app is always in ALLOWED_HOSTS
 if 'healthcheck.railway.app' not in ALLOWED_HOSTS:
@@ -177,12 +177,13 @@ if ENVIRONMENT == 'production':
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
     SECURE_HSTS_SECONDS = 31536000  # 1 year
-    SECURE_SSL_REDIRECT = True
+    # Temporarily disable SSL redirect to fix bad request
+    SECURE_SSL_REDIRECT = False
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     
-    # Session security
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
+    # Session security - temporarily relaxed
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
     SESSION_COOKIE_HTTPONLY = True
     CSRF_COOKIE_HTTPONLY = True
     
