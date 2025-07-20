@@ -52,6 +52,19 @@ STATIC_ROOT = os.getenv('STATIC_ROOT', BASE_DIR / 'staticfiles')
 MEDIA_URL = os.getenv('MEDIA_URL', '/media/')
 MEDIA_ROOT = os.getenv('MEDIA_ROOT', BASE_DIR / 'media')
 
+# Configure media files for production
+if ENVIRONMENT == 'production':
+    # Use WhiteNoise for static files
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    
+    # For media files in production, we'll use a cloud storage solution
+    # For now, we'll configure it to work with Railway's file system
+    MEDIA_ROOT = BASE_DIR / 'media'
+    MEDIA_URL = '/media/'
+    
+    # Ensure media directory exists
+    MEDIA_ROOT.mkdir(exist_ok=True)
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
