@@ -62,11 +62,13 @@ MIDDLEWARE = [
 
 # Add WhiteNoise only in production and when available
 if ENVIRONMENT == 'production':
+    # Check if whitenoise is available before importing
     try:
         import whitenoise
+        # Only add to middleware if import was successful
         MIDDLEWARE.append('whitenoise.middleware.WhiteNoiseMiddleware')
     except ImportError:
-        # If whitenoise is not available, skip it
+        # If whitenoise is not available, skip it silently
         pass
 
 # Add remaining middleware
@@ -145,6 +147,7 @@ STATICFILES_DIRS = [
 
 # WhiteNoise configuration for static files (production only)
 if ENVIRONMENT == 'production':
+    # Check if whitenoise is available before configuring
     try:
         import whitenoise
         STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -152,7 +155,8 @@ if ENVIRONMENT == 'production':
         WHITENOISE_USE_FINDERS = True
         WHITENOISE_AUTOREFRESH = True
     except ImportError:
-        pass
+        # If whitenoise is not available, use default static files storage
+        STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
