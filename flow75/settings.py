@@ -67,6 +67,7 @@ MIDDLEWARE = [
 
 # Add WhiteNoise only in production
 if ENVIRONMENT == 'production':
+    # Insert WhiteNoise after SecurityMiddleware
     MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 
 ROOT_URLCONF = 'flow75.urls'
