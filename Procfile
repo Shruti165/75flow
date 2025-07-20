@@ -1,1 +1,1 @@
-web: gunicorn flow75.wsgi:application --bind 0.0.0.0:$PORT --workers 1 --timeout 120 --log-file - --access-logfile - --error-logfile - --preload --max-requests 1000 --max-requests-jitter 100 --keep-alive 2 
+web: python railway_start.py 
