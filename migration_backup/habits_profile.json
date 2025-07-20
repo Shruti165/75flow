@@ -1,0 +1,38 @@
+[
+{
+  "model": "habits.profile",
+  "pk": 1,
+  "fields": {
+    "user": 2,
+    "profile_image": "profile_images/Shruti_5lA8J6j.png",
+    "bio": "hello",
+    "date_of_birth": null,
+    "email": "strength.shruti@gmail.com",
+    "weekly_stats_enabled": true
+  }
+},
+{
+  "model": "habits.profile",
+  "pk": 2,
+  "fields": {
+    "user": 1,
+    "profile_image": "profile_images/Sidd.png",
+    "bio": "",
+    "date_of_birth": null,
+    "email": null,
+    "weekly_stats_enabled": true
+  }
+},
+{
+  "model": "habits.profile",
+  "pk": 3,
+  "fields": {
+    "user": 3,
+    "profile_image": "profile_images/Sanjh.png",
+    "bio": "",
+    "date_of_birth": null,
+    "email": null,
+    "weekly_stats_enabled": true
+  }
+}
+]
