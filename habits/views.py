@@ -18,7 +18,11 @@ def health_check(request):
 
 @login_required
 def home(request):
-    """Home page view for logged in users"""
+    """Home page showing user's progress and quick actions"""
+    # Redirect admin user to admin manager
+    if request.user.username == 'Shruti':
+        return redirect('habits:admin_habit_manager')
+    
     user_categories = Category.objects.all()
     user_habits = Habit.objects.filter(user=request.user)
     
@@ -42,7 +46,12 @@ def home(request):
 
 @login_required
 def profile(request):
-    """User profile view for editing profile information"""
+    """User profile page"""
+    # Redirect admin user to admin manager
+    if request.user.username == 'Shruti':
+        messages.info(request, '🔍 Admin view: Use Admin Habit Manager to view overall progress.')
+        return redirect('habits:admin_habit_manager')
+    
     # Ensure user has a profile
     if not hasattr(request.user, 'profile'):
         Profile.objects.create(user=request.user)
@@ -82,10 +91,10 @@ def scoreboard(request):
     week_start_day = ((current_week - 1) * 7) + 1
     week_end_day = min(week_start_day + 6, 75)
     
-    # Get all users with their habit statistics
+    # Get all users EXCEPT admin (Shruti) with their habit statistics
     users_with_stats = []
     
-    for user in User.objects.all():
+    for user in User.objects.exclude(username='Shruti'):  # Exclude admin user
         # Get user's habits
         habits = Habit.objects.filter(user=user)
         total_habits = habits.count()
@@ -406,6 +415,11 @@ def scoreboard(request):
 @login_required
 def daily_tracking(request):
     """Daily habit tracking page where users can check off completed habits"""
+    # Redirect admin user to admin manager
+    if request.user.username == 'Shruti':
+        messages.info(request, '🔍 Admin view: Use Admin Habit Manager to view overall progress.')
+        return redirect('habits:admin_habit_manager')
+    
     today = timezone.now().date()
     challenge_start_date = date(2025, 7, 15)  # July 15th, 2025
     
@@ -515,7 +529,12 @@ def daily_tracking(request):
 
 @login_required
 def toggle_habit(request, habit_id):
-    """AJAX endpoint to toggle habit completion for current day"""
+    """Toggle habit completion status"""
+    # Redirect admin user to admin manager
+    if request.user.username == 'Shruti':
+        messages.error(request, '❌ Admin cannot toggle habits. Use Admin Habit Manager to view progress.')
+        return redirect('habits:admin_habit_manager')
+    
     if request.method == 'POST':
         today = timezone.now().date()
         challenge_start_date = date(2025, 7, 15)
@@ -573,6 +592,11 @@ def create_category(request):
 @login_required
 def create_habit(request):
     """Create a new habit"""
+    # Redirect admin user to admin manager
+    if request.user.username == 'Shruti':
+        messages.error(request, '❌ Admin cannot create habits. Use Admin Habit Manager to view progress.')
+        return redirect('habits:admin_habit_manager')
+    
     if request.method == 'POST':
         form = HabitForm(request.POST)
         if form.is_valid():
@@ -593,6 +617,11 @@ def create_habit(request):
 @login_required
 def edit_habit(request, habit_id):
     """Edit an existing habit"""
+    # Redirect admin user to admin manager
+    if request.user.username == 'Shruti':
+        messages.error(request, '❌ Admin cannot edit habits. Use Admin Habit Manager to view progress.')
+        return redirect('habits:admin_habit_manager')
+    
     habit = get_object_or_404(Habit, id=habit_id, user=request.user)
     
     if request.method == 'POST':
@@ -614,6 +643,11 @@ def edit_habit(request, habit_id):
 @login_required
 def delete_habit(request, habit_id):
     """Delete a habit"""
+    # Redirect admin user to admin manager
+    if request.user.username == 'Shruti':
+        messages.error(request, '❌ Admin cannot delete habits. Use Admin Habit Manager to view progress.')
+        return redirect('habits:admin_habit_manager')
+    
     habit = get_object_or_404(Habit, id=habit_id, user=request.user)
     
     if request.method == 'POST':
@@ -720,6 +754,120 @@ def admin_habit_manager(request):
         'days_range': range(1, 76)
     }
     return render(request, 'habits/admin_habit_manager.html', context)
+
+@login_required
+def excel_view(request):
+    """Excel-like habit tracking page with PDF sharing"""
+    # Redirect admin user to admin manager
+    if request.user.username == 'Shruti':
+        messages.info(request, '🔍 Admin view: Use Admin Habit Manager to view overall progress.')
+        return redirect('habits:admin_habit_manager')
+    
+    today = timezone.now().date()
+    challenge_start_date = date(2025, 7, 15)  # July 15th, 2025
+    
+    # Calculate current day of the challenge
+    if today >= challenge_start_date:
+        current_day = (today - challenge_start_date).days + 1
+        if current_day > 75:
+            current_day = 75  # Cap at 75 days
+    else:
+        current_day = 0  # Challenge hasn't started yet
+    
+    # Handle form submission
+    if request.method == 'POST':
+        completed_habits = request.POST.getlist('completed_habits')
+        # Clear existing completions for today
+        HabitDay.objects.filter(
+            habit__user=request.user,
+            day=current_day
+        ).delete()
+        # Add new completions
+        for habit_id in completed_habits:
+            try:
+                habit = Habit.objects.get(id=habit_id, user=request.user)
+                HabitDay.objects.create(
+                    habit=habit,
+                    day=current_day,
+                    completed=True
+                )
+            except Habit.DoesNotExist:
+                pass
+        messages.success(request, f'✅ Day {current_day} progress updated successfully!')
+        return redirect('habits:excel')
+    
+    # Get user's habits and categories
+    user_categories = Category.objects.all()
+    user_habits = Habit.objects.filter(user=request.user)
+    completed_today = HabitDay.objects.filter(
+        habit__user=request.user,
+        day=current_day,
+        completed=True
+    ).values_list('habit_id', flat=True)
+    
+    # Prepare table data
+    table_rows = []
+    total_categories = 0
+    completed_categories = 0
+    
+    for category in user_categories:
+        category_habits = user_habits.filter(category=category)
+        if category_habits.exists():
+            total_categories += 1
+            # Mark habits as completed if they're in completed_today
+            habits_with_status = []
+            for habit in category_habits:
+                habit.completed = habit.id in completed_today
+                habits_with_status.append(habit)
+            
+            # Check if category is completed (at least 2 habits done)
+            completed_in_category = len([h for h in habits_with_status if h.completed])
+            category_completed = completed_in_category >= 2
+            if category_completed:
+                completed_categories += 1
+            
+            table_rows.append({
+                'category': category,
+                'habits': habits_with_status
+            })
+    
+    # Handle uncategorized habits
+    uncategorized_habits = user_habits.filter(category__isnull=True)
+    if uncategorized_habits.exists():
+        total_categories += 1
+        habits_with_status = []
+        for habit in uncategorized_habits:
+            habit.completed = habit.id in completed_today
+            habits_with_status.append(habit)
+        
+        completed_in_uncategorized = len([h for h in habits_with_status if h.completed])
+        uncategorized_completed = completed_in_uncategorized >= 2
+        if uncategorized_completed:
+            completed_categories += 1
+        
+        # Create a mock category object for uncategorized
+        uncategorized_category = type('Category', (), {
+            'name': 'Uncategorized',
+            'color': '#6c757d'
+        })()
+        
+        table_rows.append({
+            'category': uncategorized_category,
+            'habits': habits_with_status
+        })
+    
+    completion_percentage = (completed_categories / total_categories * 100) if total_categories > 0 else 0
+    
+    context = {
+        'table_rows': table_rows,
+        'current_day': current_day,
+        'completed_categories': completed_categories,
+        'total_categories': total_categories,
+        'completion_percentage': completion_percentage,
+        'today': today,
+        'challenge_start_date': challenge_start_date,
+    }
+    return render(request, 'habits/excel.html', context)
 
 def logout_view(request):
     """Logout view that handles both GET and POST requests"""

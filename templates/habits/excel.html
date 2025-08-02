@@ -1,0 +1,320 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-4">
+    <!-- Enhanced Header with Floating Elements -->
+    <div class="challenge-header card shadow-lg border-0 mb-4 position-relative overflow-hidden" style="background: var(--gradient-primary); border-radius: 1.5rem;">
+        <!-- Floating Background Elements -->
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+        
+        <div class="card-body py-4 px-3 px-md-5 d-flex flex-wrap align-items-center justify-content-between gap-3 position-relative">
+            <div class="d-flex align-items-center gap-3 flex-wrap">
+                <div class="challenge-day-display">
+                    <span class="fs-2 fw-bold text-white" style="text-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+                        <i class="ri-calendar-event-line me-2"></i>Day {{ current_day }}
+                    </span>
+                    <div class="progress-line mt-2"></div>
+                </div>
+                <div class="stats-container d-flex gap-2">
+                    <span class="badge bg-success fs-6 py-2 px-3 shadow-sm pulse-animation" style="background: var(--gradient-secondary); color: #fff;">
+                        <i class="ri-checkbox-multiple-line me-1"></i>
+                        {{ completed_categories }}/{{ total_categories }}
+                    </span>
+                    <span class="badge bg-info fs-6 py-2 px-3 shadow-sm" style="background: var(--gradient-primary); color: #fff;">
+                        <i class="ri-bar-chart-line me-1"></i>
+                        {{ completion_percentage|floatformat:1 }}%
+                    </span>
+                </div>
+            </div>
+            <div class="action-buttons d-flex flex-wrap gap-2">
+                <button class="btn btn-danger btn-sm action-btn" onclick="generatePDF()" title="Export as PDF">
+                    <i class="ri-file-pdf-line me-1"></i>PDF
+                </button>
+                <button type="submit" class="btn btn-success btn-sm action-btn" form="habit-form" title="Save Progress">
+                    <i class="ri-save-line me-1"></i>Save
+                </button>
+                <button class="btn btn-success btn-sm action-btn" onclick="shareWhatsApp()" title="Share on WhatsApp">
+                    <i class="ri-whatsapp-line me-1"></i>Share
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced Progress Dashboard Cards -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-6">
+            <div class="progress-card card shadow-sm border-0 h-100 hover-lift" style="background: var(--soft-white); border-radius: 1.5rem;">
+                <div class="card-body text-center p-4">
+                    <div class="progress-circle mb-3">
+                        <div class="progress-circle-inner">
+                            <span class="progress-text">{{ completion_percentage|floatformat:1 }}%</span>
+                        </div>
+                        <div class="progress-ring"></div>
+                    </div>
+                    <h6 class="text-muted mb-1 fw-semibold">Today's Progress</h6>
+                    <small class="text-muted">Overall completion rate</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="category-card card shadow-sm border-0 h-100 hover-lift" style="background: var(--soft-white); border-radius: 1.5rem;">
+                <div class="card-body text-center p-4">
+                    <div class="category-summary">
+                        <div class="d-flex justify-content-center gap-2 mb-3">
+                            <span class="badge bg-success fs-6 py-2 px-3 category-badge" style="background: var(--gradient-secondary); color: #fff;">{{ completed_categories }} Complete</span>
+                            <span class="badge bg-secondary fs-6 py-2 px-3 category-badge" style="background: var(--gradient-tertiary); color: #fff;">{{ total_categories|add:"-completed_categories" }} Pending</span>
+                        </div>
+                        <h6 class="text-muted mb-1 fw-semibold">Categories Status</h6>
+                        <small class="text-muted">Track your category progress</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Card -->
+    <div class="card shadow-sm border-0 mb-4" style="background: var(--soft-white); border-radius: 1.5rem;">
+        <div class="card-header py-3" style="background: var(--gradient-secondary); color: #fff; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem;">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold" style="color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,0.15); letter-spacing: 0.02em;">
+                    <i class="ri-table-line me-2"></i>Habit Tracker
+                </h5>
+                <small class="text-light">Mark at least 2 habits per category for full points</small>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <form method="post" id="habit-form">
+                {% csrf_token %}
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered align-middle text-center mb-0 excel-table" id="excel-table">
+                        <thead class="table-dark sticky-top">
+                            <tr>
+                                <th style="min-width: 60px; padding: 0.5rem;">Emoji</th>
+                                <th style="min-width: 100px; padding: 0.5rem;">Category</th>
+                                <th style="min-width: 150px; padding: 0.5rem;">Habit</th>
+                                <th style="min-width: 80px; padding: 0.5rem;">Completed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in table_rows %}
+                                {% for habit in row.habits %}
+                                <tr class="{% if habit.completed %}table-success{% endif %} {% if forloop.first %}category-border{% endif %} habit-row">
+                                    {% if forloop.first %}
+                                        <td rowspan="{{ row.habits|length }}" class="align-middle emoji-cell" style="padding: 0.5rem; font-size: 1.5rem;">
+                                            {% if row.category.name == "Health & Fitness" %}🏃‍♂️
+                                            {% elif row.category.name == "Mental Health" %}🧠
+                                            {% elif row.category.name == "Productivity" %}⚡
+                                            {% elif row.category.name == "Relationships" %}❤️
+                                            {% elif row.category.name == "Learning" %}📚
+                                            {% elif row.category.name == "Finance" %}💰
+                                            {% elif row.category.name == "Creativity" %}🎨
+                                            {% elif row.category.name == "Spirituality" %}🙏
+                                            {% elif row.category.name == "Environment" %}🌱
+                                            {% elif row.category.name == "Social" %}👥
+                                            {% elif row.category.name == "Technology" %}💻
+                                            {% elif row.category.name == "Travel" %}✈️
+                                            {% elif row.category.name == "Cooking" %}👨‍🍳
+                                            {% elif row.category.name == "Music" %}🎵
+                                            {% elif row.category.name == "Reading" %}📖
+                                            {% elif row.category.name == "Writing" %}✍️
+                                            {% elif row.category.name == "Art" %}🎭
+                                            {% elif row.category.name == "Sports" %}⚽
+                                            {% elif row.category.name == "Meditation" %}🧘‍♀️
+                                            {% elif row.category.name == "Volunteering" %}🤝
+                                            {% else %}📋{% endif %}
+                                        </td>
+                                        <td rowspan="{{ row.habits|length }}" class="align-middle fw-bold category-cell" style="background: {{ row.category.color }}; color: #fff; border-top: 4px solid #e0e0e0; padding: 0.5rem;">
+                                            {{ row.category.name }}
+                                        </td>
+                                    {% endif %}
+                                    <td class="text-start habit-name" style="padding: 0.5rem;">{{ habit.name }}</td>
+                                    <td style="padding: 0.5rem;">
+                                        <input type="checkbox" class="form-check-input habit-checkbox" name="completed_habits" value="{{ habit.id }}" {% if habit.completed %}checked{% endif %}>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- jsPDF and WhatsApp Sharing Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+function generatePDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.text("Habit Progress - Day {{ current_day }}", 10, 10);
+    let y = 20;
+    {% for row in table_rows %}
+        doc.text("Category: {{ row.category.name }}", 10, y);
+        y += 8;
+        {% for habit in row.habits %}
+            doc.text(" - {{ habit.name }}: {% if habit.completed %}✔{% else %}✗{% endif %}", 15, y);
+            y += 8;
+        {% endfor %}
+        y += 4;
+    {% endfor %}
+    doc.save("habit_progress_day_{{ current_day }}.pdf");
+}
+
+function shareWhatsApp() {
+    let text = "My Habit Progress - Day {{ current_day }}%0A";
+    {% for row in table_rows %}
+        text += "Category: {{ row.category.name }}%0A";
+        {% for habit in row.habits %}
+            text += " - {{ habit.name }}: {% if habit.completed %}✔{% else %}✗{% endif %}%0A";
+        {% endfor %}
+        text += "%0A";
+    {% endfor %}
+    text += "Overall Progress: {{ completion_percentage|floatformat:1 }}%";
+    const url = "https://wa.me/?text=" + encodeURIComponent(text.replace(/%0A/g, "\n"));
+    window.open(url, "_blank");
+}
+</script>
+
+<style>
+/* Floating background shapes for header */
+.floating-shapes {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;
+}
+.shape {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.18;
+    filter: blur(18px);
+}
+.shape-1 { width: 120px; height: 120px; background: var(--water-blue); top: -30px; left: -40px; }
+.shape-2 { width: 90px; height: 90px; background: var(--fire-red); bottom: -20px; right: 10%; }
+.shape-3 { width: 60px; height: 60px; background: var(--air-green); top: 30px; right: -30px; }
+
+.challenge-header {
+    background: var(--gradient-primary, linear-gradient(135deg, #7dd3fc 0%, #86efac 50%, #fca5a5 100%));
+    border-radius: 1.5rem;
+    box-shadow: var(--shadow-soft, 0 4px 20px rgba(0,0,0,0.08));
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+.challenge-header .badge, .category-badge {
+    font-size: 1.05rem;
+    letter-spacing: 0.01em;
+    box-shadow: var(--shadow-soft, 0 1px 4px rgba(0,0,0,0.04));
+    border: 1px solid rgba(255,255,255,0.2);
+}
+.challenge-header .btn, .action-btn {
+    min-width: 110px;
+    border-radius: 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-soft, 0 4px 20px rgba(0,0,0,0.08));
+}
+.challenge-header .btn:hover, .action-btn:hover {
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: var(--shadow-medium, 0 8px 30px rgba(0,0,0,0.12));
+}
+.pulse-animation {
+    animation: pulse 1.5s infinite alternate;
+}
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(34,197,94,0.2);}
+    100% { box-shadow: 0 0 0 8px rgba(34,197,94,0.08);}
+}
+.hover-lift:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+    transition: 0.2s;
+}
+.progress-card, .category-card {
+    background: var(--soft-white, #fff);
+    border-radius: 1.5rem;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+.progress-circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: conic-gradient(var(--water-blue, #7dd3fc) {{ completion_percentage|floatformat:0 }}%, #e0e0e0 0%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 0.5rem auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    position: relative;
+}
+.progress-circle-inner {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+.progress-text {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--water-blue, #7dd3fc);
+}
+.progress-ring {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    border-radius: 50%;
+    border: 2px dashed var(--air-green, #86efac);
+    opacity: 0.3;
+    pointer-events: none;
+}
+.excel-table th, .excel-table td {
+    vertical-align: middle !important;
+    text-align: center;
+    padding: 0.5rem 0.75rem !important;
+}
+.excel-table th {
+    background: var(--gradient-secondary, linear-gradient(135deg, #86efac 0%, #7dd3fc 100%)) !important;
+    color: #fff !important;
+    font-weight: 600;
+    border-bottom: 2px solid #dee2e6;
+}
+.excel-table tr.table-success td {
+    background: #e6ffed !important;
+    color: #198754 !important;
+    font-weight: 500;
+}
+.category-border td, .category-border th {
+    border-top: 3px solid #e0e0e0 !important;
+}
+.emoji-cell {
+    background: rgba(255,255,255,0.08);
+    font-size: 1.7rem;
+}
+.category-cell {
+    font-size: 1.1rem;
+    letter-spacing: 0.01em;
+}
+@media (max-width: 768px) {
+    .challenge-header .row {
+        flex-direction: column;
+    }
+    .challenge-header .btn, .action-btn {
+        width: 100%;
+        min-width: unset;
+    }
+    .excel-table th, .excel-table td {
+        font-size: 0.9rem;
+        padding: 0.375rem 0.5rem !important;
+    }
+    .emoji-cell {
+        font-size: 1.2rem;
+    }
+}
+</style>
+{% endblock %} 
