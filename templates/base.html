@@ -413,6 +413,11 @@
                                 <i class="ri-checkbox-multiple-line"></i>Daily Tracking
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'habits:excel' %}">
+                                <i class="ri-file-excel-2-line"></i>Excel
+                            </a>
+                        </li>
                         {% if user.username == 'Shruti' %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'habits:admin_habit_manager' %}">
