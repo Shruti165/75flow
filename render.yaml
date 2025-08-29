@@ -3,7 +3,7 @@ services:
     name: 75flow
     env: python
     buildCommand: ./build.sh
-    startCommand: gunicorn flow75.wsgi:application
+    startCommand: gunicorn flow75.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       - key: PYTHON_VERSION
         value: 3.10.0
@@ -13,3 +13,5 @@ services:
         value: ".onrender.com"
       - key: ENVIRONMENT
         value: production
+      - key: PORT
+        value: 10000
