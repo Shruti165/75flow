@@ -34,12 +34,19 @@ echo "Running migrations..."
 python manage.py migrate
 
 # Import local data if available
-if [ -f "import_local_data.py" ]; then
-    echo "Importing local data..."
-    python import_local_data.py
-else
-    echo "No local data found, creating default users..."
-    python manage.py create_default_users
-fi
+            # Always refresh data on every deploy/restart
+            if [ -f "refresh_data.py" ]; then
+                echo "🔄 Running data refresh on every deploy/restart..."
+                python refresh_data.py
+            elif [ -f "import_local_data.py" ]; then
+                echo "🔄 Importing local data on every deploy/restart..."
+                python import_local_data.py
+            elif [ -f "import_all_local_data.py" ]; then
+                echo "🔄 Importing comprehensive local data on every deploy/restart..."
+                python import_all_local_data.py
+            else
+                echo "⚠️  No import scripts found, creating default users..."
+                python manage.py create_default_users
+            fi
 
 echo "Build completed successfully!"
