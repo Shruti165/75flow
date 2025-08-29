@@ -33,8 +33,13 @@ python manage.py collectstatic --no-input
 echo "Running migrations..."
 python manage.py migrate
 
-# Create default users
-echo "Creating default users..."
-python manage.py create_default_users
+# Import local data if available
+if [ -f "import_local_data.py" ]; then
+    echo "Importing local data..."
+    python import_local_data.py
+else
+    echo "No local data found, creating default users..."
+    python manage.py create_default_users
+fi
 
 echo "Build completed successfully!"
