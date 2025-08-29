@@ -23,8 +23,8 @@ DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
 SECRET_KEY = os.getenv('SECRET_KEY', get_random_secret_key())
 
 # Security settings
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1,healthcheck.railway.app,.railway.app,.up.railway.app,testserver,flow75.up.railway.app,*.railway.app,*.up.railway.app').split(',')
-CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', 'http://localhost:8000,http://127.0.0.1:8000,https://flow75.up.railway.app,https://*.railway.app,https://*.up.railway.app').split(',')
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1,healthcheck.railway.app,.railway.app,.up.railway.app,testserver,flow75.up.railway.app,*.railway.app,*.up.railway.app,.onrender.com,*.onrender.com').split(',')
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', 'http://localhost:8000,http://127.0.0.1:8000,https://flow75.up.railway.app,https://*.railway.app,https://*.up.railway.app,https://*.onrender.com').split(',')
 
 # Ensure healthcheck.railway.app is always in ALLOWED_HOSTS
 if 'healthcheck.railway.app' not in ALLOWED_HOSTS:
@@ -33,6 +33,10 @@ if 'healthcheck.railway.app' not in ALLOWED_HOSTS:
 # Ensure the specific Railway domain is always included
 if 'flow75.up.railway.app' not in ALLOWED_HOSTS:
     ALLOWED_HOSTS.append('flow75.up.railway.app')
+
+# Ensure Render domains are included
+if '.onrender.com' not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append('.onrender.com')
 
 # Database configuration
 DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite:///db.sqlite3')

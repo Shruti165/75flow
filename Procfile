@@ -1,1 +1,1 @@
-web: python railway_start.py 
+web: gunicorn flow75.wsgi --log-file -

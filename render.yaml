@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: 75flow
+    env: python
+    buildCommand: ./build.sh
+    startCommand: gunicorn flow75.wsgi:application
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.0
+      - key: DEBUG
+        value: false
+      - key: ALLOWED_HOSTS
+        value: ".onrender.com"
+      - key: ENVIRONMENT
+        value: production
