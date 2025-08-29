@@ -76,6 +76,24 @@ A comprehensive Django web application for tracking habits over a 75-day challen
 8. **Visit the application**
    Open your browser and go to `http://127.0.0.1:8000`
 
+## 🚀 Deployment
+
+### Render Deployment
+
+This project is configured for easy deployment on Render. All deployment files are organized in the `render_deployment/` folder.
+
+### Railway Deployment
+
+For Railway deployment, configuration files are organized in the `railway_deployment/` folder.
+
+1. **Push your code to GitHub**
+2. **Go to [Render Dashboard](https://render.com)**
+3. **Create New Web Service**
+4. **Connect your GitHub repository**
+5. **Render will automatically detect the configuration**
+
+For detailed deployment instructions, see [`render_deployment/README.md`](render_deployment/README.md).
+
 ## 📁 Project Structure
 
 ```
@@ -97,6 +115,16 @@ A comprehensive Django web application for tracking habits over a 75-day challen
 ├── static/              # Static files (CSS, JS, images)
 ├── media/               # User-uploaded files
 ├── requirements.txt     # Python dependencies
+├── render_deployment/  # Render deployment configuration
+│   ├── Procfile        # Web process specification
+│   ├── render.yaml     # Render service configuration
+│   ├── build.sh        # Build script
+│   └── README.md       # Deployment documentation
+├── railway_deployment/ # Railway deployment configuration
+│   ├── database/       # Database migration scripts
+│   ├── health/         # Health check scripts
+│   ├── railway/        # Railway-specific scripts
+│   └── scripts/        # Deployment guides
 └── manage.py           # Django management script
 ```
 

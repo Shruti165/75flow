@@ -168,4 +168,13 @@ Thumbs.db
 
 # Temporary files
 *.tmp
-*.temp 
+*.temp
+
+# Deployment files (keep in deployment folders)
+# render_deployment/ - Render deployment configuration
+# railway_deployment/ - Railway deployment configuration
+# Procfile
+# render.yaml
+# build.sh
+# runtime.txt
+# packages.txt 

@@ -1,4 +1,4 @@
-# Deployments Folder
+# Railway Deployment Configuration
 
 This folder contains all Railway-related deployment scripts, tools, and documentation organized by category.
 
