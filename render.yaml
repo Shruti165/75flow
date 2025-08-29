@@ -15,3 +15,13 @@ services:
         value: production
       - key: PORT
         value: 10000
+    # System dependencies for Pillow
+    packages:
+      - libjpeg-dev
+      - libpng-dev
+      - libfreetype6-dev
+      - liblcms2-dev
+      - libwebp-dev
+      - libtiff5-dev
+      - libopenjp2-7-dev
+      - libxcb1-dev
