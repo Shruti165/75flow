@@ -2462,16 +2462,16 @@ def import_users():
         else:
             print(f"  ℹ️  User already exists: {user.username}")
         
-                 # Create or update profile
-         profile, profile_created = Profile.objects.get_or_create(
-             user=user,
-             defaults={
-                 'bio': user_data['profile']['bio'],
-                 'date_of_birth': datetime.fromisoformat(user_data['profile']['date_of_birth']).date() if user_data['profile']['date_of_birth'] else None,
-                 'email': user_data['profile']['email'],
-                 'weekly_stats_enabled': user_data['profile']['weekly_stats_enabled']
-             }
-         )
+        # Create or update profile
+        profile, profile_created = Profile.objects.get_or_create(
+            user=user,
+            defaults={
+                'bio': user_data['profile']['bio'],
+                'date_of_birth': datetime.fromisoformat(user_data['profile']['date_of_birth']).date() if user_data['profile']['date_of_birth'] else None,
+                'email': user_data['profile']['email'],
+                'weekly_stats_enabled': user_data['profile']['weekly_stats_enabled']
+            }
+        )
         
         if profile_created:
             print(f"    ✅ Created profile for: {user.username}")
