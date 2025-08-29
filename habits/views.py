@@ -20,7 +20,7 @@ def health_check(request):
 def home(request):
     """Home page showing user's progress and quick actions"""
     # Redirect admin user to admin manager
-    if request.user.username == 'Shruti':
+    if request.user.username == 'admin':
         return redirect('habits:admin_habit_manager')
     
     user_categories = Category.objects.all()
@@ -48,13 +48,16 @@ def home(request):
 def profile(request):
     """User profile page"""
     # Redirect admin user to admin manager
-    if request.user.username == 'Shruti':
+    if request.user.username == 'admin':
         messages.info(request, '🔍 Admin view: Use Admin Habit Manager to view overall progress.')
         return redirect('habits:admin_habit_manager')
     
-    # Ensure user has a profile
-    if not hasattr(request.user, 'profile'):
-        Profile.objects.create(user=request.user)
+    # Ensure user has a profile (profile should be created automatically via signal)
+    try:
+        profile = request.user.profile
+    except Profile.DoesNotExist:
+        # If profile doesn't exist, create it (fallback for existing users)
+        profile = Profile.objects.create(user=request.user)
     
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
@@ -94,7 +97,7 @@ def scoreboard(request):
     # Get all users EXCEPT admin (Shruti) with their habit statistics
     users_with_stats = []
     
-    for user in User.objects.exclude(username='Shruti'):  # Exclude admin user
+    for user in User.objects.exclude(username='admin'):  # Exclude admin user
         # Get user's habits
         habits = Habit.objects.filter(user=user)
         total_habits = habits.count()
@@ -362,9 +365,12 @@ def scoreboard(request):
     # Prepare habit completion data for 75-day viewer
     habit_completion_data = {}
     for user in User.objects.all():
-        # Ensure user has a profile
-        if not hasattr(user, 'profile'):
-            Profile.objects.create(user=user)
+        # Ensure user has a profile (profile should be created automatically via signal)
+        try:
+            profile = user.profile
+        except Profile.DoesNotExist:
+            # If profile doesn't exist, create it (fallback for existing users)
+            profile = Profile.objects.create(user=user)
             
         user_habits = Habit.objects.filter(user=user)
         user_completions = {}
@@ -416,7 +422,7 @@ def scoreboard(request):
 def daily_tracking(request):
     """Daily habit tracking page where users can check off completed habits"""
     # Redirect admin user to admin manager
-    if request.user.username == 'Shruti':
+    if request.user.username == 'admin':
         messages.info(request, '🔍 Admin view: Use Admin Habit Manager to view overall progress.')
         return redirect('habits:admin_habit_manager')
     
@@ -531,7 +537,7 @@ def daily_tracking(request):
 def toggle_habit(request, habit_id):
     """Toggle habit completion status"""
     # Redirect admin user to admin manager
-    if request.user.username == 'Shruti':
+    if request.user.username == 'admin':
         messages.error(request, '❌ Admin cannot toggle habits. Use Admin Habit Manager to view progress.')
         return redirect('habits:admin_habit_manager')
     
@@ -593,7 +599,7 @@ def create_category(request):
 def create_habit(request):
     """Create a new habit"""
     # Redirect admin user to admin manager
-    if request.user.username == 'Shruti':
+    if request.user.username == 'admin':
         messages.error(request, '❌ Admin cannot create habits. Use Admin Habit Manager to view progress.')
         return redirect('habits:admin_habit_manager')
     
@@ -618,7 +624,7 @@ def create_habit(request):
 def edit_habit(request, habit_id):
     """Edit an existing habit"""
     # Redirect admin user to admin manager
-    if request.user.username == 'Shruti':
+    if request.user.username == 'admin':
         messages.error(request, '❌ Admin cannot edit habits. Use Admin Habit Manager to view progress.')
         return redirect('habits:admin_habit_manager')
     
@@ -644,7 +650,7 @@ def edit_habit(request, habit_id):
 def delete_habit(request, habit_id):
     """Delete a habit"""
     # Redirect admin user to admin manager
-    if request.user.username == 'Shruti':
+    if request.user.username == 'admin':
         messages.error(request, '❌ Admin cannot delete habits. Use Admin Habit Manager to view progress.')
         return redirect('habits:admin_habit_manager')
     
@@ -665,8 +671,8 @@ def delete_habit(request, habit_id):
 @login_required
 def admin_habit_manager(request):
     """Admin-only page for Shruti to manage habit completions in Excel-like format"""
-    # Check if user is Shruti (admin)
-    if request.user.username != 'Shruti':
+    # Check if user is admin
+    if request.user.username != 'admin':
         messages.error(request, '❌ Access denied. Admin only.')
         return redirect('habits:home')
     
@@ -759,7 +765,7 @@ def admin_habit_manager(request):
 def excel_view(request):
     """Excel-like habit tracking page with PDF sharing"""
     # Redirect admin user to admin manager
-    if request.user.username == 'Shruti':
+    if request.user.username == 'admin':
         messages.info(request, '🔍 Admin view: Use Admin Habit Manager to view overall progress.')
         return redirect('habits:admin_habit_manager')
     
@@ -873,3 +879,59 @@ def logout_view(request):
     """Logout view that handles both GET and POST requests"""
     logout(request)
     return redirect('login')
+
+@login_required
+def add_participant(request):
+    """Add a new participant to the challenge (Admin only)"""
+    # Check if user is admin
+    if request.user.username != 'admin':
+        messages.error(request, '❌ Access denied. Admin only.')
+        return redirect('habits:home')
+    
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        first_name = request.POST.get('first_name', '')
+        last_name = request.POST.get('last_name', '')
+        
+        # Validate input
+        if not username or not email or not password:
+            messages.error(request, '❌ All fields are required.')
+            return redirect('habits:add_participant')
+        
+        # Check if username already exists
+        if User.objects.filter(username=username).exists():
+            messages.error(request, '❌ Username already exists.')
+            return redirect('habits:add_participant')
+        
+        # Check if email already exists
+        if User.objects.filter(email=email).exists():
+            messages.error(request, '❌ Email already exists.')
+            return redirect('habits:add_participant')
+        
+        try:
+            # Create new user (profile will be created automatically via signal)
+            user = User.objects.create_user(
+                username=username,
+                email=email,
+                password=password,
+                first_name=first_name,
+                last_name=last_name
+            )
+            
+            messages.success(request, f'✅ Participant "{username}" added successfully!')
+            return redirect('habits:admin_habit_manager')
+            
+        except Exception as e:
+            messages.error(request, f'❌ Error creating participant: {str(e)}')
+            return redirect('habits:add_participant')
+    
+    # Get existing participants for reference
+    participants = User.objects.exclude(username='admin').order_by('username')
+    
+    context = {
+        'participants': participants,
+        'title': 'Add Participant'
+    }
+    return render(request, 'habits/add_participant.html', context)

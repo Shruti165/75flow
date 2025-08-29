@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-4">
+    <!-- Header Card -->
+    <div class="card shadow-lg border-0 mb-4" style="background: var(--gradient-primary); border-radius: 1.5rem;">
+        <div class="card-body py-4 px-5 text-center">
+            <h2 class="text-white fw-bold mb-2">
+                <i class="ri-user-add-line me-2"></i>Add New Participant
+            </h2>
+            <p class="text-white-50 mb-0">Invite someone to join the 75-Day Challenge!</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Add Participant Form -->
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 mb-4" style="background: var(--soft-white); border-radius: 1.5rem;">
+                <div class="card-header py-3" style="background: var(--gradient-secondary); color: #fff; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem;">
+                    <h5 class="mb-0 fw-bold">
+                        <i class="ri-user-settings-line me-2"></i>Participant Details
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post" id="participant-form">
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="username" class="form-label fw-semibold">
+                                    <i class="ri-user-line me-1"></i>Username *
+                                </label>
+                                <input type="text" class="form-control" id="username" name="username" required 
+                                       placeholder="Enter username" style="border-radius: 15px;">
+                                <small class="text-muted">Username must be unique</small>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email" class="form-label fw-semibold">
+                                    <i class="ri-mail-line me-1"></i>Email *
+                                </label>
+                                <input type="email" class="form-control" id="email" name="email" required 
+                                       placeholder="Enter email" style="border-radius: 15px;">
+                                <small class="text-muted">Email must be unique</small>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="first_name" class="form-label fw-semibold">
+                                    <i class="ri-user-heart-line me-1"></i>First Name
+                                </label>
+                                <input type="text" class="form-control" id="first_name" name="first_name" 
+                                       placeholder="Enter first name" style="border-radius: 15px;">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="last_name" class="form-label fw-semibold">
+                                    <i class="ri-user-heart-line me-1"></i>Last Name
+                                </label>
+                                <input type="text" class="form-control" id="last_name" name="last_name" 
+                                       placeholder="Enter last name" style="border-radius: 15px;">
+                            </div>
+                            <div class="col-12">
+                                <label for="password" class="form-label fw-semibold">
+                                    <i class="ri-lock-line me-1"></i>Password *
+                                </label>
+                                <input type="password" class="form-control" id="password" name="password" required 
+                                       placeholder="Enter password" style="border-radius: 15px;">
+                                <small class="text-muted">Minimum 8 characters recommended</small>
+                            </div>
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn btn-success btn-lg px-5" style="border-radius: 25px;">
+                                    <i class="ri-user-add-line me-2"></i>Add Participant
+                                </button>
+                                <a href="{% url 'habits:admin_habit_manager' %}" class="btn btn-outline-secondary btn-lg ms-2" style="border-radius: 25px;">
+                                    <i class="ri-arrow-left-line me-2"></i>Back to Admin
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Current Participants List -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm border-0" style="background: var(--soft-white); border-radius: 1.5rem;">
+                <div class="card-header py-3" style="background: var(--gradient-primary); color: #fff; border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem;">
+                    <h5 class="mb-0 fw-bold">
+                        <i class="ri-team-line me-2"></i>Current Participants
+                    </h5>
+                </div>
+                <div class="card-body p-0">
+                    {% if participants %}
+                        <div class="list-group list-group-flush">
+                            {% for participant in participants %}
+                            <div class="list-group-item d-flex justify-content-between align-items-center py-3" style="border: none; background: transparent;">
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar-circle me-3" style="width: 40px; height: 40px; background: var(--gradient-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+                                        {{ participant.first_name|first|upper|default:participant.username|first|upper }}
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0 fw-semibold">{{ participant.get_full_name|default:participant.username }}</h6>
+                                        <small class="text-muted">{{ participant.email }}</small>
+                                    </div>
+                                </div>
+                                <span class="badge bg-success">Active</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="ri-user-line fs-1 text-muted mb-3"></i>
+                            <p class="text-muted mb-0">No participants yet</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.form-control:focus {
+    border-color: var(--water-blue, #7dd3fc);
+    box-shadow: 0 0 0 0.2rem rgba(125, 211, 252, 0.25);
+}
+.btn {
+    transition: all 0.3s ease;
+}
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.avatar-circle {
+    background: var(--gradient-secondary, linear-gradient(135deg, #86efac 0%, #7dd3fc 100%)) !important;
+}
+</style>
+{% endblock %}

@@ -418,7 +418,12 @@
                                 <i class="ri-file-excel-2-line"></i>Excel
                             </a>
                         </li>
-                        {% if user.username == 'Shruti' %}
+                        {% if user.username == 'admin' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'habits:add_participant' %}">
+                                <i class="ri-user-add-line"></i>Add Participant
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'habits:admin_habit_manager' %}">
                                 <i class="ri-admin-line"></i>Admin Manager

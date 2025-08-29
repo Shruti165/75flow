@@ -152,7 +152,7 @@
                                                                type="checkbox" 
                                                                name="habit_{{ row.habit.id }}_{{ day }}"
                                                                id="habit_{{ row.habit.id }}_{{ day }}"
-                                                               {% if row.completions|get_item:day %}checked{% endif %}
+                                                               {% if day in row.completions %}checked{% endif %}
                                                                {% if day > current_day %}disabled{% endif %}>
                                                     </div>
                                                 </td>

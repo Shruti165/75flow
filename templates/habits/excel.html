@@ -165,19 +165,145 @@ function generatePDF() {
     doc.save("habit_progress_day_{{ current_day }}.pdf");
 }
 
-function shareWhatsApp() {
-    let text = "My Habit Progress - Day {{ current_day }}%0A";
-    {% for row in table_rows %}
-        text += "Category: {{ row.category.name }}%0A";
-        {% for habit in row.habits %}
-            text += " - {{ habit.name }}: {% if habit.completed %}✔{% else %}✗{% endif %}%0A";
-        {% endfor %}
-        text += "%0A";
-    {% endfor %}
-    text += "Overall Progress: {{ completion_percentage|floatformat:1 }}%";
-    const url = "https://wa.me/?text=" + encodeURIComponent(text.replace(/%0A/g, "\n"));
-    window.open(url, "_blank");
+    function shareWhatsApp() {
+        try {
+            console.log('Share WhatsApp function called');
+            
+            // Build a simple progress message
+            let text = "Completed below activities for the day:\n\n";
+            
+            // Collect all completed habits from the table
+            let completedHabits = [];
+            let totalCompleted = 0;
+            
+            // Get all table rows
+            const tableRows = document.querySelectorAll('tbody tr.habit-row');
+            
+            tableRows.forEach(row => {
+                const habitName = row.querySelector('.habit-name');
+                const habitCheckbox = row.querySelector('.habit-checkbox');
+                
+                if (habitName && habitCheckbox) {
+                    const habitText = habitName.textContent.trim();
+                    const isCompleted = habitCheckbox.checked;
+                    
+                    if (isCompleted) {
+                        totalCompleted++;
+                        // Get category name from the row
+                        const categoryCell = row.querySelector('.category-cell');
+                        let categoryName = 'General';
+                        
+                        if (categoryCell) {
+                            categoryName = categoryCell.textContent.trim();
+                        } else {
+                            // If no category cell in this row, look for it in previous rows
+                            let prevRow = row.previousElementSibling;
+                            while (prevRow && !prevRow.querySelector('.category-cell')) {
+                                prevRow = prevRow.previousElementSibling;
+                            }
+                            if (prevRow) {
+                                const prevCategoryCell = prevRow.querySelector('.category-cell');
+                                if (prevCategoryCell) {
+                                    categoryName = prevCategoryCell.textContent.trim();
+                                }
+                            }
+                        }
+                        
+                        completedHabits.push({
+                            category: categoryName,
+                            habit: habitText
+                        });
+                    }
+                }
+            });
+            
+            // Group habits by category
+            const habitsByCategory = {};
+            completedHabits.forEach(item => {
+                if (!habitsByCategory[item.category]) {
+                    habitsByCategory[item.category] = [];
+                }
+                habitsByCategory[item.category].push(item.habit);
+            });
+            
+            // Add completed habits to the message
+            if (totalCompleted > 0) {
+                text += `Total completed: ${totalCompleted} activities\n\n`;
+                
+                Object.keys(habitsByCategory).forEach(category => {
+                    text += `${category}:\n`;
+                    habitsByCategory[category].forEach(habit => {
+                        text += `  - ${habit}\n`;
+                    });
+                    text += '\n';
+                });
+            } else {
+                text += "No activities completed yet today.\n\n";
+            }
+            
+            text += "Keep up the great work!\n";
+            text += "Shared from 75Flow Challenge";
+            
+            console.log('Generated text:', text);
+            console.log('Total completed habits:', totalCompleted);
+        
+                    // Create WhatsApp URL with proper encoding
+            const encodedText = encodeURIComponent(text);
+            const url = "https://wa.me/?text=" + encodedText;
+            console.log('WhatsApp URL:', url);
+            console.log('Encoded text length:', encodedText.length);
+            
+            // Try multiple methods to open WhatsApp
+            let success = false;
+            
+            // Method 1: Try to open WhatsApp directly
+            try {
+                const newWindow = window.open(url, "_blank");
+                if (newWindow && !newWindow.closed) {
+                    console.log('WhatsApp window opened successfully (Method 1)');
+                    success = true;
+                }
+            } catch (e) {
+                console.log('Method 1 failed:', e);
+            }
+            
+            // Method 1.5: Try mobile-specific WhatsApp URL
+            if (!success) {
+                try {
+                    const mobileUrl = "whatsapp://send?text=" + encodedText;
+                    const mobileWindow = window.open(mobileUrl, "_blank");
+                    if (mobileWindow && !mobileWindow.closed) {
+                        console.log('WhatsApp mobile opened successfully (Method 1.5)');
+                        success = true;
+                    }
+                } catch (e) {
+                    console.log('Method 1.5 failed:', e);
+                }
+            }
+        
+        // Method 2: If Method 1 fails, try to copy to clipboard and show instructions
+        if (!success) {
+            try {
+                // Try to copy text to clipboard
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('✅ Progress copied to clipboard!\n\n📱 To share on WhatsApp:\n1. Open WhatsApp\n2. Paste the copied text\n3. Send to your desired chat\n\n📋 Text copied: ' + text.substring(0, 100) + '...');
+                }).catch(() => {
+                    // If clipboard fails, just show the text
+                    alert('📱 To share on WhatsApp:\n\n1. Open WhatsApp\n2. Copy this text:\n\n' + text + '\n\n3. Paste and send to your desired chat');
+                });
+            } catch (e) {
+                console.error('Clipboard method failed:', e);
+                // Final fallback: just show the text
+                alert('📱 WhatsApp sharing failed. Here\'s your progress:\n\n' + text);
+            }
+        }
+    } catch (error) {
+        console.error('Error in shareWhatsApp function:', error);
+        alert('Error sharing to WhatsApp: ' + error.message);
+    }
+    
 }
+
 </script>
 
 <style>
