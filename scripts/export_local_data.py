@@ -148,7 +148,8 @@ if __name__ == "__main__":
     reset_passwords()
 """
     
-    with open('render_deployment/reset_passwords.py', 'w') as f:
+    # Create the file in the current directory since we're on Render
+    with open('reset_passwords.py', 'w') as f:
         f.write(script_content)
     
     print("  ✅ Created reset_passwords.py")
@@ -327,7 +328,8 @@ if __name__ == "__main__":
     main()
 """
     
-    with open('render_deployment/import_local_data.py', 'w') as f:
+    # Create the file in the current directory since we're on Render
+    with open('import_local_data.py', 'w') as f:
         f.write(script_content)
     
     print("  ✅ Created import_local_data.py")
@@ -364,7 +366,7 @@ def main():
             'habit_days': habit_days_data
         }
         
-        with open('render_deployment/local_data_export.json', 'w') as f:
+        with open('local_data_export.json', 'w') as f:
             json.dump(export_data, f, indent=2)
         
         print("=" * 50)
@@ -376,9 +378,9 @@ def main():
         print(f"  Habit Days: {len(habit_days_data)}")
         print()
         print("📁 Files created:")
-        print("  render_deployment/local_data_export.json")
-        print("  render_deployment/import_local_data.py")
-        print("  render_deployment/reset_passwords.py")
+        print("  local_data_export.json")
+        print("  import_local_data.py")
+        print("  reset_passwords.py")
         print()
         print("🚀 Next steps:")
         print("  1. Push these files to GitHub")
