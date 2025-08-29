@@ -25,3 +25,5 @@ services:
       - libtiff5-dev
       - libopenjp2-7-dev
       - libxcb1-dev
+      - build-essential
+      - python3-dev

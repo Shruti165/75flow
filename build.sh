@@ -8,9 +8,15 @@ echo "Starting build process..."
 echo "Upgrading pip..."
 python -m pip install --upgrade pip
 
-# Install Pillow first with specific flags to avoid build issues
+# Try to install Pillow first with fallback options
 echo "Installing Pillow..."
-pip install Pillow==9.5.0 --no-cache-dir --verbose --global-option=build_ext --global-option=--disable-platform-guessing
+if ! pip install Pillow==8.4.0 --no-cache-dir --verbose; then
+    echo "Pillow 8.4.0 failed, trying Pillow 7.2.0..."
+    if ! pip install Pillow==7.2.0 --no-cache-dir --verbose; then
+        echo "Pillow 7.2.0 failed, trying latest compatible version..."
+        pip install Pillow --no-cache-dir --verbose
+    fi
+fi
 
 # Install remaining requirements
 echo "Installing remaining requirements..."
