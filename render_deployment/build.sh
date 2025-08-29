@@ -33,4 +33,8 @@ python manage.py collectstatic --no-input
 echo "Running migrations..."
 python manage.py migrate
 
+# Create default users
+echo "Creating default users..."
+python manage.py create_default_users
+
 echo "Build completed successfully!"
