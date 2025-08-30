@@ -328,7 +328,6 @@
                                         <th><i class="ri-user-line me-1"></i>Participant</th>
                                         <th><i class="ri-folder-line me-1"></i>Categories</th>
                                         <th><i class="ri-check-line me-1"></i>Days</th>
-                                        <th><i class="ri-bar-chart-line me-1"></i>Overall %</th>
                                         <th><i class="ri-fire-line me-1"></i>Streak</th>
                                         <th><i class="ri-progress-line me-1"></i>Progress</th>
                                     </tr>
@@ -381,11 +380,6 @@
                                         </td>
                                         <td class="categories-cell">{{ user_stat.total_categories }}</td>
                                         <td class="days-cell">{{ user_stat.total_completed_days }}</td>
-                                        <td class="percentage-cell">
-                                            <span class="percentage-badge {% if user_stat.overall_completion_percentage >= 80 %}excellent{% elif user_stat.overall_completion_percentage >= 60 %}good{% else %}needs-improvement{% endif %}">
-                                                {{ user_stat.overall_completion_percentage|floatformat:1 }}%
-                                            </span>
-                                        </td>
                                         <td class="streak-cell">
                                             <span class="streak-badge">{{ user_stat.current_streak }}</span>
                                         </td>
@@ -396,7 +390,6 @@
                                                          style="width: {{ user_stat.overall_completion_percentage }}%">
                                                     </div>
                                                 </div>
-                                                <small class="progress-text">{{ user_stat.overall_completion_percentage|floatformat:1 }}%</small>
                                             </div>
                                         </td>
                                     </tr>
@@ -423,7 +416,7 @@
                                         <th><i class="ri-trophy-line me-1"></i>Rank</th>
                                         <th><i class="ri-user-line me-1"></i>Participant</th>
                                         <th><i class="ri-check-line me-1"></i>Weekly Completed</th>
-                                        <th><i class="ri-bar-chart-line me-1"></i>Weekly %</th>
+
                                         <th><i class="ri-progress-line me-1"></i>Progress</th>
                                     </tr>
                                 </thead>
@@ -474,11 +467,6 @@
                                             </div>
                                         </td>
                                         <td class="days-cell">{{ user_stat.weekly_completed }}</td>
-                                        <td class="percentage-cell">
-                                            <span class="percentage-badge {% if user_stat.weekly_completion_percentage >= 80 %}excellent{% elif user_stat.weekly_completion_percentage >= 60 %}good{% else %}needs-improvement{% endif %}">
-                                                {{ user_stat.weekly_completion_percentage|floatformat:1 }}%
-                                            </span>
-                                        </td>
                                         <td class="progress-cell">
                                             <div class="enhanced-progress">
                                                 <div class="progress" style="height: 10px;">
@@ -486,7 +474,6 @@
                                                          style="width: {{ user_stat.weekly_completion_percentage }}%">
                                                     </div>
                                                 </div>
-                                                <small class="progress-text">{{ user_stat.weekly_completion_percentage|floatformat:1 }}%</small>
                                             </div>
                                         </td>
                                     </tr>
@@ -580,7 +567,6 @@
                                                          style="width: {{ user_stat.daily_completion_percentage }}%">
                                                     </div>
                                                 </div>
-                                                <small class="progress-text">{{ user_stat.daily_completion_percentage|floatformat:1 }}%</small>
                                             </div>
                                         </td>
                                     </tr>
@@ -607,7 +593,6 @@
                                         <th><i class="ri-trophy-line me-1"></i>Rank</th>
                                         <th><i class="ri-user-line me-1"></i>Participant</th>
                                         <th><i class="ri-fire-line me-1"></i>Current Streak</th>
-                                        <th><i class="ri-bar-chart-line me-1"></i>Overall %</th>
                                         <th><i class="ri-progress-line me-1"></i>Progress</th>
                                     </tr>
                                 </thead>
@@ -660,11 +645,6 @@
                                         <td class="streak-cell">
                                             <span class="streak-badge">{{ user_stat.current_streak }} days</span>
                                         </td>
-                                        <td class="percentage-cell">
-                                            <span class="percentage-badge {% if user_stat.overall_completion_percentage >= 80 %}excellent{% elif user_stat.overall_completion_percentage >= 60 %}good{% else %}needs-improvement{% endif %}">
-                                                {{ user_stat.overall_completion_percentage|floatformat:1 }}%
-                                            </span>
-                                        </td>
                                         <td class="progress-cell">
                                             <div class="enhanced-progress">
                                                 <div class="progress" style="height: 10px;">
@@ -672,7 +652,6 @@
                                                          style="width: {{ user_stat.overall_completion_percentage }}%">
                                                     </div>
                                                 </div>
-                                                <small class="progress-text">{{ user_stat.overall_completion_percentage|floatformat:1 }}%</small>
                                             </div>
                                         </td>
                                     </tr>
@@ -684,77 +663,7 @@
                 </div>
             </div>
 
-            <!-- Category Winners -->
-            {% if category_winners %}
-            <div class="row mt-5">
-                <div class="col-12">
-                    <h5 class="mb-4"><i class="ri-star-line icon-gradient me-2"></i>Category Champions</h5>
-                    <div class="row">
-                        {% for category, winner in category_winners.items %}
-                        <div class="col-md-4 mb-3">
-                            <div class="card h-100" style="border-left: 4px solid {{ category.color }};">
-                                <div class="card-body text-center">
-                                    <div class="mb-3">
-                                        <i class="ri-trophy-line achievement-star" style="color: {{ category.color }}; font-size: 2rem;"></i>
-                                    </div>
-                                    <h6 class="card-title">
-                                        {% if category.name == "Reading" %}📚
-                                        {% elif category.name == "Fitness" %}💪
-                                        {% elif category.name == "Nutrition" %}🥗
-                                        {% elif category.name == "Wealth" %}💰
-                                        {% elif category.name == "Spiritual" %}🧘
-                                        {% elif category.name == "Fun" %}🎉
-                                        {% else %}📋{% endif %}
-                                        {{ category.name }}
-                                    </h6>
-                                    <p class="card-text">
-                                        {% if winner.user %}
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <div class="user-avatar-small me-2">
-                                                {% if winner.user.profile and winner.user.profile.profile_image %}
-                                                    <img src="{{ winner.user.profile.profile_image.url }}" 
-                                                         alt="{{ winner.user.username }}" 
-                                                         class="avatar-circle-small user-profile-image">
-                                                {% else %}
-                                                    <div class="avatar-circle-small" style="background: var(--gradient-primary);">
-                                                        <i class="ri-user-line"></i>
-                                                    </div>
-                                                {% endif %}
-                                            </div>
-                                            <div>
-                                                <strong>{{ winner.user.username }}</strong>
-                                                {% if winner.user == request.user %}
-                                                    <span class="badge bg-primary">You</span>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                        {% else %}
-                                        <div class="text-center">
-                                            <div class="user-avatar-small mx-auto mb-2">
-                                                <div class="avatar-circle-small" style="background: var(--gradient-primary);">
-                                                    <i class="ri-user-line"></i>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <strong class="text-muted">No participants yet</strong>
-                                            </div>
-                                        </div>
-                                        {% endif %}
-                                    </p>
-                                    <div class="progress mb-2">
-                                        <div class="progress-bar" role="progressbar" 
-                                             style="width: {{ winner.percentage }}%; background-color: {{ category.color }};">
-                                        </div>
-                                    </div>
-                                    <small class="text-muted">Completion: {{ winner.percentage|floatformat:1 }}%</small>
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-            {% endif %}
+
 
             <!-- Category Performance Overview - Enhanced Styles -->
             <div class="row mt-5">
@@ -924,108 +833,7 @@
                                         </div>
                                     </div>
                                     
-                                    <!-- Category Insights -->
-                                    <div class="category-insights">
-                                        <div class="insights-header">
-                                            <h6 class="insights-title">
-                                                <i class="ri-lightbulb-line me-2"></i>Category Insights & Ideas
-                                            </h6>
-                                        </div>
-                                        <div class="insights-content">
-                                            {% if category_data.category.name == "Reading" %}
-                                                <div class="insight-item">
-                                                    <i class="ri-book-open-line"></i>
-                                                    <span><strong>Try:</strong> Read 10 pages before bed, listen to audiobooks during commute, join a book club</span>
-                                                </div>
-                                                <div class="insight-item">
-                                                    <i class="ri-time-line"></i>
-                                                    <span><strong>Tip:</strong> Start with 15-minute reading sessions and gradually increase</span>
-                                                </div>
-                                                <div class="insight-item">
-                                                    <i class="ri-lightbulb-line"></i>
-                                                    <span><strong>Idea:</strong> Mix fiction with non-fiction, explore different genres each week</span>
-                                                </div>
-                                            {% elif category_data.category.name == "Fitness" %}
-                                                <div class="insight-item">
-                                                    <i class="ri-heart-pulse-line"></i>
-                                                    <span><strong>Try:</strong> 20-minute home workouts, take stairs instead of elevator, walk meetings</span>
-                                                </div>
-                                                <div class="insight-item">
-                                                    <i class="ri-time-line"></i>
-                                                    <span><strong>Tip:</strong> Break workouts into 3x10 minute sessions throughout the day</span>
-                                                </div>
-                                                <div class="insight-item">
-                                                    <i class="ri-lightbulb-line"></i>
-                                                    <span><strong>Idea:</strong> Try yoga, dancing, or sports you've never done before</span>
-                                                </div>
-                                            {% elif category_data.category.name == "Nutrition" %}
-                                                <div class="insight-item">
-                                                    <i class="ri-restaurant-line"></i>
-                                                    <span><strong>Try:</strong> Meal prep on Sundays, drink 8 glasses of water, eat rainbow-colored foods</span>
-                                                </div>
-                                                <div class="insight-item">
-                                                    <i class="ri-time-line"></i>
-                                                    <span><strong>Tip:</strong> Start with one healthy meal per day, gradually increase</span>
-                                                </div>
-                                                <div class="insight-item">
-                                                    <i class="ri-lightbulb-line"></i>
-                                                    <span><strong>Idea:</strong> Try new recipes, explore different cuisines, grow your own herbs</span>
-                                                </div>
-                                            {% elif category_data.category.name == "Wealth" %}
-                                                <div class="insight-item">
-                                                    <i class="ri-money-dollar-circle-line"></i>
-                                                    <span><strong>Try:</strong> Save 10% of income, track all expenses, invest in index funds</span>
-                                                </div>
-                                                <div class="insight-item">
-                                                    <i class="ri-time-line"></i>
-                                                    <span><strong>Tip:</strong> Start with $5 daily savings, automate your investments</span>
-                                                </div>
-                                                <div class="insight-item">
-                                                    <i class="ri-lightbulb-line"></i>
-                                                    <span><strong>Idea:</strong> Learn about side hustles, start a small business, develop new skills</span>
-                                                </div>
-                                            {% elif category_data.category.name == "Spiritual" %}
-                                                <div class="insight-item">
-                                                    <i class="ri-heart-line"></i>
-                                                    <span><strong>Try:</strong> 10-minute meditation, practice gratitude, spend time in nature</span>
-                                                </div>
-                                                <div class="insight-item">
-                                                    <i class="ri-time-line"></i>
-                                                    <span><strong>Tip:</strong> Start with 5-minute sessions, find a quiet space daily</span>
-                                                </div>
-                                                <div class="insight-item">
-                                                    <i class="ri-lightbulb-line"></i>
-                                                    <span><strong>Idea:</strong> Try journaling, reading spiritual texts, joining a community</span>
-                                                </div>
-                                            {% elif category_data.category.name == "Fun" %}
-                                                <div class="insight-item">
-                                                    <i class="ri-gamepad-line"></i>
-                                                    <span><strong>Try:</strong> Learn a new hobby, play board games, explore your city</span>
-                                                </div>
-                                                <div class="insight-item">
-                                                    <i class="ri-time-line"></i>
-                                                    <span><strong>Tip:</strong> Schedule fun activities, try something new weekly</span>
-                                                </div>
-                                                <div class="insight-item">
-                                                    <i class="ri-lightbulb-line"></i>
-                                                    <span><strong>Idea:</strong> Take up painting, learn an instrument, join a social club</span>
-                                                </div>
-                                            {% else %}
-                                                <div class="insight-item">
-                                                    <i class="ri-arrow-up-line"></i>
-                                                    <span><strong>Try:</strong> Break your goal into smaller, daily achievable tasks</span>
-                                                </div>
-                                                <div class="insight-item">
-                                                    <i class="ri-time-line"></i>
-                                                    <span><strong>Tip:</strong> Start with 5-10 minutes daily and gradually increase</span>
-                                                </div>
-                                                <div class="insight-item">
-                                                    <i class="ri-trending-up-line"></i>
-                                                    <span><strong>Idea:</strong> Track your progress, celebrate small wins, find an accountability partner</span>
-                                                </div>
-                                            {% endif %}
-                                        </div>
-                                    </div>
+
                                 </div>
                                 
 
@@ -2609,55 +2417,7 @@
         font-size: 1.2rem;
     }
 
-    /* Category Insights */
-    .category-insights {
-        background: var(--soft-white);
-        border-radius: 15px;
-        padding: 25px;
-        box-shadow: var(--shadow-soft);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-    }
 
-    .insight-card {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        padding: 20px;
-        background: rgba(248, 249, 250, 0.8);
-        border-radius: 12px;
-        transition: all 0.3s ease;
-        height: 100%;
-    }
-
-    .insight-card:hover {
-        transform: translateY(-3px);
-        box-shadow: var(--shadow-soft);
-    }
-
-    .insight-icon {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--gradient-secondary);
-        color: white;
-        font-size: 1.5rem;
-        flex-shrink: 0;
-    }
-
-    .insight-content h6 {
-        color: var(--text-primary);
-        font-weight: 700;
-        margin-bottom: 8px;
-    }
-
-    .insight-content p {
-        color: var(--text-secondary);
-        font-size: 0.9rem;
-        line-height: 1.4;
-    }
 
     /* Responsive Design for Category Comparison */
     @media (max-width: 768px) {
@@ -3565,30 +3325,12 @@
 
     .enhanced-table th:nth-child(3),
     .enhanced-table td:nth-child(3) {
-        width: 100px;
-        min-width: 100px;
-    }
-
-    .enhanced-table th:nth-child(4),
-    .enhanced-table td:nth-child(4) {
-        width: 100px;
-        min-width: 100px;
-    }
-
-    .enhanced-table th:nth-child(5),
-    .enhanced-table td:nth-child(5) {
         width: 120px;
         min-width: 120px;
     }
 
-    .enhanced-table th:nth-child(6),
-    .enhanced-table td:nth-child(6) {
-        width: 100px;
-        min-width: 100px;
-    }
-
-    .enhanced-table th:nth-child(7),
-    .enhanced-table td:nth-child(7) {
+    .enhanced-table th:nth-child(4),
+    .enhanced-table td:nth-child(4) {
         width: 150px;
         min-width: 150px;
     }
@@ -4342,89 +4084,7 @@
         font-weight: 500;
     }
 
-    /* Category Insights */
-    .category-insights {
-        background: rgba(248, 249, 250, 0.8);
-        border-radius: 12px;
-        padding: 20px;
-        border: 1px solid rgba(0, 0, 0, 0.05);
-    }
 
-    .insights-header {
-        margin-bottom: 15px;
-    }
-
-    .insights-title {
-        font-size: 1rem;
-        font-weight: 600;
-        color: var(--text-primary);
-        margin-bottom: 0;
-        display: flex;
-        align-items: center;
-    }
-
-    .insights-content {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .insight-item {
-        display: flex;
-        align-items: flex-start;
-        gap: 12px;
-        font-size: 0.9rem;
-        color: var(--text-secondary);
-        line-height: 1.5;
-        padding: 12px;
-        background: rgba(255, 255, 255, 0.6);
-        border-radius: 8px;
-        border-left: 3px solid var(--gradient-primary);
-        transition: all 0.3s ease;
-    }
-
-    .insight-item:hover {
-        background: rgba(255, 255, 255, 0.9);
-        transform: translateX(3px);
-        box-shadow: var(--shadow-soft);
-    }
-
-    .insight-item i {
-        flex-shrink: 0;
-        margin-top: 2px;
-        color: var(--gradient-primary);
-        font-size: 1rem;
-        background: rgba(125, 211, 252, 0.1);
-        padding: 6px;
-        border-radius: 6px;
-    }
-
-    .insight-item strong {
-        color: var(--text-primary);
-        font-weight: 600;
-    }
-
-    .insight-item span {
-        flex: 1;
-    }
-
-    /* Mobile responsiveness for insights */
-    @media (max-width: 768px) {
-        .insights-content {
-            gap: 8px;
-        }
-        
-        .insight-item {
-            padding: 10px;
-            gap: 10px;
-            font-size: 0.85rem;
-        }
-        
-        .insight-item i {
-            padding: 5px;
-            font-size: 0.9rem;
-        }
-    }
 
 
 
