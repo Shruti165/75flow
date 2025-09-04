@@ -1,0 +1,389 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Feedback & Bug Reports - 75Flow{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex align-items-center mb-4">
+                <i class="ri-feedback-line me-3" style="font-size: 2rem; color: #007bff;"></i>
+                <div>
+                    <h1 class="mb-0">Feedback & Bug Reports</h1>
+                    <p class="text-muted mb-0">Help us improve 75Flow by sharing your thoughts and reporting issues</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Feedback Form -->
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="ri-feedback-line me-2"></i>Share Your Feedback
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" id="feedbackForm">
+                        {% csrf_token %}
+                        <input type="hidden" name="form_type" value="feedback">
+                        
+                        <div class="mb-3">
+                            <label for="{{ feedback_form.feedback_type.id_for_label }}" class="form-label">
+                                <i class="ri-tag-line me-1"></i>Feedback Type
+                            </label>
+                            {{ feedback_form.feedback_type }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ feedback_form.title.id_for_label }}" class="form-label">
+                                <i class="ri-feedback-line me-1"></i>Title
+                            </label>
+                            {{ feedback_form.title }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ feedback_form.description.id_for_label }}" class="form-label">
+                                <i class="ri-message-3-line me-1"></i>Description
+                            </label>
+                            {{ feedback_form.description }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ feedback_form.priority.id_for_label }}" class="form-label">
+                                <i class="ri-flag-line me-1"></i>Priority
+                            </label>
+                            {{ feedback_form.priority }}
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="ri-send-plane-line me-2"></i>Submit Feedback
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bug Report Form -->
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">
+                        <i class="ri-bug-line me-2"></i>Report a Bug
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data" id="bugForm">
+                        {% csrf_token %}
+                        <input type="hidden" name="form_type" value="bug_report">
+                        
+                        <div class="mb-3">
+                            <label for="{{ bug_form.title.id_for_label }}" class="form-label">
+                                <i class="ri-bug-line me-1"></i>Bug Title
+                            </label>
+                            {{ bug_form.title }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ bug_form.description.id_for_label }}" class="form-label">
+                                <i class="ri-message-3-line me-1"></i>What happened?
+                            </label>
+                            {{ bug_form.description }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ bug_form.steps_to_reproduce.id_for_label }}" class="form-label">
+                                <i class="ri-list-ordered me-1"></i>Steps to Reproduce
+                            </label>
+                            {{ bug_form.steps_to_reproduce }}
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ bug_form.expected_behavior.id_for_label }}" class="form-label">
+                                    <i class="ri-check-line me-1"></i>Expected Behavior
+                                </label>
+                                {{ bug_form.expected_behavior }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ bug_form.actual_behavior.id_for_label }}" class="form-label">
+                                    <i class="ri-close-line me-1"></i>Actual Behavior
+                                </label>
+                                {{ bug_form.actual_behavior }}
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ bug_form.severity.id_for_label }}" class="form-label">
+                                    <i class="ri-alert-line me-1"></i>Severity
+                                </label>
+                                {{ bug_form.severity }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ bug_form.browser_info.id_for_label }}" class="form-label">
+                                    <i class="ri-global-line me-1"></i>Browser Info
+                                </label>
+                                {{ bug_form.browser_info }}
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ bug_form.device_info.id_for_label }}" class="form-label">
+                                <i class="ri-smartphone-line me-1"></i>Device Info
+                            </label>
+                            {{ bug_form.device_info }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ bug_form.screenshot.id_for_label }}" class="form-label">
+                                <i class="ri-image-line me-1"></i>Screenshot (Optional)
+                            </label>
+                            {{ bug_form.screenshot }}
+                            <div class="form-text">Upload a screenshot to help us understand the issue better</div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-danger w-100">
+                            <i class="ri-bug-line me-2"></i>Report Bug
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Submissions -->
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">
+                        <i class="ri-history-line me-2"></i>Your Recent Feedback
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if recent_feedback %}
+                        <div class="list-group list-group-flush">
+                            {% for feedback in recent_feedback %}
+                                <div class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">{{ feedback.title }}</div>
+                                        <small class="text-muted">{{ feedback.get_feedback_type_display }} • {{ feedback.created_at|date:"M d, Y" }}</small>
+                                    </div>
+                                    <span class="badge bg-{% if feedback.priority == 'high' %}danger{% elif feedback.priority == 'medium' %}warning{% else %}secondary{% endif %}">
+                                        {{ feedback.get_priority_display }}
+                                    </span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted text-center py-3">
+                            <i class="ri-feedback-line me-2"></i>No feedback submitted yet
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0">
+                        <i class="ri-bug-line me-2"></i>Your Recent Bug Reports
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if recent_bugs %}
+                        <div class="list-group list-group-flush">
+                            {% for bug in recent_bugs %}
+                                <div class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">{{ bug.title }}</div>
+                                        <small class="text-muted">{{ bug.created_at|date:"M d, Y" }}</small>
+                                    </div>
+                                    <div class="d-flex flex-column align-items-end">
+                                        <span class="badge bg-{% if bug.severity == 'critical' %}danger{% elif bug.severity == 'high' %}warning{% elif bug.severity == 'medium' %}info{% else %}secondary{% endif %} mb-1">
+                                            {{ bug.get_severity_display }}
+                                        </span>
+                                        <span class="badge bg-{% if bug.status == 'resolved' %}success{% elif bug.status == 'in_progress' %}primary{% else %}secondary{% endif %}">
+                                            {{ bug.get_status_display }}
+                                        </span>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted text-center py-3">
+                            <i class="ri-bug-line me-2"></i>No bug reports submitted yet
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Section -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">
+                        <i class="ri-question-line me-2"></i>Need Help?
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex align-items-start">
+                                <i class="ri-lightbulb-line me-3 text-warning" style="font-size: 1.5rem;"></i>
+                                <div>
+                                    <h6 class="mb-1">Feature Requests</h6>
+                                    <p class="text-muted small mb-0">Have an idea for a new feature? We'd love to hear it!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex align-items-start">
+                                <i class="ri-tools-line me-3 text-info" style="font-size: 1.5rem;"></i>
+                                <div>
+                                    <h6 class="mb-1">Bug Reports</h6>
+                                    <p class="text-muted small mb-0">Found something that's not working? Let us know!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex align-items-start">
+                                <i class="ri-heart-line me-3 text-danger" style="font-size: 1.5rem;"></i>
+                                <div>
+                                    <h6 class="mb-1">General Feedback</h6>
+                                    <p class="text-muted small mb-0">Share your thoughts about the app experience</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    border: none;
+    border-radius: 15px;
+}
+
+.card-header {
+    border-radius: 15px 15px 0 0 !important;
+    border: none;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.btn {
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.list-group-item {
+    border: none;
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.list-group-item:last-child {
+    border-bottom: none;
+}
+
+.badge {
+    font-size: 0.75rem;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+}
+</style>
+
+<script>
+// Form validation and enhancement
+document.addEventListener('DOMContentLoaded', function() {
+    // Add form validation
+    const feedbackForm = document.getElementById('feedbackForm');
+    const bugForm = document.getElementById('bugForm');
+    
+    if (feedbackForm) {
+        feedbackForm.addEventListener('submit', function(e) {
+            const title = document.querySelector('#id_title');
+            const description = document.querySelector('#id_description');
+            
+            if (!title.value.trim()) {
+                e.preventDefault();
+                title.focus();
+                alert('Please enter a title for your feedback.');
+                return;
+            }
+            
+            if (!description.value.trim()) {
+                e.preventDefault();
+                description.focus();
+                alert('Please provide a description for your feedback.');
+                return;
+            }
+        });
+    }
+    
+    if (bugForm) {
+        bugForm.addEventListener('submit', function(e) {
+            const title = document.querySelector('#id_title');
+            const description = document.querySelector('#id_description');
+            const steps = document.querySelector('#id_steps_to_reproduce');
+            
+            if (!title.value.trim()) {
+                e.preventDefault();
+                title.focus();
+                alert('Please enter a title for the bug report.');
+                return;
+            }
+            
+            if (!description.value.trim()) {
+                e.preventDefault();
+                description.focus();
+                alert('Please describe what happened.');
+                return;
+            }
+            
+            if (!steps.value.trim()) {
+                e.preventDefault();
+                steps.focus();
+                alert('Please provide steps to reproduce the bug.');
+                return;
+            }
+        });
+    }
+    
+    // Auto-resize textareas
+    const textareas = document.querySelectorAll('textarea');
+    textareas.forEach(textarea => {
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
+        });
+    });
+});
+</script>
+{% endblock %}

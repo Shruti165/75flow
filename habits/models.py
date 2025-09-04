@@ -97,3 +97,69 @@ class HabitDay(models.Model):
     
     def __str__(self):
         return f"{self.habit.name} - Day {self.day} ({'Completed' if self.completed else 'Not Completed'})"
+
+class Feedback(models.Model):
+    FEEDBACK_TYPES = [
+        ('general', 'General Feedback'),
+        ('feature_request', 'Feature Request'),
+        ('improvement', 'Improvement Suggestion'),
+        ('other', 'Other'),
+    ]
+    
+    PRIORITY_LEVELS = [
+        ('low', 'Low'),
+        ('medium', 'Medium'),
+        ('high', 'High'),
+    ]
+    
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    feedback_type = models.CharField(max_length=20, choices=FEEDBACK_TYPES, default='general')
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    priority = models.CharField(max_length=10, choices=PRIORITY_LEVELS, default='medium')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_resolved = models.BooleanField(default=False)
+    admin_notes = models.TextField(blank=True, null=True)
+    
+    class Meta:
+        ordering = ['-created_at']
+    
+    def __str__(self):
+        return f"{self.get_feedback_type_display()} - {self.title}"
+
+class BugReport(models.Model):
+    SEVERITY_LEVELS = [
+        ('low', 'Low - Minor issue'),
+        ('medium', 'Medium - Moderate impact'),
+        ('high', 'High - Significant impact'),
+        ('critical', 'Critical - App breaking'),
+    ]
+    
+    STATUS_CHOICES = [
+        ('new', 'New'),
+        ('in_progress', 'In Progress'),
+        ('resolved', 'Resolved'),
+        ('closed', 'Closed'),
+    ]
+    
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    steps_to_reproduce = models.TextField(help_text="Detailed steps to reproduce the bug")
+    expected_behavior = models.TextField(help_text="What should happen?")
+    actual_behavior = models.TextField(help_text="What actually happened?")
+    severity = models.CharField(max_length=10, choices=SEVERITY_LEVELS, default='medium')
+    status = models.CharField(max_length=15, choices=STATUS_CHOICES, default='new')
+    browser_info = models.CharField(max_length=100, blank=True, help_text="Browser and version")
+    device_info = models.CharField(max_length=100, blank=True, help_text="Device type and OS")
+    screenshot = models.ImageField(upload_to='bug_reports/', blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    admin_notes = models.TextField(blank=True, null=True)
+    
+    class Meta:
+        ordering = ['-created_at']
+    
+    def __str__(self):
+        return f"Bug: {self.title} ({self.get_severity_display()})"

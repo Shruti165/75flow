@@ -16,5 +16,6 @@ urlpatterns = [
     path('habit/<int:habit_id>/edit/', views.edit_habit, name='edit_habit'),
     path('habit/<int:habit_id>/delete/', views.delete_habit, name='delete_habit'),
     path('profile/', views.profile, name='profile'),
+    path('feedback/', views.feedback_page, name='feedback'),
     path('logout/', views.logout_view, name='logout'),
 ] 

@@ -7,8 +7,8 @@ from django.db.models import Count, Sum, Q
 from django.utils import timezone
 from datetime import datetime, timedelta, date
 from django.http import JsonResponse, HttpResponse
-from .models import Habit, HabitDay, Category, Profile
-from .forms import CategoryForm, HabitForm, ProfileForm
+from .models import Habit, HabitDay, Category, Profile, Feedback, BugReport
+from .forms import CategoryForm, HabitForm, ProfileForm, FeedbackForm, BugReportForm
 
 # Create your views here.
 
@@ -935,3 +935,43 @@ def add_participant(request):
         'title': 'Add Participant'
     }
     return render(request, 'habits/add_participant.html', context)
+
+@login_required
+def feedback_page(request):
+    """Feedback and bug reporting page"""
+    # Initialize forms
+    feedback_form = FeedbackForm()
+    bug_form = BugReportForm()
+    
+    if request.method == 'POST':
+        form_type = request.POST.get('form_type')
+        
+        if form_type == 'feedback':
+            feedback_form = FeedbackForm(request.POST)
+            if feedback_form.is_valid():
+                feedback = feedback_form.save(commit=False)
+                feedback.user = request.user
+                feedback.save()
+                messages.success(request, '✅ Thank you for your feedback! We appreciate your input.')
+                return redirect('habits:feedback')
+        elif form_type == 'bug_report':
+            bug_form = BugReportForm(request.POST, request.FILES)
+            if bug_form.is_valid():
+                bug_report = bug_form.save(commit=False)
+                bug_report.user = request.user
+                bug_report.save()
+                messages.success(request, '✅ Bug report submitted successfully! We\'ll investigate and fix it soon.')
+                return redirect('habits:feedback')
+    
+    # Get recent feedback and bug reports for the user
+    recent_feedback = Feedback.objects.filter(user=request.user).order_by('-created_at')[:5]
+    recent_bugs = BugReport.objects.filter(user=request.user).order_by('-created_at')[:5]
+    
+    context = {
+        'feedback_form': feedback_form,
+        'bug_form': bug_form,
+        'recent_feedback': recent_feedback,
+        'recent_bugs': recent_bugs,
+        'user': request.user
+    }
+    return render(request, 'habits/feedback.html', context)

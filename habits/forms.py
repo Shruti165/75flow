@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Habit, Category, Profile
+from .models import Habit, Category, Profile, Feedback, BugReport
 from django.core.exceptions import ValidationError
 import os
 
@@ -75,3 +75,99 @@ class ProfileForm(forms.ModelForm):
                 raise ValidationError("Please upload a valid image file.")
         
         return image 
+
+class FeedbackForm(forms.ModelForm):
+    """Form for submitting feedback and suggestions"""
+    
+    class Meta:
+        model = Feedback
+        fields = ['feedback_type', 'title', 'description', 'priority']
+        widgets = {
+            'feedback_type': forms.Select(attrs={'class': 'form-control'}),
+            'title': forms.TextInput(attrs={
+                'class': 'form-control', 
+                'placeholder': 'Brief title for your feedback'
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control', 
+                'rows': 5, 
+                'placeholder': 'Please provide detailed feedback...'
+            }),
+            'priority': forms.Select(attrs={'class': 'form-control'}),
+        }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['description'].required = True
+        self.fields['title'].required = True
+
+class BugReportForm(forms.ModelForm):
+    """Form for reporting bugs"""
+    
+    class Meta:
+        model = BugReport
+        fields = ['title', 'description', 'steps_to_reproduce', 'expected_behavior', 
+                 'actual_behavior', 'severity', 'browser_info', 'device_info', 'screenshot']
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'form-control', 
+                'placeholder': 'Brief description of the bug'
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control', 
+                'rows': 3, 
+                'placeholder': 'What happened?'
+            }),
+            'steps_to_reproduce': forms.Textarea(attrs={
+                'class': 'form-control', 
+                'rows': 4, 
+                'placeholder': '1. Go to...\n2. Click on...\n3. See error...'
+            }),
+            'expected_behavior': forms.Textarea(attrs={
+                'class': 'form-control', 
+                'rows': 3, 
+                'placeholder': 'What should have happened?'
+            }),
+            'actual_behavior': forms.Textarea(attrs={
+                'class': 'form-control', 
+                'rows': 3, 
+                'placeholder': 'What actually happened?'
+            }),
+            'severity': forms.Select(attrs={'class': 'form-control'}),
+            'browser_info': forms.TextInput(attrs={
+                'class': 'form-control', 
+                'placeholder': 'e.g., Chrome 120, Firefox 119'
+            }),
+            'device_info': forms.TextInput(attrs={
+                'class': 'form-control', 
+                'placeholder': 'e.g., Windows 11, iPhone 15, MacBook Pro'
+            }),
+            'screenshot': forms.FileInput(attrs={
+                'class': 'form-control',
+                'accept': 'image/*'
+            }),
+        }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['screenshot'].required = False
+        self.fields['browser_info'].required = False
+        self.fields['device_info'].required = False
+    
+    def clean_screenshot(self):
+        """Validate screenshot upload"""
+        screenshot = self.cleaned_data.get('screenshot')
+        
+        if screenshot:
+            # Check file size (10MB limit for bug reports)
+            if screenshot.size > 10 * 1024 * 1024:  # 10MB in bytes
+                raise ValidationError("Screenshot file size must be under 10MB.")
+            
+            # Check file extension
+            allowed_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp']
+            file_extension = os.path.splitext(screenshot.name)[1].lower()
+            
+            if file_extension not in allowed_extensions:
+                raise ValidationError("Please upload a valid image file (JPG, PNG, GIF, or WebP).")
+        
+        return screenshot
