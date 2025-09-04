@@ -36,7 +36,7 @@ class Command(BaseCommand):
         
         # Create users if they don't exist
         users_data = [
-            {'username': 'Sid', 'email': 'sid@example.com', 'first_name': 'Sid', 'last_name': 'Kumar'},
+            {'username': 'Sidd', 'email': 'sidd@example.com', 'first_name': 'Sid', 'last_name': 'Kumar'},
             {'username': 'Shruti', 'email': 'shruti@example.com', 'first_name': 'Shruti', 'last_name': 'Gupta'},
             {'username': 'Sanju', 'email': 'sanju@example.com', 'first_name': 'Sanju', 'last_name': 'Patel'},
         ]

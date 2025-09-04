@@ -13,7 +13,7 @@ class Command(BaseCommand):
         # Create users if they don't exist
         users_data = [
             {'username': 'Shruti', 'password': 'shruti'},
-            {'username': 'Sid', 'password': 'sid'},
+            {'username': 'Sidd', 'password': 'sidd'},
             {'username': 'Sanju', 'password': 'sanju'},
         ]
         
