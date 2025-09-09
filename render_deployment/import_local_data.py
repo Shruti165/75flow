@@ -7,7 +7,7 @@ This script imports users, categories, and habits from local export
 import os
 import sys
 import django
-from datetime import datetime
+from datetime import datetime, date
 
 # Add the project directory to Python path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -17,7 +17,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'flow75.settings')
 django.setup()
 
 from django.contrib.auth.models import User
-from habits.models import Profile, Category, Habit, HabitDay
+from habits.models import Profile, Category, Habit, HabitDay, Streak
 from django.core.files.base import ContentFile
 
 # Import data from local export
@@ -34,9 +34,9 @@ USERS_DATA = [
     "profile": {
       "bio": "",
       "profile_image": "profile_images/Sid_1_MD4DgkD.png",
-      "date_of_birth": null,
-      "email": null,
-      "weekly_stats_enabled": true
+      "date_of_birth": None,
+      "email": None,
+      "weekly_stats_enabled": True
     }
   },
   {
@@ -51,9 +51,9 @@ USERS_DATA = [
     "profile": {
       "bio": "hello",
       "profile_image": "profile_images/Shruti_5lA8J6j.png",
-      "date_of_birth": null,
+      "date_of_birth": None,
       "email": "strength.shruti@gmail.com",
-      "weekly_stats_enabled": true
+      "weekly_stats_enabled": True
     }
   },
   {
@@ -68,9 +68,9 @@ USERS_DATA = [
     "profile": {
       "bio": "",
       "profile_image": "profile_images/Sanjh.png",
-      "date_of_birth": null,
-      "email": null,
-      "weekly_stats_enabled": true
+      "date_of_birth": None,
+      "email": None,
+      "weekly_stats_enabled": True
     }
   },
   {
@@ -84,10 +84,10 @@ USERS_DATA = [
     "date_joined": "2025-08-01T10:05:04.306733+00:00",
     "profile": {
       "bio": "",
-      "profile_image": null,
-      "date_of_birth": null,
-      "email": null,
-      "weekly_stats_enabled": true
+      "profile_image": None,
+      "date_of_birth": None,
+      "email": None,
+      "weekly_stats_enabled": True
     }
   },
   {
@@ -101,10 +101,10 @@ USERS_DATA = [
     "date_joined": "2025-08-29T07:14:49.929459+00:00",
     "profile": {
       "bio": "",
-      "profile_image": null,
-      "date_of_birth": null,
-      "email": null,
-      "weekly_stats_enabled": true
+      "profile_image": None,
+      "date_of_birth": None,
+      "email": None,
+      "weekly_stats_enabled": True
     }
   },
   {
@@ -118,10 +118,10 @@ USERS_DATA = [
     "date_joined": "2025-08-29T07:16:41.919444+00:00",
     "profile": {
       "bio": "",
-      "profile_image": null,
-      "date_of_birth": null,
-      "email": null,
-      "weekly_stats_enabled": true
+      "profile_image": None,
+      "date_of_birth": None,
+      "email": None,
+      "weekly_stats_enabled": True
     }
   },
   {
@@ -135,10 +135,10 @@ USERS_DATA = [
     "date_joined": "2025-08-29T08:08:52.775112+00:00",
     "profile": {
       "bio": "",
-      "profile_image": null,
-      "date_of_birth": null,
-      "email": null,
-      "weekly_stats_enabled": true
+      "profile_image": None,
+      "date_of_birth": None,
+      "email": None,
+      "weekly_stats_enabled": True
     }
   }
 ]
@@ -1487,938 +1487,938 @@ HABIT_DAYS_DATA = [
     "habit": "Fiction",
     "user": "Shruti",
     "date": "2025-07-13",
-    "completed": true,
+    "completed": True,
     "day": 0
   },
   {
     "habit": "Spiritual",
     "user": "Shruti",
     "date": "2025-07-13",
-    "completed": true,
+    "completed": True,
     "day": 0
   },
   {
     "habit": "Swim",
     "user": "Shruti",
     "date": "2025-07-13",
-    "completed": true,
+    "completed": True,
     "day": 0
   },
   {
     "habit": "Run",
     "user": "Shruti",
     "date": "2025-07-13",
-    "completed": true,
+    "completed": True,
     "day": 0
   },
   {
     "habit": "Consume Leaves",
     "user": "Shruti",
     "date": "2025-07-13",
-    "completed": true,
+    "completed": True,
     "day": 0
   },
   {
     "habit": "Take Supplements",
     "user": "Shruti",
     "date": "2025-07-13",
-    "completed": true,
+    "completed": True,
     "day": 0
   },
   {
     "habit": "AI Projects",
     "user": "Shruti",
     "date": "2025-07-13",
-    "completed": true,
+    "completed": True,
     "day": 0
   },
   {
     "habit": "Upskill",
     "user": "Shruti",
     "date": "2025-07-13",
-    "completed": true,
+    "completed": True,
     "day": 0
   },
   {
     "habit": "Journal",
     "user": "Shruti",
     "date": "2025-07-13",
-    "completed": true,
+    "completed": True,
     "day": 0
   },
   {
     "habit": "Grounding",
     "user": "Shruti",
     "date": "2025-07-13",
-    "completed": true,
+    "completed": True,
     "day": 0
   },
   {
     "habit": "Social Club Meet",
     "user": "Shruti",
     "date": "2025-07-13",
-    "completed": true,
+    "completed": True,
     "day": 0
   },
   {
     "habit": "Visit Orphanage/ Old Age Home",
     "user": "Shruti",
     "date": "2025-07-13",
-    "completed": true,
+    "completed": True,
     "day": 0
   },
   {
     "habit": "Walk",
     "user": "Sid",
     "date": "2025-07-14",
-    "completed": true,
+    "completed": True,
     "day": 0
   },
   {
     "habit": "Hand Stand / Pull Up / Pole Session",
     "user": "Sid",
     "date": "2025-07-14",
-    "completed": true,
+    "completed": True,
     "day": 0
   },
   {
     "habit": "Have Fruits",
     "user": "Sid",
     "date": "2025-07-14",
-    "completed": true,
+    "completed": True,
     "day": 0
   },
   {
     "habit": "Drink Vegetable Juice",
     "user": "Sid",
     "date": "2025-07-14",
-    "completed": true,
+    "completed": True,
     "day": 0
   },
   {
     "habit": "Get Aligned High Income Job Offers",
     "user": "Sid",
     "date": "2025-07-14",
-    "completed": true,
+    "completed": True,
     "day": 0
   },
   {
     "habit": "AI Projects",
     "user": "Sid",
     "date": "2025-07-14",
-    "completed": true,
+    "completed": True,
     "day": 0
   },
   {
     "habit": "Community Service",
     "user": "Sid",
     "date": "2025-07-14",
-    "completed": true,
+    "completed": True,
     "day": 0
   },
   {
     "habit": "Music Jam",
     "user": "Sid",
     "date": "2025-07-14",
-    "completed": true,
+    "completed": True,
     "day": 0
   },
   {
     "habit": "Community Service",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 1
   },
   {
     "habit": "Social Club Meet",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 1
   },
   {
     "habit": "Social Club Meet",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 2
   },
   {
     "habit": "Hackathons",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 2
   },
   {
     "habit": "Music Jam",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 2
   },
   {
     "habit": "Drink Coconut Water",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 2
   },
   {
     "habit": "Declutter / Organise",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 3
   },
   {
     "habit": "Visit Orphanage/ Old Age Home",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 3
   },
   {
     "habit": "Spiritual",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 4
   },
   {
     "habit": "Play guitar",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 4
   },
   {
     "habit": "Drink Coconut Water",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 4
   },
   {
     "habit": "Sleep Well / Binaural Beats",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 4
   },
   {
     "habit": "Run",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 5
   },
   {
     "habit": "Football",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 5
   },
   {
     "habit": "Drink Vegetable Juice",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 5
   },
   {
     "habit": "Play guitar",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 5
   },
   {
     "habit": "Mantra Chanting",
     "user": "Sid",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 1
   },
   {
     "habit": "Passion Projects",
     "user": "Sid",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 2
   },
   {
     "habit": "Gym",
     "user": "Sid",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 2
   },
   {
     "habit": "Run",
     "user": "Sid",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 2
   },
   {
     "habit": "Painitng, Gardening, Sketch",
     "user": "Sid",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 3
   },
   {
     "habit": "Drink Water",
     "user": "Sid",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 3
   },
   {
     "habit": "Go To The Office",
     "user": "Sid",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 4
   },
   {
     "habit": "Create Content",
     "user": "Sid",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 4
   },
   {
     "habit": "Attend an Event",
     "user": "Sid",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 4
   },
   {
     "habit": "Dance",
     "user": "Sid",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 5
   },
   {
     "habit": "Get Aligned High Income Job Offers",
     "user": "Sid",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 5
   },
   {
     "habit": "Passion Projects",
     "user": "Sid",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 5
   },
   {
     "habit": "Gym",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 1
   },
   {
     "habit": "Go To The Park",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 1
   },
   {
     "habit": "Study fintech",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 2
   },
   {
     "habit": "Feed The Dogs",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 2
   },
   {
     "habit": "Swim",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 3
   },
   {
     "habit": "Drink 8 glasses water",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 3
   },
   {
     "habit": "Prepare Meal / Cook Dinner",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 5
   },
   {
     "habit": "Attend an Event",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 5
   },
   {
     "habit": "Prepare Meal / Cook Dinner",
     "user": "Sanju",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 1
   },
   {
     "habit": "Go To The Park",
     "user": "Sanju",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 1
   },
   {
     "habit": "Attend an Event",
     "user": "Sanju",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 2
   },
   {
     "habit": "Grounding",
     "user": "Sanju",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 2
   },
   {
     "habit": "Take Chia Seeds",
     "user": "Sanju",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 2
   },
   {
     "habit": "Save money",
     "user": "Sanju",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 2
   },
   {
     "habit": "Hackathons",
     "user": "Sanju",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 3
   },
   {
     "habit": "Drink Matcha",
     "user": "Sanju",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 3
   },
   {
     "habit": "Drink Vegetable Juice",
     "user": "Sanju",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 5
   },
   {
     "habit": "Drink Water",
     "user": "Sanju",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 5
   },
   {
     "habit": "Have Fruits",
     "user": "Sanju",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 5
   },
   {
     "habit": "Hackathons",
     "user": "Sanju",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 5
   },
   {
     "habit": "Create Content",
     "user": "Sid",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 1
   },
   {
     "habit": "Football",
     "user": "Sid",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 1
   },
   {
     "habit": "Gym workout",
     "user": "Sid",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 1
   },
   {
     "habit": "Investment research",
     "user": "Sid",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 1
   },
   {
     "habit": "Drink Coconut Water",
     "user": "Sid",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 2
   },
   {
     "habit": "Grounding",
     "user": "Sid",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 2
   },
   {
     "habit": "Play guitar",
     "user": "Sid",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 2
   },
   {
     "habit": "Gym workout",
     "user": "Sid",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 2
   },
   {
     "habit": "Drink Coconut Water",
     "user": "Sid",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 3
   },
   {
     "habit": "Music Jam",
     "user": "Sid",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 3
   },
   {
     "habit": "Grounding",
     "user": "Sid",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 3
   },
   {
     "habit": "Journal",
     "user": "Sid",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 5
   },
   {
     "habit": "Mantra Chanting",
     "user": "Sid",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 5
   },
   {
     "habit": "Music Jam",
     "user": "Sid",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 5
   },
   {
     "habit": "Football",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 1
   },
   {
     "habit": "Sleep Well / Binaural Beats",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 1
   },
   {
     "habit": "Sleep Well / Binaural Beats",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 2
   },
   {
     "habit": "Attend an Event",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 2
   },
   {
     "habit": "Planning for Tomorrow",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 2
   },
   {
     "habit": "Read tech blogs",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 2
   },
   {
     "habit": "Read tech blogs",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 3
   },
   {
     "habit": "7 Minute HIIT",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 3
   },
   {
     "habit": "Save money",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 3
   },
   {
     "habit": "Planning for Tomorrow",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 4
   },
   {
     "habit": "Swim",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 4
   },
   {
     "habit": "Community Service",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 4
   },
   {
     "habit": "Drink Matcha",
     "user": "Shruti",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 4
   },
   {
     "habit": "Drink Water",
     "user": "Sanju",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 2
   },
   {
     "habit": "Painitng, Gardening, Sketch",
     "user": "Sanju",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 2
   },
   {
     "habit": "Drink Coconut Water",
     "user": "Sanju",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 2
   },
   {
     "habit": "Painitng, Gardening, Sketch",
     "user": "Sanju",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 3
   },
   {
     "habit": "Go To The Park",
     "user": "Sanju",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 3
   },
   {
     "habit": "Drink 8 glasses water",
     "user": "Sanju",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 3
   },
   {
     "habit": "Planning for Tomorrow",
     "user": "Sanju",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 3
   },
   {
     "habit": "Social Club Meet",
     "user": "Sanju",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 5
   },
   {
     "habit": "Run",
     "user": "Sanju",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 5
   },
   {
     "habit": "Gym workout",
     "user": "Sanju",
     "date": "2025-07-20",
-    "completed": true,
+    "completed": True,
     "day": 5
   },
   {
     "habit": "Spiritual",
     "user": "Sid",
     "date": "2025-08-02",
-    "completed": true,
+    "completed": True,
     "day": 19
   },
   {
     "habit": "Run",
     "user": "Sid",
     "date": "2025-08-02",
-    "completed": true,
+    "completed": True,
     "day": 19
   },
   {
     "habit": "Dance",
     "user": "Sid",
     "date": "2025-08-02",
-    "completed": true,
+    "completed": True,
     "day": 19
   },
   {
     "habit": "Take Chia Seeds",
     "user": "Sid",
     "date": "2025-08-02",
-    "completed": true,
+    "completed": True,
     "day": 19
   },
   {
     "habit": "Drink water",
     "user": "Sid",
     "date": "2025-08-02",
-    "completed": true,
+    "completed": True,
     "day": 19
   },
   {
     "habit": "Mantra Chanting",
     "user": "Sid",
     "date": "2025-08-02",
-    "completed": true,
+    "completed": True,
     "day": 19
   },
   {
     "habit": "Fiction",
     "user": "Sid",
     "date": "2025-08-29",
-    "completed": true,
+    "completed": True,
     "day": 46
   },
   {
     "habit": "Non-Fiction",
     "user": "Sid",
     "date": "2025-08-29",
-    "completed": true,
+    "completed": True,
     "day": 46
   },
   {
     "habit": "Spiritual",
     "user": "Sid",
     "date": "2025-08-29",
-    "completed": true,
+    "completed": True,
     "day": 46
   },
   {
     "habit": "Swim",
     "user": "Sid",
     "date": "2025-08-29",
-    "completed": true,
+    "completed": True,
     "day": 46
   },
   {
     "habit": "Run",
     "user": "Sid",
     "date": "2025-08-29",
-    "completed": true,
+    "completed": True,
     "day": 46
   },
   {
     "habit": "Dance",
     "user": "Sid",
     "date": "2025-08-29",
-    "completed": true,
+    "completed": True,
     "day": 46
   },
   {
     "habit": "Go To The Park",
     "user": "Sid",
     "date": "2025-08-29",
-    "completed": true,
+    "completed": True,
     "day": 46
   },
   {
     "habit": "Walk",
     "user": "Sid",
     "date": "2025-08-29",
-    "completed": true,
+    "completed": True,
     "day": 46
   },
   {
     "habit": "Football",
     "user": "Sid",
     "date": "2025-08-29",
-    "completed": true,
+    "completed": True,
     "day": 46
   },
   {
     "habit": "Have Fruits",
     "user": "Sid",
     "date": "2025-08-29",
-    "completed": true,
+    "completed": True,
     "day": 46
   },
   {
     "habit": "Drink Water",
     "user": "Sid",
     "date": "2025-08-29",
-    "completed": true,
+    "completed": True,
     "day": 46
   },
   {
     "habit": "Drink Vegetable Juice",
     "user": "Sid",
     "date": "2025-08-29",
-    "completed": true,
+    "completed": True,
     "day": 46
   },
   {
     "habit": "Mantra Chanting",
     "user": "Sid",
     "date": "2025-08-29",
-    "completed": true,
+    "completed": True,
     "day": 46
   },
   {
     "habit": "Optimise Linkedin",
     "user": "Sid",
     "date": "2025-08-29",
-    "completed": true,
+    "completed": True,
     "day": 46
   },
   {
     "habit": "Passion Projects",
     "user": "Sid",
     "date": "2025-08-29",
-    "completed": true,
+    "completed": True,
     "day": 46
   },
   {
     "habit": "Fiction",
     "user": "Sanju",
     "date": "2025-08-29",
-    "completed": true,
+    "completed": True,
     "day": 46
   },
   {
     "habit": "Swim",
     "user": "Sanju",
     "date": "2025-08-29",
-    "completed": true,
+    "completed": True,
     "day": 46
   },
   {
     "habit": "Drink Matcha",
     "user": "Sanju",
     "date": "2025-08-29",
-    "completed": true,
+    "completed": True,
     "day": 46
   },
   {
     "habit": "Consume Leaves",
     "user": "Sanju",
     "date": "2025-08-29",
-    "completed": true,
+    "completed": True,
     "day": 46
   },
   {
     "habit": "Mantra Chanting",
     "user": "Sanju",
     "date": "2025-08-29",
-    "completed": true,
+    "completed": True,
     "day": 46
   },
   {
     "habit": "Get Aligned High Income Job Offers",
     "user": "Sanju",
     "date": "2025-08-29",
-    "completed": true,
+    "completed": True,
     "day": 46
   },
   {
     "habit": "Grounding",
     "user": "Sanju",
     "date": "2025-08-29",
-    "completed": true,
+    "completed": True,
     "day": 46
   },
   {
     "habit": "Social Club Meet",
     "user": "Sanju",
     "date": "2025-08-29",
-    "completed": true,
+    "completed": True,
     "day": 46
   }
 ]
@@ -2479,30 +2479,40 @@ def import_users():
             print(f"    ℹ️  Profile already exists for: {user.username}")
 
 def import_habits():
-    """Import habits"""
+    """Import habits (now global, no user field)"""
     print("📥 Importing habits...")
     
     for habit_data in HABITS_DATA:
         try:
-            user = User.objects.get(username=habit_data['user'])
+            # Get the user who created this habit (if specified)
+            created_by = None
+            if 'user' in habit_data and habit_data['user']:
+                try:
+                    created_by = User.objects.get(username=habit_data['user'])
+                except User.DoesNotExist:
+                    print(f"  ⚠️  User {habit_data['user']} not found, creating habit without creator")
+            
             category = Category.objects.get(name=habit_data['category']) if habit_data['category'] else None
             
-            habit, created = Habit.objects.get_or_create(
+            # Check if habit already exists (global habits)
+            existing_habits = Habit.objects.filter(name=habit_data['name'])
+            if existing_habits.exists():
+                print(f"  ℹ️  Habit already exists: {habit_data['name']}")
+                continue
+            
+            # Create new global habit
+            habit = Habit.objects.create(
                 name=habit_data['name'],
-                user=user,
-                defaults={
-                    'description': habit_data['description'],
-                    'category': category
-                }
+                description=habit_data['description'],
+                category=category,
+                created_by=created_by,
+                start_date=datetime.strptime(habit_data['start_date'], '%Y-%m-%d').date() if habit_data.get('start_date') else date.today()
             )
             
-            if created:
-                print(f"  ✅ Created habit: {habit.name} for {user.username}")
-            else:
-                print(f"  ℹ️  Habit already exists: {habit.name} for {user.username}")
+            print(f"  ✅ Created habit: {habit.name}")
                 
         except User.DoesNotExist:
-            print(f"  ❌ User not found: {habit_data['user']}")
+            print(f"  ❌ User not found: {habit_data.get('user', 'Unknown')}")
         except Category.DoesNotExist:
             print(f"  ❌ Category not found: {habit_data['category']}")
 
@@ -2513,24 +2523,61 @@ def import_habit_days():
     imported_count = 0
     for habit_day_data in HABIT_DAYS_DATA:
         try:
-            habit = Habit.objects.get(name=habit_day_data['habit'])
-            date = datetime.fromisoformat(habit_day_data['date']).date()
+            habit = Habit.objects.filter(name=habit_day_data['habit']).first()
+            if not habit:
+                print(f"  ❌ Habit not found: {habit_day_data['habit']}")
+                continue
+            user = User.objects.get(username=habit_day_data['user'])
             
-            habit_day, created = HabitDay.objects.get_or_create(
-                habit=habit,
-                date=date,
-                defaults={
-                    'completed': habit_day_data['completed']
-                }
-            )
+            # Convert date to day number (1-75)
+            habit_date = datetime.fromisoformat(habit_day_data['date']).date()
+            start_date = date(2025, 7, 15)  # Challenge start date
+            day_number = (habit_date - start_date).days + 1
             
-            if created:
-                imported_count += 1
+            # Only import if day is within 75-day range
+            if 1 <= day_number <= 75:
+                habit_day, created = HabitDay.objects.get_or_create(
+                    habit=habit,
+                    user=user,
+                    day=day_number,
+                    defaults={
+                        'completed': habit_day_data['completed']
+                    }
+                )
                 
-        except Habit.DoesNotExist:
-            print(f"  ❌ Habit not found: {habit_day_data['habit']}")
+                if created:
+                    imported_count += 1
+            else:
+                print(f"  ⚠️  Skipping day {day_number} (outside 75-day range)")
+                
+        except User.DoesNotExist:
+            print(f"  ❌ User not found: {habit_day_data['user']}")
+        except Exception as e:
+            print(f"  ❌ Error importing habit day: {e}")
     
     print(f"  ✅ Imported {imported_count} habit completion records")
+
+def import_streaks():
+    """Import streak records"""
+    print("📥 Importing streak records...")
+    
+    imported_count = 0
+    for user in User.objects.all():
+        streak, created = Streak.objects.get_or_create(
+            user=user,
+            defaults={
+                'current_streak': 0,
+                'best_streak': 0
+            }
+        )
+        
+        if created:
+            imported_count += 1
+            print(f"  ✅ Created streak for: {user.username}")
+        else:
+            print(f"  ℹ️  Streak already exists for: {user.username}")
+    
+    print(f"  ✅ Imported {imported_count} streak records")
 
 def main():
     """Main import function"""
@@ -2545,6 +2592,8 @@ def main():
         print()
         import_habit_days()
         print()
+        import_streaks()
+        print()
         
         print("🎉 Data import completed successfully!")
         print("\n📊 Summary:")
@@ -2552,6 +2601,7 @@ def main():
         print(f"  Categories: {len(CATEGORIES_DATA)}")
         print(f"  Habits: {len(HABITS_DATA)}")
         print(f"  Habit Days: {len(HABIT_DAYS_DATA)}")
+        print(f"  Streaks: {User.objects.count()}")
         
     except Exception as e:
         print(f"❌ Error during import: {e}")
