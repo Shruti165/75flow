@@ -1,7 +1,7 @@
 # 🔄 Automatic Data Refresh on Render
 
 ## **Overview**
-Every time you **deploy** or **restart** your Render service, all your local data is automatically loaded fresh. This ensures your deployed application always has the latest data structure and habits.
+Every time you **deploy** or **restart** your Render service, all your local data is automatically loaded fresh. This ensures your deployed application always has the latest data structure, habits, and respects your configurable challenge settings.
 
 ## **How It Works**
 
@@ -32,6 +32,21 @@ The `refresh_data.py` script automatically:
 ✅ **No Manual Work**: Automatic execution on every deploy/restart
 ✅ **Complete Reset**: Clears old data and imports fresh data
 ✅ **Easy Access**: All users can login with username=password
+✅ **Configurable Settings**: Respects your challenge configuration
+
+## **Configuration Support**
+
+The refresh process respects your challenge configuration:
+
+### **Environment Variables**
+- `CHALLENGE_START_DATE`: Challenge start date (default: 2025-07-15)
+- `CHALLENGE_DURATION_DAYS`: Challenge duration (default: 75)
+- `CHALLENGE_NAME`: Challenge display name (default: 75Flow Challenge)
+
+### **How to Customize**
+1. **Set environment variables in Render dashboard**
+2. **Redeploy your service**
+3. **Data refresh will use your custom settings**
 
 ## **What Gets Refreshed**
 

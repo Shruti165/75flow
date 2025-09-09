@@ -1,6 +1,6 @@
 # 🚀 Render Deployment Guide with Local Data
 
-This guide explains how to deploy your 75Flow application to Render with all your local data and users.
+This guide explains how to deploy your 75Flow application to Render with all your local data and users, including configurable challenge settings.
 
 ## 📋 Prerequisites
 
@@ -47,7 +47,21 @@ The build process will:
 3. **Import your local data automatically**
 4. Create all users, categories, and habits
 
-### **Step 5: Login with Your Local Credentials**
+### **Step 5: Configure Challenge Settings (Optional)**
+
+Customize your challenge parameters in Render:
+
+1. **Go to your Render service dashboard**
+2. **Navigate to Environment tab**
+3. **Add these environment variables:**
+   ```bash
+   CHALLENGE_START_DATE=2025-07-15
+   CHALLENGE_DURATION_DAYS=75
+   CHALLENGE_NAME=75Flow Challenge
+   ```
+4. **Redeploy if you made changes**
+
+### **Step 6: Login with Your Local Credentials**
 
 After deployment, you can login with:
 - **Your existing usernames**

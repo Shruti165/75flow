@@ -1,6 +1,6 @@
 # 🚀 Render Deployment Configuration
 
-This folder contains all the necessary files for deploying the 75Flow Django application to Render.
+This folder contains all the necessary files for deploying the 75Flow Django application to Render with configurable challenge settings.
 
 ## 📁 Files Overview
 
@@ -33,11 +33,32 @@ This folder contains all the necessary files for deploying the 75Flow Django app
 ## 🌐 Environment Variables
 
 The following environment variables are configured in `render.yaml`:
+
+### **Core Settings**
 - `PYTHON_VERSION`: 3.11.0
 - `DEBUG`: false
 - `ALLOWED_HOSTS`: .onrender.com
 - `ENVIRONMENT`: production
 - `PORT`: 10000
+
+### **Challenge Configuration**
+- `CHALLENGE_START_DATE`: 2025-07-15 (Challenge start date)
+- `CHALLENGE_DURATION_DAYS`: 75 (Challenge duration in days)
+- `CHALLENGE_NAME`: 75Flow Challenge (Display name for the challenge)
+
+### **Customizing Challenge Settings**
+
+To modify the challenge parameters, update the environment variables in your Render dashboard:
+
+1. Go to your Render service dashboard
+2. Navigate to Environment tab
+3. Add or modify these variables:
+   ```bash
+   CHALLENGE_START_DATE=2025-08-01
+   CHALLENGE_DURATION_DAYS=100
+   CHALLENGE_NAME=100-Day Transformation Challenge
+   ```
+4. Redeploy your service
 
 ## 📦 System Dependencies
 

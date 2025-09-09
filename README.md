@@ -1,11 +1,11 @@
-# 75Flow - 75-Day Habit Tracking Challenge
+# 75Flow - Configurable Habit Tracking Challenge
 
-A comprehensive Django web application for tracking habits over a 75-day challenge period. Built with modern UI/UX design and gamification elements to keep users motivated and engaged.
+A comprehensive Django web application for tracking habits over a customizable challenge period. Built with modern UI/UX design and gamification elements to keep users motivated and engaged.
 
 ## 🌟 Features
 
 ### Core Functionality
-- **75-Day Challenge Tracking**: Complete habit tracking system for a 75-day transformation journey
+- **Configurable Challenge Tracking**: Complete habit tracking system for customizable challenge periods (default: 75 days)
 - **Multi-Category Habits**: Support for Reading, Fitness, Nutrition, Wealth, Spiritual, and Fun categories
 - **Daily Progress Tracking**: Check off completed habits daily with visual progress indicators
 - **Real-time Scoreboard**: Live leaderboard with daily, weekly, and overall rankings
@@ -24,6 +24,7 @@ A comprehensive Django web application for tracking habits over a 75-day challen
 - **Remix Icons**: Beautiful flat icon system
 - **Real-time Updates**: Dynamic progress bars and statistics
 - **Media Upload**: Profile image uploads with automatic resizing
+- **Configurable Settings**: Environment-based configuration for challenge parameters
 
 ## 🚀 Quick Start
 
@@ -75,6 +76,42 @@ A comprehensive Django web application for tracking habits over a 75-day challen
 
 8. **Visit the application**
    Open your browser and go to `http://127.0.0.1:8000`
+
+## ⚙️ Configuration
+
+The application supports configurable challenge parameters through environment variables:
+
+### Challenge Settings
+
+```bash
+# Challenge start date (default: 2025-07-15)
+export CHALLENGE_START_DATE="2025-08-01"
+
+# Challenge duration in days (default: 75)
+export CHALLENGE_DURATION_DAYS="100"
+
+# Challenge name (default: 75Flow Challenge)
+export CHALLENGE_NAME="100-Day Transformation Challenge"
+```
+
+### Environment Variables
+
+Create a `.env` file in your project root:
+
+```bash
+# Challenge Configuration
+CHALLENGE_START_DATE=2025-07-15
+CHALLENGE_DURATION_DAYS=75
+CHALLENGE_NAME=75Flow Challenge
+
+# Django Settings
+DEBUG=True
+SECRET_KEY=your-secret-key-here
+ALLOWED_HOSTS=localhost,127.0.0.1
+
+# Database (for production)
+DATABASE_URL=postgresql://user:password@host:port/dbname
+```
 
 ## 🚀 Deployment
 
