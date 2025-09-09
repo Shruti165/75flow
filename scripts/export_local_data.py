@@ -18,7 +18,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'flow75.settings')
 django.setup()
 
 from django.contrib.auth.models import User
-from habits.models import Profile, Category, Habit, HabitDay, Streak, Streak
+from habits.models import Profile, Category, Habit, HabitDay, Streak
 from django.core import serializers
 
 def export_users():
