@@ -45,9 +45,6 @@ python manage.py migrate
             elif [ -f "render_deployment/import_local_data.py" ]; then
                 echo "🔄 Importing local data on every deploy/restart..."
                 python render_deployment/import_local_data.py
-            elif [ -f "render_deployment/import_all_local_data.py" ]; then
-                echo "🔄 Importing comprehensive local data on every deploy/restart..."
-                python render_deployment/import_all_local_data.py
             else
                 echo "⚠️  No import scripts found, creating default users..."
                 python manage.py create_default_users
