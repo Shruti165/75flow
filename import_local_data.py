@@ -17,7 +17,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'flow75.settings')
 django.setup()
 
 from django.contrib.auth.models import User
-from habits.models import Profile, Category, Habit, HabitDay
+from habits.models import Profile, Category, Habit, HabitDay, Streak
 from django.core.files.base import ContentFile
 
 # Import data from local export
@@ -33,9 +33,9 @@ USERS_DATA = [
     "date_joined": "2025-09-08T17:36:17.360721+00:00",
     "profile": {
       "bio": "",
-      "profile_image": null,
-      "date_of_birth": null,
-      "email": null,
+      "profile_image": None,
+      "date_of_birth": None,
+      "email": None,
       "weekly_stats_enabled": True
     }
   },
@@ -50,9 +50,9 @@ USERS_DATA = [
     "date_joined": "2025-09-08T17:36:41.622628+00:00",
     "profile": {
       "bio": "",
-      "profile_image": null,
-      "date_of_birth": null,
-      "email": null,
+      "profile_image": None,
+      "date_of_birth": None,
+      "email": None,
       "weekly_stats_enabled": True
     }
   },
@@ -67,9 +67,9 @@ USERS_DATA = [
     "date_joined": "2025-09-08T17:36:51.800532+00:00",
     "profile": {
       "bio": "",
-      "profile_image": null,
-      "date_of_birth": null,
-      "email": null,
+      "profile_image": None,
+      "date_of_birth": None,
+      "email": None,
       "weekly_stats_enabled": True
     }
   },
@@ -84,9 +84,9 @@ USERS_DATA = [
     "date_joined": "2025-09-08T17:36:52.153512+00:00",
     "profile": {
       "bio": "",
-      "profile_image": null,
-      "date_of_birth": null,
-      "email": null,
+      "profile_image": None,
+      "date_of_birth": None,
+      "email": None,
       "weekly_stats_enabled": True
     }
   },
@@ -101,9 +101,9 @@ USERS_DATA = [
     "date_joined": "2025-09-08T17:36:52.489115+00:00",
     "profile": {
       "bio": "",
-      "profile_image": null,
-      "date_of_birth": null,
-      "email": null,
+      "profile_image": None,
+      "date_of_birth": None,
+      "email": None,
       "weekly_stats_enabled": True
     }
   },
@@ -118,9 +118,9 @@ USERS_DATA = [
     "date_joined": "2025-09-08T17:36:52.824705+00:00",
     "profile": {
       "bio": "",
-      "profile_image": null,
-      "date_of_birth": null,
-      "email": null,
+      "profile_image": None,
+      "date_of_birth": None,
+      "email": None,
       "weekly_stats_enabled": True
     }
   },
@@ -135,9 +135,9 @@ USERS_DATA = [
     "date_joined": "2025-09-08T17:36:53.159832+00:00",
     "profile": {
       "bio": "",
-      "profile_image": null,
-      "date_of_birth": null,
-      "email": null,
+      "profile_image": None,
+      "date_of_birth": None,
+      "email": None,
       "weekly_stats_enabled": True
     }
   },
@@ -152,9 +152,9 @@ USERS_DATA = [
     "date_joined": "2025-09-08T17:36:53.492932+00:00",
     "profile": {
       "bio": "",
-      "profile_image": null,
-      "date_of_birth": null,
-      "email": null,
+      "profile_image": None,
+      "date_of_birth": None,
+      "email": None,
       "weekly_stats_enabled": True
     }
   }
