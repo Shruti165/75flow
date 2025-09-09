@@ -27,16 +27,16 @@ USERS_DATA = [
     "email": "shruti@example.com",
     "first_name": "",
     "last_name": "",
-    "is_staff": false,
-    "is_superuser": false,
-    "is_active": true,
+    "is_staff": False,
+    "is_superuser": False,
+    "is_active": True,
     "date_joined": "2025-09-08T17:36:17.360721+00:00",
     "profile": {
       "bio": "",
       "profile_image": null,
       "date_of_birth": null,
       "email": null,
-      "weekly_stats_enabled": true
+      "weekly_stats_enabled": True
     }
   },
   {
@@ -44,16 +44,16 @@ USERS_DATA = [
     "email": "sidd@example.com",
     "first_name": "",
     "last_name": "",
-    "is_staff": false,
-    "is_superuser": false,
-    "is_active": true,
+    "is_staff": False,
+    "is_superuser": False,
+    "is_active": True,
     "date_joined": "2025-09-08T17:36:41.622628+00:00",
     "profile": {
       "bio": "",
       "profile_image": null,
       "date_of_birth": null,
       "email": null,
-      "weekly_stats_enabled": true
+      "weekly_stats_enabled": True
     }
   },
   {
@@ -61,16 +61,16 @@ USERS_DATA = [
     "email": "sanju@example.com",
     "first_name": "",
     "last_name": "",
-    "is_staff": false,
-    "is_superuser": false,
-    "is_active": true,
+    "is_staff": False,
+    "is_superuser": False,
+    "is_active": True,
     "date_joined": "2025-09-08T17:36:51.800532+00:00",
     "profile": {
       "bio": "",
       "profile_image": null,
       "date_of_birth": null,
       "email": null,
-      "weekly_stats_enabled": true
+      "weekly_stats_enabled": True
     }
   },
   {
@@ -78,16 +78,16 @@ USERS_DATA = [
     "email": "mahi@example.com",
     "first_name": "",
     "last_name": "",
-    "is_staff": false,
-    "is_superuser": false,
-    "is_active": true,
+    "is_staff": False,
+    "is_superuser": False,
+    "is_active": True,
     "date_joined": "2025-09-08T17:36:52.153512+00:00",
     "profile": {
       "bio": "",
       "profile_image": null,
       "date_of_birth": null,
       "email": null,
-      "weekly_stats_enabled": true
+      "weekly_stats_enabled": True
     }
   },
   {
@@ -95,16 +95,16 @@ USERS_DATA = [
     "email": "anurag@example.com",
     "first_name": "",
     "last_name": "",
-    "is_staff": false,
-    "is_superuser": false,
-    "is_active": true,
+    "is_staff": False,
+    "is_superuser": False,
+    "is_active": True,
     "date_joined": "2025-09-08T17:36:52.489115+00:00",
     "profile": {
       "bio": "",
       "profile_image": null,
       "date_of_birth": null,
       "email": null,
-      "weekly_stats_enabled": true
+      "weekly_stats_enabled": True
     }
   },
   {
@@ -112,16 +112,16 @@ USERS_DATA = [
     "email": "pooja@example.com",
     "first_name": "",
     "last_name": "",
-    "is_staff": false,
-    "is_superuser": false,
-    "is_active": true,
+    "is_staff": False,
+    "is_superuser": False,
+    "is_active": True,
     "date_joined": "2025-09-08T17:36:52.824705+00:00",
     "profile": {
       "bio": "",
       "profile_image": null,
       "date_of_birth": null,
       "email": null,
-      "weekly_stats_enabled": true
+      "weekly_stats_enabled": True
     }
   },
   {
@@ -129,16 +129,16 @@ USERS_DATA = [
     "email": "sachin@example.com",
     "first_name": "",
     "last_name": "",
-    "is_staff": false,
-    "is_superuser": false,
-    "is_active": true,
+    "is_staff": False,
+    "is_superuser": False,
+    "is_active": True,
     "date_joined": "2025-09-08T17:36:53.159832+00:00",
     "profile": {
       "bio": "",
       "profile_image": null,
       "date_of_birth": null,
       "email": null,
-      "weekly_stats_enabled": true
+      "weekly_stats_enabled": True
     }
   },
   {
@@ -146,16 +146,16 @@ USERS_DATA = [
     "email": "defni@example.com",
     "first_name": "",
     "last_name": "",
-    "is_staff": false,
-    "is_superuser": false,
-    "is_active": true,
+    "is_staff": False,
+    "is_superuser": False,
+    "is_active": True,
     "date_joined": "2025-09-08T17:36:53.492932+00:00",
     "profile": {
       "bio": "",
       "profile_image": null,
       "date_of_birth": null,
       "email": null,
-      "weekly_stats_enabled": true
+      "weekly_stats_enabled": True
     }
   }
 ]
@@ -659,84 +659,84 @@ HABIT_DAYS_DATA = [
     "habit": "7 Minute HIIT",
     "user": "sidd",
     "date": "2025-09-09",
-    "completed": true,
+    "completed": True,
     "day": 57
   },
   {
     "habit": "Align High Income Job Offers",
     "user": "sidd",
     "date": "2025-09-09",
-    "completed": true,
+    "completed": True,
     "day": 57
   },
   {
     "habit": "Attend an Event",
     "user": "sidd",
     "date": "2025-09-09",
-    "completed": true,
+    "completed": True,
     "day": 57
   },
   {
     "habit": "Chanting",
     "user": "sidd",
     "date": "2025-09-09",
-    "completed": true,
+    "completed": True,
     "day": 57
   },
   {
     "habit": "Community Meet",
     "user": "sidd",
     "date": "2025-09-09",
-    "completed": true,
+    "completed": True,
     "day": 57
   },
   {
     "habit": "Consume Leaves",
     "user": "sidd",
     "date": "2025-09-09",
-    "completed": true,
+    "completed": True,
     "day": 57
   },
   {
     "habit": "Create Content",
     "user": "sidd",
     "date": "2025-09-09",
-    "completed": true,
+    "completed": True,
     "day": 57
   },
   {
     "habit": "Dance",
     "user": "sidd",
     "date": "2025-09-09",
-    "completed": true,
+    "completed": True,
     "day": 57
   },
   {
     "habit": "Drink 8 Glasses of Water",
     "user": "sidd",
     "date": "2025-09-09",
-    "completed": true,
+    "completed": True,
     "day": 57
   },
   {
     "habit": "Fiction",
     "user": "sidd",
     "date": "2025-09-09",
-    "completed": true,
+    "completed": True,
     "day": 57
   },
   {
     "habit": "Gratitude Practice",
     "user": "sidd",
     "date": "2025-09-09",
-    "completed": true,
+    "completed": True,
     "day": 57
   },
   {
     "habit": "Journal Writing",
     "user": "sidd",
     "date": "2025-09-09",
-    "completed": true,
+    "completed": True,
     "day": 57
   }
 ]
