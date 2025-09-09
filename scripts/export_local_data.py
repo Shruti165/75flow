@@ -18,7 +18,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'flow75.settings')
 django.setup()
 
 from django.contrib.auth.models import User
-from habits.models import Profile, Category, Habit, HabitDay
+from habits.models import Profile, Category, Habit, HabitDay, Streak
 from django.core import serializers
 
 def export_users():
@@ -78,8 +78,9 @@ def export_habits():
             'name': habit.name,
             'description': habit.description,
             'category': habit.category.name if habit.category else None,
-            'user': habit.user.username,
-            'start_date': habit.start_date.isoformat()
+            'created_by': habit.created_by.username if habit.created_by else None,
+            'start_date': habit.start_date.isoformat(),
+            'updated_at': habit.updated_at.isoformat()
         }
         habits_data.append(habit_data)
         print(f"  ✅ Exported habit: {habit.name}")
@@ -94,7 +95,7 @@ def export_habit_days():
     for habit_day in HabitDay.objects.all():
         habit_day_data = {
             'habit': habit_day.habit.name,
-            'user': habit_day.habit.user.username,
+            'user': habit_day.user.username,
             'date': habit_day.date.isoformat(),
             'completed': habit_day.completed,
             'day': habit_day.day
@@ -103,6 +104,26 @@ def export_habit_days():
     
     print(f"  ✅ Exported {len(habit_days_data)} habit completion records")
     return habit_days_data
+
+def export_streaks():
+    """Export all streak records"""
+    print("📤 Exporting streak records...")
+    
+    streaks_data = []
+    for streak in Streak.objects.all():
+        streak_data = {
+            'user': streak.user.username,
+            'current_streak': streak.current_streak,
+            'best_streak': streak.best_streak,
+            'last_reset_date': streak.last_reset_date.isoformat(),
+            'created_at': streak.created_at.isoformat(),
+            'updated_at': streak.updated_at.isoformat()
+        }
+        streaks_data.append(streak_data)
+        print(f"  ✅ Exported streak for: {streak.user.username}")
+    
+    print(f"  ✅ Exported {len(streaks_data)} streak records")
+    return streaks_data
 
 def create_password_reset_script(users_data):
     """Create a script to reset passwords on Render"""
@@ -154,7 +175,7 @@ if __name__ == "__main__":
     
     print("  ✅ Created reset_passwords.py")
 
-def create_import_script(users_data, categories_data, habits_data, habit_days_data):
+def create_import_script(users_data, categories_data, habits_data, habit_days_data, streaks_data):
     """Create a script to import data on Render"""
     print("📝 Creating data import script...")
     
@@ -188,6 +209,8 @@ CATEGORIES_DATA = {json.dumps(categories_data, indent=2)}
 HABITS_DATA = {json.dumps(habits_data, indent=2)}
 
 HABIT_DAYS_DATA = {json.dumps(habit_days_data, indent=2)}
+
+STREAKS_DATA = {json.dumps(streaks_data, indent=2)}
 
 def import_categories():
     \"\"\"Import categories\"\"\"
@@ -250,25 +273,26 @@ def import_habits():
     
     for habit_data in HABITS_DATA:
         try:
-            user = User.objects.get(username=habit_data['user'])
+            created_by = User.objects.get(username=habit_data['created_by']) if habit_data['created_by'] else None
             category = Category.objects.get(name=habit_data['category']) if habit_data['category'] else None
             
             habit, created = Habit.objects.get_or_create(
                 name=habit_data['name'],
-                user=user,
+                category=category,
                 defaults={{
                     'description': habit_data['description'],
-                    'category': category
+                    'created_by': created_by,
+                    'start_date': datetime.fromisoformat(habit_data['start_date']).date()
                 }}
             )
             
             if created:
-                print(f"  ✅ Created habit: {{habit.name}} for {{user.username}}")
+                print(f"  ✅ Created habit: {{habit.name}}")
             else:
-                print(f"  ℹ️  Habit already exists: {{habit.name}} for {{user.username}}")
+                print(f"  ℹ️  Habit already exists: {{habit.name}}")
                 
         except User.DoesNotExist:
-            print(f"  ❌ User not found: {{habit_data['user']}}")
+            print(f"  ❌ User not found: {{habit_data['created_by']}}")
         except Category.DoesNotExist:
             print(f"  ❌ Category not found: {{habit_data['category']}}")
 
@@ -280,13 +304,16 @@ def import_habit_days():
     for habit_day_data in HABIT_DAYS_DATA:
         try:
             habit = Habit.objects.get(name=habit_day_data['habit'])
+            user = User.objects.get(username=habit_day_data['user'])
             date = datetime.fromisoformat(habit_day_data['date']).date()
             
             habit_day, created = HabitDay.objects.get_or_create(
                 habit=habit,
-                date=date,
+                user=user,
+                day=habit_day_data['day'],
                 defaults={{
-                    'completed': habit_day_data['completed']
+                    'completed': habit_day_data['completed'],
+                    'date': date
                 }}
             )
             
@@ -295,8 +322,39 @@ def import_habit_days():
                 
         except Habit.DoesNotExist:
             print(f"  ❌ Habit not found: {{habit_day_data['habit']}}")
+        except User.DoesNotExist:
+            print(f"  ❌ User not found: {{habit_day_data['user']}}")
     
     print(f"  ✅ Imported {{imported_count}} habit completion records")
+
+def import_streaks():
+    \"\"\"Import streak records\"\"\"
+    print("📥 Importing streak records...")
+    
+    imported_count = 0
+    for streak_data in STREAKS_DATA:
+        try:
+            user = User.objects.get(username=streak_data['user'])
+            
+            streak, created = Streak.objects.get_or_create(
+                user=user,
+                defaults={{
+                    'current_streak': streak_data['current_streak'],
+                    'best_streak': streak_data['best_streak'],
+                    'last_reset_date': datetime.fromisoformat(streak_data['last_reset_date'])
+                }}
+            )
+            
+            if created:
+                imported_count += 1
+                print(f"  ✅ Created streak for: {{user.username}}")
+            else:
+                print(f"  ℹ️  Streak already exists for: {{user.username}}")
+                
+        except User.DoesNotExist:
+            print(f"  ❌ User not found: {{streak_data['user']}}")
+    
+    print(f"  ✅ Imported {{imported_count}} streak records")
 
 def main():
     \"\"\"Main import function\"\"\"
@@ -311,6 +369,8 @@ def main():
         print()
         import_habit_days()
         print()
+        import_streaks()
+        print()
         
         print("🎉 Data import completed successfully!")
         print("\\n📊 Summary:")
@@ -318,6 +378,7 @@ def main():
         print(f"  Categories: {{len(CATEGORIES_DATA)}}")
         print(f"  Habits: {{len(HABITS_DATA)}}")
         print(f"  Habit Days: {{len(HABIT_DAYS_DATA)}}")
+        print(f"  Streaks: {{len(STREAKS_DATA)}}")
         
     except Exception as e:
         print(f"❌ Error during import: {{e}}")
@@ -353,9 +414,12 @@ def main():
         habit_days_data = export_habit_days()
         print()
         
+        streaks_data = export_streaks()
+        print()
+        
         # Create scripts
         create_password_reset_script(users_data)
-        create_import_script(users_data, categories_data, habits_data, habit_days_data)
+        create_import_script(users_data, categories_data, habits_data, habit_days_data, streaks_data)
         
         # Save raw data
         export_data = {
@@ -363,7 +427,8 @@ def main():
             'users': users_data,
             'categories': categories_data,
             'habits': habits_data,
-            'habit_days': habit_days_data
+            'habit_days': habit_days_data,
+            'streaks': streaks_data
         }
         
         with open('local_data_export.json', 'w') as f:
@@ -376,6 +441,7 @@ def main():
         print(f"  Categories: {len(categories_data)}")
         print(f"  Habits: {len(habits_data)}")
         print(f"  Habit Days: {len(habit_days_data)}")
+        print(f"  Streaks: {len(streaks_data)}")
         print()
         print("📁 Files created:")
         print("  local_data_export.json")

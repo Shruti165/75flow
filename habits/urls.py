@@ -5,6 +5,7 @@ app_name = 'habits'
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('habits/', views.habits, name='habits'),
     path('scoreboard/', views.scoreboard, name='scoreboard'),
     path('daily-tracking/', views.daily_tracking, name='daily_tracking'),
     path('excel/', views.excel_view, name='excel'),
@@ -17,5 +18,6 @@ urlpatterns = [
     path('habit/<int:habit_id>/delete/', views.delete_habit, name='delete_habit'),
     path('profile/', views.profile, name='profile'),
     path('feedback/', views.feedback_page, name='feedback'),
+    path('reset-streak/', views.reset_streak, name='reset_streak'),
     path('logout/', views.logout_view, name='logout'),
 ] 

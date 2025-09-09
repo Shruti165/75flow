@@ -296,8 +296,17 @@
                             <button class="nav-link" id="streak-tab" data-bs-toggle="pill" data-bs-target="#streak" type="button" role="tab">
                                 <div class="tab-content">
                                     <i class="ri-fire-line tab-icon"></i>
-                                    <span class="tab-label">Streaks</span>
+                                    <span class="tab-label">Current Streaks</span>
                                     <small class="tab-description">Consistency</small>
+                                </div>
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="best-streak-tab" data-bs-toggle="pill" data-bs-target="#best-streak" type="button" role="tab">
+                                <div class="tab-content">
+                                    <i class="ri-trophy-line tab-icon"></i>
+                                    <span class="tab-label">Best Streaks</span>
+                                    <small class="tab-description">All-time Records</small>
                                 </div>
                             </button>
                         </li>
@@ -371,7 +380,7 @@
                                                     {% endif %}
                                                 </div>
                                                 <div class="participant-details">
-                                                    <div class="participant-name">{{ user_stat.user.username }}</div>
+                                                    <div class="participant-name">{{ user_stat.user.username|title }}</div>
                                                     {% if user_stat.user == request.user %}
                                                         <span class="current-user-badge">You</span>
                                                     {% endif %}
@@ -459,7 +468,7 @@
                                                     {% endif %}
                                                 </div>
                                                 <div class="participant-details">
-                                                    <div class="participant-name">{{ user_stat.user.username }}</div>
+                                                    <div class="participant-name">{{ user_stat.user.username|title }}</div>
                                                     {% if user_stat.user == request.user %}
                                                         <span class="current-user-badge">You</span>
                                                     {% endif %}
@@ -547,7 +556,7 @@
                                                     {% endif %}
                                                 </div>
                                                 <div class="participant-details">
-                                                    <div class="participant-name">{{ user_stat.user.username }}</div>
+                                                    <div class="participant-name">{{ user_stat.user.username|title }}</div>
                                                     {% if user_stat.user == request.user %}
                                                         <span class="current-user-badge">You</span>
                                                     {% endif %}
@@ -635,7 +644,7 @@
                                                     {% endif %}
                                                 </div>
                                                 <div class="participant-details">
-                                                    <div class="participant-name">{{ user_stat.user.username }}</div>
+                                                    <div class="participant-name">{{ user_stat.user.username|title }}</div>
                                                     {% if user_stat.user == request.user %}
                                                         <span class="current-user-badge">You</span>
                                                     {% endif %}
@@ -643,7 +652,23 @@
                                             </div>
                                         </td>
                                         <td class="streak-cell">
-                                            <span class="streak-badge">{{ user_stat.current_streak }} days</span>
+                                            <div class="streak-info">
+                                                <div class="current-streak">
+                                                    <span class="streak-badge">{{ user_stat.current_streak }} days</span>
+                                                    {% if user_stat.user == request.user and user_stat.current_streak > 0 %}
+                                                        <button type="button" class="btn btn-sm btn-outline-danger ms-2" 
+                                                                data-bs-toggle="modal" data-bs-target="#resetStreakModal"
+                                                                title="Reset your streak">
+                                                            <i class="ri-refresh-line"></i>
+                                                        </button>
+                                                    {% endif %}
+                                                </div>
+                                                {% if user_stat.best_streak > user_stat.current_streak %}
+                                                    <div class="best-streak">
+                                                        <small class="text-muted">Best: {{ user_stat.best_streak }} days</small>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
                                         </td>
                                         <td class="progress-cell">
                                             <div class="enhanced-progress">
@@ -652,6 +677,105 @@
                                                          style="width: {{ user_stat.overall_completion_percentage }}%">
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Best Streak Rankings -->
+                    <div class="tab-pane fade" id="best-streak" role="tabpanel">
+                        <div class="ranking-header">
+                            <div class="ranking-title-section">
+                                <h5 class="ranking-title">
+                                    <i class="ri-trophy-line me-2"></i>Best Streak Rankings
+                                </h5>
+                                <div class="ranking-subtitle">All-time personal records and achievements</div>
+                            </div>
+                        </div>
+                        <div class="enhanced-table-container">
+                            <table class="table enhanced-table">
+                                <thead>
+                                    <tr>
+                                        <th><i class="ri-trophy-line me-1"></i>Rank</th>
+                                        <th><i class="ri-user-line me-1"></i>Participant</th>
+                                        <th><i class="ri-fire-line me-1"></i>Best Streak</th>
+                                        <th><i class="ri-progress-line me-1"></i>Current Streak</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user_stat in best_streak_rankings %}
+                                    <tr class="ranking-row {% if forloop.first %}rank-1{% elif forloop.counter == 2 %}rank-2{% elif forloop.counter == 3 %}rank-3{% endif %} {% if user_stat.user == request.user %}current-user{% endif %}">
+                                        <td class="rank-cell">
+                                            {% if forloop.first %}
+                                                <div class="rank-badge rank-1">
+                                                    <i class="ri-crown-line"></i>
+                                                    <span>1st</span>
+                                                </div>
+                                            {% elif forloop.counter == 2 %}
+                                                <div class="rank-badge rank-2">
+                                                    <i class="ri-medal-line"></i>
+                                                    <span>2nd</span>
+                                                </div>
+                                            {% elif forloop.counter == 3 %}
+                                                <div class="rank-badge rank-3">
+                                                    <i class="ri-medal-line"></i>
+                                                    <span>3rd</span>
+                                                </div>
+                                            {% else %}
+                                                <div class="rank-badge rank-other">
+                                                    <span>#{{ forloop.counter }}</span>
+                                                </div>
+                                            {% endif %}
+                                        </td>
+                                        <td class="participant-cell">
+                                            <div class="participant-info">
+                                                <div class="user-avatar-small me-3">
+                                                    {% if user_stat.user.profile and user_stat.user.profile.profile_image %}
+                                                        <img src="{{ user_stat.user.profile.profile_image.url }}" 
+                                                             alt="{{ user_stat.user.username }}" 
+                                                             class="avatar-circle-small user-profile-image">
+                                                    {% else %}
+                                                        <div class="avatar-circle-small" style="background: var(--gradient-primary);">
+                                                            <i class="ri-user-line"></i>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="participant-details">
+                                                    <div class="participant-name">{{ user_stat.user.username|title }}</div>
+                                                    {% if user_stat.user == request.user %}
+                                                        <span class="current-user-badge">You</span>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="streak-cell">
+                                            <div class="streak-info">
+                                                <div class="current-streak">
+                                                    <span class="streak-badge" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">{{ user_stat.best_streak }} days</span>
+                                                </div>
+                                                <div class="best-streak">
+                                                    <small class="text-success">🏆 Personal Record</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="streak-cell">
+                                            <div class="streak-info">
+                                                <div class="current-streak">
+                                                    <span class="streak-badge">{{ user_stat.current_streak }} days</span>
+                                                </div>
+                                                {% if user_stat.best_streak > user_stat.current_streak %}
+                                                    <div class="best-streak">
+                                                        <small class="text-muted">Working towards record</small>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="best-streak">
+                                                        <small class="text-success">🔥 New record!</small>
+                                                    </div>
+                                                {% endif %}
                                             </div>
                                         </td>
                                     </tr>
@@ -792,7 +916,7 @@
                                                 {% if forloop.first %}🥇{% elif forloop.counter == 2 %}🥈{% elif forloop.counter == 3 %}🥉{% endif %}
                                             </div>
                                             <div class="performer-info">
-                                                <div class="performer-name">{{ user_stat.user.username }}</div>
+                                                <div class="performer-name">{{ user_stat.user.username|title }}</div>
                                                 <div class="performer-details">
                                                     <span class="performer-score">{{ user_stat.percentage|floatformat:1 }}%</span>
                                                     <span class="performer-days">{{ user_stat.completed }} days</span>
@@ -3548,6 +3672,26 @@
         font-size: 0.85rem;
     }
 
+    .streak-info {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .current-streak {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .best-streak {
+        font-size: 0.75rem;
+    }
+
+    .streak-cell {
+        min-width: 120px;
+    }
+
     /* Progress Cell */
     .progress-cell {
         width: 150px;
@@ -4579,4 +4723,43 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeCategoryOverview();
 });
 </script>
+
+<!-- Reset Streak Modal -->
+<div class="modal fade" id="resetStreakModal" tabindex="-1" aria-labelledby="resetStreakModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="resetStreakModalLabel">
+                    <i class="ri-refresh-line me-2"></i>Reset Streak
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <div class="mb-3">
+                        <i class="ri-fire-line text-danger" style="font-size: 3rem;"></i>
+                    </div>
+                    <h6>Are you sure you want to reset your streak?</h6>
+                    <p class="text-muted">This will reset your current streak to 0. You can start building a new streak from tomorrow!</p>
+                    <div class="alert alert-warning">
+                        <i class="ri-alert-line me-2"></i>
+                        <strong>Warning:</strong> This action cannot be undone!
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="ri-close-line me-1"></i>Cancel
+                </button>
+                <form method="post" action="{% url 'habits:reset_streak' %}" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                        <i class="ri-refresh-line me-1"></i>Reset Streak
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

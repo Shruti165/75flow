@@ -15,8 +15,8 @@
         <div class="hero-content text-center">
             <div class="hero-title">
                 <h1 class="display-4 fw-bold text-white mb-3">
-                    <i class="ri-heart-pulse-line me-3 hero-icon"></i>
-                    Welcome to 75Flow, {{ user.username }}!
+                    <i class="ri-home-4-line me-3 hero-icon"></i>
+                    Welcome to 75Flow, {{ user.username|title }}!
                 </h1>
                 <p class="lead text-white-50 mb-4">Your 75-day journey to better habits starts here. Track, grow, and celebrate every step!</p>
             </div>
@@ -27,7 +27,7 @@
                             <div class="hero-stat-icon">
                                 <i class="ri-folder-line"></i>
                             </div>
-                            <div class="hero-stat-number">{{ categories.count }}</div>
+                            <div class="hero-stat-number">{{ total_categories }}</div>
                             <div class="hero-stat-label">Categories</div>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                             <div class="hero-stat-icon">
                                 <i class="ri-check-double-line"></i>
                             </div>
-                            <div class="hero-stat-number">{{ habits.count }}</div>
+                            <div class="hero-stat-number">{{ total_habits }}</div>
                             <div class="hero-stat-label">Active Habits</div>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                             <div class="hero-stat-icon">
                                 <i class="ri-calendar-check-line"></i>
                             </div>
-                            <div class="hero-stat-number">Day {{ challenge_stats.current_day|default:1 }}/75</div>
+                            <div class="hero-stat-number">Day {{ current_day }}/75</div>
                             <div class="hero-stat-label">Current Day</div>
                         </div>
                     </div>
@@ -54,8 +54,8 @@
                             <div class="hero-stat-icon">
                                 <i class="ri-fire-line"></i>
                             </div>
-                            <div class="hero-stat-number">{{ challenge_stats.best_streak|default:0 }}</div>
-                            <div class="hero-stat-label">Best Streak</div>
+                            <div class="hero-stat-number">{{ current_streak }}</div>
+                            <div class="hero-stat-label">Current Streak</div>
                         </div>
                     </div>
                 </div>
@@ -72,10 +72,29 @@
                 </a>
             </div> -->
             <div class="mt-4">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="hero-actions">
+                            <!-- <a href="{% url 'habits:habits' %}" class="btn btn-primary btn-lg me-3 mb-2">
+                                <i class="ri-heart-pulse-line me-2"></i>Manage Habits
+                            </a>
+                            <a href="{% url 'habits:daily_tracking' %}" class="btn btn-success btn-lg me-3 mb-2">
+                                <i class="ri-checkbox-multiple-line me-2"></i>Track Today
+                            </a>
+                            <a href="{% url 'habits:scoreboard' %}" class="btn btn-warning btn-lg me-3 mb-2">
+                                <i class="ri-trophy-line me-2"></i>View Scoreboard
+                            </a> -->
+                            <button type="button" class="btn btn-outline-light btn-lg mb-2" data-bs-toggle="modal" data-bs-target="#resetStreakModal">
+                                <i class="ri-refresh-line me-2"></i>Reset Streak
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            <div class="mt-4">
                 <blockquote class="blockquote text-white-50 mb-0">
-                    <p class="mb-0">“Small daily improvements are the key to staggering long-term results.”</p>
-                    <!-- <footer class="blockquote-footer text-white-50">James Clear</footer> -->
+                        <p class="mb-0">"Small daily improvements are the key to staggering long-term results."</p>
                 </blockquote>
+                </div>
             </div>
         </div>
     </div>
@@ -88,265 +107,127 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h4><i class="ri-dashboard-line icon-gradient me-2"></i>Challenge Dashboard</h4>
-                       
+                        <h4><i class="ri-dashboard-line icon-gradient me-2"></i>Welcome Dashboard</h4>
+                        <span class="badge bg-primary">Quick Overview</span>
                     </div>
                     <div class="mt-2">
-                        <span class="text-muted small"><i class="ri-information-line me-1"></i>These categories and habits are shared by all participants in the challenge.</span>
+                        <span class="text-muted small"><i class="ri-information-line me-1"></i>Your personal 75-day challenge overview and quick actions.</span>
                     </div>
                 </div>
                 <div class="card-body">
-                    <!-- Categories Overview -->
-                    {% if categories %}
+                    <!-- Best Streak Achievement -->
                         <div class="row mb-4">
                             <div class="col-12">
-                                <h5 class="mb-3"><i class="ri-folder-line me-2"></i>All Habit Categories</h5>
-                                <div class="row">
-                                    {% for cat_data in categories_with_habits %}
-                                    <div class="col-md-4 col-lg-3 mb-3">
-                                        <div class="card h-100 category-card" style="border-left: 4px solid {{ cat_data.category.color }};">
-                                            <div class="card-body text-center p-3">
-                                                <div class="category-icon emoji-bounce mb-2">
-                                                    {% if cat_data.category.name == "Reading" %}<i class="ri-book-line icon-large"></i>
-                                                    {% elif cat_data.category.name == "Fitness" %}<i class="ri-heart-pulse-line icon-large"></i>
-                                                    {% elif cat_data.category.name == "Nutrition" %}<i class="ri-restaurant-line icon-large"></i>
-                                                    {% elif cat_data.category.name == "Wealth" %}<i class="ri-money-dollar-circle-line icon-large"></i>
-                                                    {% elif cat_data.category.name == "Spiritual" %}<i class="ri-mental-health-line icon-large"></i>
-                                                    {% elif cat_data.category.name == "Fun" %}<i class="ri-gamepad-line icon-large"></i>
-                                                    {% else %}<i class="ri-file-list-line icon-large"></i>{% endif %}
-                                                </div>
-                                                <h6 class="card-title mb-1">{{ cat_data.category.name }}</h6>
-                                                <small class="text-muted">{{ cat_data.habit_count }} habits</small>
-                                                <div class="mt-2">
-                                                    <span class="badge fun-badge">
-                                                        <i class="ri-check-double-line me-1"></i>{{ cat_data.habit_count }} Active
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {% endfor %}
+                            <div class="achievement-card text-center p-4 border rounded bg-gradient">
+                                <div class="achievement-icon mb-3">
+                                    <i class="ri-trophy-line text-warning" style="font-size: 3rem;"></i>
+                                </div>
+                                <h3 class="mb-2 text-primary">{{ best_streak }}</h3>
+                                <h5 class="mb-3 text-muted">Best Streak Achieved</h5>
+                                <p class="text-muted mb-0">Your personal record for consecutive days of habit completion!</p>
                                 </div>
                             </div>
                         </div>
-                    {% else %}
-                        <!-- Fallback when no categories/habits exist -->
-                        <div class="row" id="noHabitsSection">
-                            <div class="col-12">
-                                <div class="alert alert-info text-center">
-                                    <i class="ri-information-line me-2"></i>
-                                    <strong>No habits found!</strong> 
-                                    <br>Create some categories and habits to get started with your 75-day challenge.
-                                    <br><br>
-                                    <a href="{% url 'habits:create_category' %}" class="btn btn-primary btn-sm me-2">
-                                        <i class="ri-folder-add-line me-1"></i>Create Category
-                                    </a>
-                                    <a href="{% url 'habits:create_habit' %}" class="btn btn-success btn-sm">
-                                        <i class="ri-add-line me-1"></i>Create Habit
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    {% endif %}
 
-                    <!-- Compact Habits by Category -->
-                    {% if categories %}
+                    <!-- Quick Actions -->
                         <div class="row">
                             <div class="col-12">
-                                <h5 class="mb-3"><i class="ri-list-check me-2"></i>All Habits by Category</h5>
-                                <div class="accordion" id="habitsAccordion">
-                                    {% for cat_data in categories_with_habits %}
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="heading{{ cat_data.category.id }}">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ cat_data.category.id }}" aria-expanded="false" aria-controls="collapse{{ cat_data.category.id }}">
-                                                <div class="d-flex align-items-center w-100">
-                                                    <div class="me-3">
-                                                        {% if cat_data.category.name == "Reading" %}<i class="ri-book-line icon-medium"></i>
-                                                        {% elif cat_data.category.name == "Fitness" %}<i class="ri-heart-pulse-line icon-medium"></i>
-                                                        {% elif cat_data.category.name == "Nutrition" %}<i class="ri-restaurant-line icon-medium"></i>
-                                                        {% elif cat_data.category.name == "Wealth" %}<i class="ri-money-dollar-circle-line icon-medium"></i>
-                                                        {% elif cat_data.category.name == "Spiritual" %}<i class="ri-mental-health-line icon-medium"></i>
-                                                        {% elif cat_data.category.name == "Fun" %}<i class="ri-gamepad-line icon-medium"></i>
-                                                        {% else %}<i class="ri-file-list-line icon-medium"></i>{% endif %}
-                                                    </div>
-                                                    <div class="flex-grow-1">
-                                                        <strong>{{ cat_data.category.name }}</strong>
-                                                        <small class="text-muted ms-2">({{ cat_data.habit_count }} habits)</small>
-                                                    </div>
-                                                    <span class="badge" style="background-color: {{ cat_data.category.color }}; color: white;">
-                                                        <i class="ri-check-double-line me-1"></i>{{ cat_data.habit_count }} Active
-                                                    </span>
-                                                </div>
-                                            </button>
-                                        </h2>
-                                        <div id="collapse{{ cat_data.category.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ cat_data.category.id }}" data-bs-parent="#habitsAccordion">
-                                            <div class="accordion-body">
+                            <h5 class="mb-3"><i class="ri-rocket-line me-2"></i>Quick Actions</h5>
                                                 <div class="row">
-                                                    {% for habit in cat_data.habits %}
-                                                    <div class="col-md-6 col-lg-4 mb-3">
-                                                        <div class="habit-card p-3 border rounded" style="border-left: 3px solid {{ cat_data.category.color }} !important;">
-                                                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                                                <h6 class="mb-0 habit-title">
-                                                                    {% if "Swim" in habit.name %}<i class="ri-swimming-line me-1"></i>
-                                                                    {% elif "Run" in habit.name %}<i class="ri-run-line me-1"></i>
-                                                                    {% elif "Dance" in habit.name %}<i class="ri-dance-line me-1"></i>
-                                                                    {% elif "Yoga" in habit.name %}<i class="ri-mental-health-line me-1"></i>
-                                                                    {% elif "Gym" in habit.name %}<i class="ri-heart-pulse-line me-1"></i>
-                                                                    {% elif "Walk" in habit.name %}<i class="ri-walk-line me-1"></i>
-                                                                    {% elif "Football" in habit.name %}<i class="ri-football-line me-1"></i>
-                                                                    {% elif "HIIT" in habit.name %}<i class="ri-fire-line me-1"></i>
-                                                                    {% elif "Drink" in habit.name %}<i class="ri-cup-line me-1"></i>
-                                                                    {% elif "Fruits" in habit.name %}<i class="ri-apple-line me-1"></i>
-                                                                    {% elif "Water" in habit.name %}<i class="ri-water-flash-line me-1"></i>
-                                                                    {% elif "Cook" in habit.name %}<i class="ri-restaurant-line me-1"></i>
-                                                                    {% elif "Job" in habit.name %}<i class="ri-briefcase-line me-1"></i>
-                                                                    {% elif "LinkedIn" in habit.name %}<i class="ri-linkedin-box-line me-1"></i>
-                                                                    {% elif "AI" in habit.name %}<i class="ri-robot-line me-1"></i>
-                                                                    {% elif "Content" in habit.name %}<i class="ri-file-text-line me-1"></i>
-                                                                    {% elif "Office" in habit.name %}<i class="ri-building-line me-1"></i>
-                                                                    {% elif "Meditate" in habit.name %}<i class="ri-mental-health-line me-1"></i>
-                                                                    {% elif "Journal" in habit.name %}<i class="ri-book-open-line me-1"></i>
-                                                                    {% elif "Sleep" in habit.name %}<i class="ri-hotel-bed-line me-1"></i>
-                                                                    {% elif "Event" in habit.name %}<i class="ri-calendar-event-line me-1"></i>
-                                                                    {% elif "Hackathon" in habit.name %}<i class="ri-code-line me-1"></i>
-                                                                    {% elif "Music" in habit.name %}<i class="ri-music-line me-1"></i>
-                                                                    {% elif "Painting" in habit.name %}<i class="ri-palette-line me-1"></i>
-                                                                    {% elif "Dogs" in habit.name %}<i class="ri-dog-line me-1"></i>
-                                                                    {% elif "Fiction" in habit.name %}<i class="ri-book-line me-1"></i>
-                                                                    {% elif "Non-Fiction" in habit.name %}<i class="ri-book-read-line me-1"></i>
-                                                                    {% else %}<i class="ri-check-line me-1"></i>{% endif %}
-                                                                    {{ habit.name }}
-                                                                </h6>
-                                                                <div class="habit-actions">
-                                                                    <div class="btn-group" role="group">
-                                                                        <a href="{% url 'habits:edit_habit' habit.id %}" class="btn btn-sm btn-outline-primary" title="Edit habit">
-                                                                            <i class="ri-edit-line"></i>
-                                                                        </a>
-                                                                        <a href="{% url 'habits:delete_habit' habit.id %}" class="btn btn-sm btn-outline-danger" title="Delete habit">
-                                                                            <i class="ri-delete-bin-line"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            {% if habit.description %}
-                                                                <p class="text-muted small mb-2">{{ habit.description|truncatechars:60 }}</p>
-                                                            {% endif %}
-                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                <div class="progress flex-grow-1 me-2" style="height: 6px;">
-                                                                    <div class="progress-bar" role="progressbar" style="width: 0%; background-color: {{ cat_data.category.color }};"></div>
-                                                                </div>
-                                                                <small class="text-muted">0/75</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    {% endfor %}
-                                                </div>
-                                            </div>
+                                <div class="col-md-4 col-sm-6 mb-3">
+                                    <div class="action-card text-center p-3 border rounded h-100">
+                                        <div class="action-icon mb-3">
+                                            <i class="ri-heart-pulse-line"></i>
                                         </div>
+                                        <h6 class="mb-2">Manage Habits</h6>
+                                        <p class="text-muted small mb-3">View, edit, and organize all your habits</p>
+                                        <a href="{% url 'habits:habits' %}" class="btn btn-primary btn-sm w-100">
+                                            <i class="ri-arrow-right-line me-1"></i>Go to Habits
+                                        </a>
                                     </div>
-                                    {% endfor %}
+                                </div>
+                                <div class="col-md-4 col-sm-6 mb-3">
+                                    <div class="action-card text-center p-3 border rounded h-100">
+                                        <div class="action-icon mb-3">
+                                            <i class="ri-checkbox-multiple-line"></i>
+                            </div>
+                                        <h6 class="mb-2">Track Today</h6>
+                                        <p class="text-muted small mb-3">Mark your habits as completed for today</p>
+                                        <a href="{% url 'habits:daily_tracking' %}" class="btn btn-success btn-sm w-100">
+                                            <i class="ri-arrow-right-line me-1"></i>Track Today
+                            </a>
+                        </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6 mb-3">
+                                    <div class="action-card text-center p-3 border rounded h-100">
+                                        <div class="action-icon mb-3">
+                                            <i class="ri-trophy-line"></i>
+                            </div>
+                                        <h6 class="mb-2">View Scoreboard</h6>
+                                        <p class="text-muted small mb-3">See how you rank against other participants</p>
+                                        <a href="{% url 'habits:scoreboard' %}" class="btn btn-warning btn-sm w-100">
+                                            <i class="ri-arrow-right-line me-1"></i>View Rankings
+                                </a>
+                            </div>
                                 </div>
                             </div>
                         </div>
-                    {% else %}
-                        <div class="text-center py-5">
-                            <i class="ri-folder-line icon-large icon-gradient mb-3"></i>
-                            <h5 class="text-muted mb-3">No categories yet!</h5>
-                            <p class="text-muted">Start your 75-day journey by creating your first category.</p>
-                            <a href="{% url 'habits:create_category' %}" class="btn btn-primary">
-                                <i class="ri-add-line"></i>Create Category
-                            </a>
+                    </div>
+                    
+                    <!-- Motivational Quote -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="alert alert-light border-0 text-center">
+                                <i class="ri-quote-text me-2 text-primary"></i>
+                                <strong>"The secret of getting ahead is getting started."</strong>
+                                <br><small class="text-muted">- Mark Twain</small>
+                            </div>
                         </div>
-                    {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Manage Habits Section -->
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-12">
-            <div class="card border-0 shadow-sm">
-                <div class="card-header bg-gradient-primary text-white">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0">
-                            <i class="ri-settings-3-line me-2"></i>
-                            Manage Your Habits
-                        </h4>
-                        <span class="badge bg-light text-dark">
-                            <i class="ri-tools-line me-1"></i>
-                            Quick Actions
-                        </span>
+<!-- Reset Streak Modal -->
+<div class="modal fade" id="resetStreakModal" tabindex="-1" aria-labelledby="resetStreakModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="resetStreakModalLabel">
+                    <i class="ri-refresh-line me-2 text-warning"></i>Reset Streak Counter
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <div class="mb-3">
+                        <i class="ri-fire-line text-warning" style="font-size: 3rem;"></i>
                     </div>
+                    <h6 class="mb-3">Are you sure you want to reset your streak?</h6>
+                    <p class="text-muted mb-3">
+                        This will reset your current streak of <strong>{{ current_streak }} days</strong> back to 0.
+                        <br><small>Your best streak of {{ best_streak }} days will be preserved.</small>
+                    </p>
+                    {% if last_reset_date %}
+                    <div class="alert alert-info">
+                        <i class="ri-information-line me-1"></i>
+                        <small>Last reset: {{ last_reset_date|date:"M d, Y \a\t g:i A" }}</small>
+                    </div>
+                    {% endif %}
                 </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3 col-sm-6 mb-3">
-                            <div class="management-card text-center p-3 border rounded h-100">
-                                <div class="management-icon mb-3">
-                                    <i class="ri-add-circle-line"></i>
-                                </div>
-                                <h6 class="mb-2">Create New Habit</h6>
-                                <p class="text-muted small mb-3">Add a new habit to the challenge</p>
-                                <a href="{% url 'habits:create_habit' %}" class="btn btn-primary btn-sm w-100">
-                                    <i class="ri-add-line me-1"></i>Add Habit
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6 mb-3">
-                            <div class="management-card text-center p-3 border rounded h-100">
-                                <div class="management-icon mb-3">
-                                    <i class="ri-folder-add-line"></i>
-                                </div>
-                                <h6 class="mb-2">Create Category</h6>
-                                <p class="text-muted small mb-3">Organize habits into categories</p>
-                                <a href="{% url 'habits:create_category' %}" class="btn btn-success btn-sm w-100">
-                                    <i class="ri-folder-add-line me-1"></i>Add Category
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6 mb-3">
-                            <div class="management-card text-center p-3 border rounded h-100">
-                                <div class="management-icon mb-3">
-                                    <i class="ri-edit-line"></i>
-                                </div>
-                                <h6 class="mb-2">Edit Habits</h6>
-                                <p class="text-muted small mb-3">Modify existing habits and details</p>
-                                <button class="btn btn-info btn-sm w-100" onclick="scrollToHabits()">
-                                    <i class="ri-edit-line me-1"></i>Edit Habits
-                                </button>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6 mb-3">
-                            <div class="management-card text-center p-3 border rounded h-100">
-                                <div class="management-icon mb-3">
-                                    <i class="ri-delete-bin-line"></i>
-                                </div>
-                                <h6 class="mb-2">Delete Habits</h6>
-                                <p class="text-muted small mb-3">Remove habits you no longer need</p>
-                                <button class="btn btn-danger btn-sm w-100" onclick="scrollToHabits()">
-                                    <i class="ri-delete-bin-line me-1"></i>Delete Habits
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Quick Tips -->
-                    <div class="row mt-4">
-                        <div class="col-12">
-                            <div class="alert alert-info border-0">
-                                <div class="d-flex align-items-center">
-                                    <i class="ri-lightbulb-line me-3 text-info"></i>
-                                    <div>
-                                        <strong>Pro Tip:</strong> Hover over any habit card above to see edit and delete buttons. You can also use the buttons above to quickly navigate to habit management.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="ri-close-line me-1"></i>Cancel
+                </button>
+                <form method="post" action="{% url 'habits:reset_streak' %}" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-warning">
+                        <i class="ri-refresh-line me-1"></i>Yes, Reset Streak
+                    </button>
+                </form>
             </div>
         </div>
     </div>
@@ -465,6 +346,18 @@
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     }
 
+    .hero-stat-card .btn {
+        font-size: 0.7rem;
+        padding: 4px 8px;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+    }
+
+    .hero-stat-card .btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
     .hero-stat-icon {
         font-size: 2rem;
         color: white;
@@ -555,39 +448,118 @@
         transform: scale(1.1);
     }
 
-    /* Management Cards Styling */
-    .management-card {
+    /* Stat Cards Styling */
+    .stat-card {
         transition: all 0.3s ease;
-        background: rgba(255, 255, 255, 0.8);
+        background: rgba(255, 255, 255, 0.9);
         border: 1px solid rgba(0, 0, 0, 0.1) !important;
     }
 
-    .management-card:hover {
+    .stat-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        border-color: rgba(102, 126, 234, 0.3) !important;
+    }
+
+    .stat-icon {
+        font-size: 2rem;
+        transition: all 0.3s ease;
+    }
+
+    .stat-card:hover .stat-icon {
+        transform: scale(1.1);
+    }
+
+    .stat-card .btn {
+        font-size: 0.75rem;
+        padding: 4px 8px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .stat-card .btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Action Cards Styling */
+    .action-card {
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .action-card:hover {
         transform: translateY(-5px);
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         border-color: rgba(102, 126, 234, 0.3) !important;
     }
 
-    .management-icon {
+    .action-icon {
         font-size: 2.5rem;
         color: #667eea;
         transition: all 0.3s ease;
     }
 
-    .management-card:hover .management-icon {
+    .action-card:hover .action-icon {
         transform: scale(1.1);
         color: #764ba2;
     }
 
-    .management-card .btn {
+    .action-card .btn {
         border-radius: 8px;
         font-weight: 500;
         transition: all 0.3s ease;
     }
 
-    .management-card .btn:hover {
+    .action-card .btn:hover {
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Achievement Card Styling */
+    .achievement-card {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+        border: 2px solid rgba(102, 126, 234, 0.2) !important;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .achievement-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
+    }
+
+    .achievement-card:hover::before {
+        left: 100%;
+    }
+
+    .achievement-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        border-color: rgba(102, 126, 234, 0.4) !important;
+    }
+
+    .achievement-icon {
+        transition: all 0.3s ease;
+    }
+
+    .achievement-card:hover .achievement-icon {
+        transform: scale(1.1);
+        animation: bounce 1s ease-in-out;
+    }
+
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% { transform: scale(1.1) translateY(0); }
+        40% { transform: scale(1.1) translateY(-10px); }
+        60% { transform: scale(1.1) translateY(-5px); }
     }
 
     /* Animations */
@@ -746,53 +718,21 @@
 </style>
 
 <script>
-function scrollToHabits() {
-    const habitsSection = document.querySelector('#habitsAccordion');
-    const noHabitsSection = document.querySelector('#noHabitsSection');
-    
-    if (habitsSection) {
-        // Scroll to habits section
-        habitsSection.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'start' 
-        });
-        
-        // Add a subtle highlight effect
-        habitsSection.style.transition = 'all 0.3s ease';
-        habitsSection.style.boxShadow = '0 0 20px rgba(102, 126, 234, 0.3)';
-        setTimeout(() => {
-            habitsSection.style.boxShadow = '';
-        }, 2000);
-    } else if (noHabitsSection) {
-        // Scroll to no habits section
-        noHabitsSection.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'start' 
-        });
-        
-        // Add a subtle highlight effect
-        noHabitsSection.style.transition = 'all 0.3s ease';
-        noHabitsSection.style.boxShadow = '0 0 20px rgba(102, 126, 234, 0.3)';
-        setTimeout(() => {
-            noHabitsSection.style.boxShadow = '';
-        }, 2000);
-    } else {
-        // If neither section exists, show a helpful message
-        alert('No habits section found. Please make sure you\'re logged in as a participant (not admin).');
-    }
-}
-
-// Add hover effect to make habit actions more visible on mobile
+// Add smooth animations to stat and action cards
 document.addEventListener('DOMContentLoaded', function() {
-    const habitCards = document.querySelectorAll('.habit-card');
+    const statCards = document.querySelectorAll('.stat-card');
+    const actionCards = document.querySelectorAll('.action-card');
     
-    habitCards.forEach(card => {
-        card.addEventListener('touchstart', function() {
-            const actions = this.querySelector('.habit-actions');
-            if (actions) {
-                actions.style.opacity = '1';
-            }
-        });
+    // Add staggered animation to stat cards
+    statCards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+        card.classList.add('fadeInUp');
+    });
+    
+    // Add staggered animation to action cards
+    actionCards.forEach((card, index) => {
+        card.style.animationDelay = `${(index + statCards.length) * 0.1}s`;
+        card.classList.add('fadeInUp');
     });
 });
 </script>

@@ -7,10 +7,60 @@ from django.db.models import Count, Sum, Q
 from django.utils import timezone
 from datetime import datetime, timedelta, date
 from django.http import JsonResponse, HttpResponse
-from .models import Habit, HabitDay, Category, Profile, Feedback, BugReport
+from .models import Habit, HabitDay, Category, Profile, Feedback, BugReport, Streak
 from .forms import CategoryForm, HabitForm, ProfileForm, FeedbackForm, BugReportForm
 
 # Create your views here.
+
+def calculate_user_streak(user):
+    """Calculate current streak for a user based on habit completions"""
+    today = timezone.now().date()
+    challenge_start_date = date(2025, 7, 15)
+    
+    # Calculate current day of the challenge
+    if today >= challenge_start_date:
+        current_day = (today - challenge_start_date).days + 1
+        if current_day > 75:
+            current_day = 75
+    else:
+        current_day = 0
+    
+    # Calculate streak by checking consecutive days from today backwards
+    streak = 0
+    for day_num in range(current_day, 0, -1):
+        # Check if user completed at least 2 activities from any category on this day
+        day_categories_completed = 0
+        day_total_categories = 0
+        
+        for category in Category.objects.all():
+            category_habits = Habit.objects.filter(category=category)
+            if category_habits.exists():
+                day_total_categories += 1
+                completed_in_category = HabitDay.objects.filter(
+                    habit__in=category_habits,
+                    day=day_num,
+                    completed=True
+                ).count()
+                
+                if completed_in_category >= 2:
+                    day_categories_completed += 1
+        
+        # If user completed at least one category, count as a streak day
+        if day_categories_completed > 0:
+            streak += 1
+        else:
+            break
+    
+    return streak
+
+def get_or_create_streak(user):
+    """Get or create streak record for user"""
+    streak, created = Streak.objects.get_or_create(user=user)
+    if created:
+        # Calculate initial streak
+        current_streak = calculate_user_streak(user)
+        streak.update_streak(current_streak)
+    return streak
 
 def health_check(request):
     """Health check endpoint for Railway"""
@@ -18,18 +68,85 @@ def health_check(request):
 
 @login_required
 def home(request):
-    """Home page showing user's progress and quick actions"""
+    """Home page - welcome dashboard with quick actions"""
     # Redirect admin user to admin manager
     if request.user.username == 'admin':
         return redirect('habits:admin_habit_manager')
     
+    # Get basic stats for the home page
     user_categories = Category.objects.all()
-    user_habits = Habit.objects.filter(user=request.user)
+    all_habits = Habit.objects.all()
     
-    # Organize habits by category for the current user
+    # Get streak information
+    streak_record = get_or_create_streak(request.user)
+    current_streak = calculate_user_streak(request.user)
+    streak_record.update_streak(current_streak)
+    
+    # Calculate today's date and challenge day
+    today = timezone.now().date()
+    challenge_start_date = date(2025, 7, 15)
+    
+    if today >= challenge_start_date:
+        current_day = (today - challenge_start_date).days + 1
+        if current_day > 75:
+            current_day = 75
+    else:
+        current_day = 0
+    
+    context = {
+        'categories': user_categories,
+        'habits': all_habits,
+        'user': request.user,
+        'current_streak': current_streak,
+        'best_streak': streak_record.best_streak,
+        'current_day': current_day,
+        'total_habits': all_habits.count(),
+        'total_categories': user_categories.count(),
+        'last_reset_date': streak_record.last_reset_date,
+    }
+    return render(request, 'habits/home.html', context)
+
+@login_required
+def reset_streak(request):
+    """Reset user's current streak"""
+    if request.method == 'POST':
+        streak_record = get_or_create_streak(request.user)
+        streak_record.reset_streak()
+        messages.success(request, f'Your streak has been reset to 0. You can start fresh now!')
+        return redirect('habits:home')
+    
+    return redirect('habits:home')
+
+@login_required
+def habits(request):
+    """Habits page showing all global habits and user's progress"""
+    # Redirect admin user to admin manager
+    if request.user.username == 'admin':
+        return redirect('habits:admin_habit_manager')
+    
+    categories = Category.objects.all()
+    all_habits = Habit.objects.all()
+    
+    # Get streak information
+    streak_record = get_or_create_streak(request.user)
+    current_streak = calculate_user_streak(request.user)
+    streak_record.update_streak(current_streak)
+    
+    # Calculate today's date and challenge day
+    today = timezone.now().date()
+    challenge_start_date = date(2025, 7, 15)
+    
+    if today >= challenge_start_date:
+        current_day = (today - challenge_start_date).days + 1
+        if current_day > 75:
+            current_day = 75
+    else:
+        current_day = 0
+    
+    # Organize habits by category
     categories_with_habits = []
-    for category in user_categories:
-        category_habits = user_habits.filter(category=category)
+    for category in categories:
+        category_habits = all_habits.filter(category=category)
         categories_with_habits.append({
             'category': category,
             'habits': category_habits,
@@ -37,12 +154,17 @@ def home(request):
         })
     
     context = {
-        'categories': user_categories,
-        'habits': user_habits,
+        'categories': categories,
+        'habits': all_habits,
         'categories_with_habits': categories_with_habits,
-        'user': request.user
+        'user': request.user,
+        'challenge_stats': {
+            'current_day': current_day,
+            'current_streak': current_streak,
+            'best_streak': streak_record.best_streak,
+        }
     }
-    return render(request, 'habits/home.html', context)
+    return render(request, 'habits/habits.html', context)
 
 @login_required
 def profile(request):
@@ -99,7 +221,7 @@ def scoreboard(request):
     
     for user in User.objects.exclude(username='admin'):  # Exclude admin user
         # Get user's habits
-        habits = Habit.objects.filter(user=user)
+        habits = Habit.objects.all()
         total_habits = habits.count()
         
         # Calculate category-based scoring (2 activities per category = full points)
@@ -181,29 +303,12 @@ def scoreboard(request):
         
         daily_completion_percentage = (daily_completed_categories / daily_total_categories * 100) if daily_total_categories > 0 else 0
         
-        # Calculate current streak (category-based)
-        current_streak = 0
-        for day_num in range(current_day, 0, -1):
-            day_categories_completed = 0
-            day_total_categories = 0
-            
-            for category in Category.objects.all():
-                category_habits = habits.filter(category=category)
-                if category_habits.exists():
-                    day_total_categories += 1
-                    completed_in_category = HabitDay.objects.filter(
-                        habit__in=category_habits,
-                        day=day_num,
-                        completed=True
-                    ).count()
-                    
-                    if completed_in_category >= 2:
-                        day_categories_completed += 1
-            
-            if day_categories_completed > 0:
-                current_streak += 1
-            else:
-                break
+        # Get or create streak record and calculate current streak
+        streak_record = get_or_create_streak(user)
+        current_streak = calculate_user_streak(user)
+        
+        # Update streak record with calculated streak
+        streak_record.update_streak(current_streak)
         
         users_with_stats.append({
             'user': user,
@@ -215,6 +320,8 @@ def scoreboard(request):
             'daily_completed': daily_completed_categories,
             'daily_completion_percentage': daily_completion_percentage,
             'current_streak': current_streak,
+            'best_streak': streak_record.best_streak,
+            'streak_record': streak_record,
             'category_stats': category_stats,
             'total_categories': daily_total_categories
         })
@@ -224,6 +331,7 @@ def scoreboard(request):
     weekly_rankings = sorted(users_with_stats, key=lambda x: x['weekly_completion_percentage'], reverse=True)
     daily_rankings = sorted(users_with_stats, key=lambda x: x['daily_completion_percentage'], reverse=True)
     streak_rankings = sorted(users_with_stats, key=lambda x: x['current_streak'], reverse=True)
+    best_streak_rankings = sorted(users_with_stats, key=lambda x: x['best_streak'], reverse=True)
     
     # Find category winners
     category_winners = {}
@@ -314,7 +422,7 @@ def scoreboard(request):
         user_stat['category_stats'] = []
         for category in Category.objects.all():
             # Get user's habits for this category
-            user_habits = Habit.objects.filter(user=user_stat['user'], category=category)
+            user_habits = Habit.objects.filter(category=category)
             
             # Find this user's stats for this category
             category_found = False
@@ -372,12 +480,12 @@ def scoreboard(request):
             # If profile doesn't exist, create it (fallback for existing users)
             profile = Profile.objects.create(user=user)
             
-        user_habits = Habit.objects.filter(user=user)
+        user_habits = Habit.objects.all()
         user_completions = {}
         
         for day_num in range(1, 76):
             day_completions = HabitDay.objects.filter(
-                habit__user=user,
+                user=user,
                 day=day_num,
                 completed=True
             ).select_related('habit')
@@ -409,6 +517,7 @@ def scoreboard(request):
         'weekly_rankings': weekly_rankings,
         'daily_rankings': daily_rankings,
         'streak_rankings': streak_rankings,
+        'best_streak_rankings': best_streak_rankings,
         'category_winners': category_winners,
         'category_breakdown': category_breakdown,
         'categories': Category.objects.all(),
@@ -439,7 +548,7 @@ def daily_tracking(request):
     
     # Get user's habits organized by category
     user_categories = Category.objects.all()
-    user_habits = Habit.objects.filter(user=request.user)
+    user_habits = Habit.objects.all()
     
     # Handle form submission
     if request.method == 'POST':
@@ -447,15 +556,16 @@ def daily_tracking(request):
         
         # Clear all existing completions for today
         HabitDay.objects.filter(
-            habit__user=request.user,
+            user=request.user,
             day=current_day
         ).delete()
         
         # Mark selected habits as completed
         for habit_id in completed_habits:
             try:
-                habit = Habit.objects.get(id=habit_id, user=request.user)
+                habit = Habit.objects.get(id=habit_id)
                 HabitDay.objects.create(
+                    user=request.user,
                     habit=habit,
                     day=current_day,
                     completed=True
@@ -468,7 +578,7 @@ def daily_tracking(request):
     
     # Get current completion status for today
     completed_today = HabitDay.objects.filter(
-        habit__user=request.user,
+        user=request.user,
         day=current_day,
         completed=True
     ).values_list('habit_id', flat=True)
@@ -553,8 +663,9 @@ def toggle_habit(request, habit_id):
             return JsonResponse({'error': 'Challenge has not started yet'}, status=400)
         
         try:
-            habit = Habit.objects.get(id=habit_id, user=request.user)
+            habit = Habit.objects.get(id=habit_id)
             habit_day, created = HabitDay.objects.get_or_create(
+                user=request.user,
                 habit=habit,
                 day=current_day,
                 defaults={'completed': False}
@@ -607,10 +718,10 @@ def create_habit(request):
         form = HabitForm(request.POST)
         if form.is_valid():
             habit = form.save(commit=False)
-            habit.user = request.user
+            habit.created_by = request.user
             habit.save()
-            messages.success(request, '✅ Habit created successfully!')
-            return redirect('habits:home')
+            messages.success(request, '✅ Habit created successfully! All users can now track this habit!')
+            return redirect('habits:habits')
     else:
         form = HabitForm()
     
@@ -628,14 +739,14 @@ def edit_habit(request, habit_id):
         messages.error(request, '❌ Admin cannot edit habits. Use Admin Habit Manager to view progress.')
         return redirect('habits:admin_habit_manager')
     
-    habit = get_object_or_404(Habit, id=habit_id, user=request.user)
+    habit = get_object_or_404(Habit, id=habit_id)
     
     if request.method == 'POST':
         form = HabitForm(request.POST, instance=habit)
         if form.is_valid():
             form.save()
             messages.success(request, '✅ Habit updated successfully!')
-            return redirect('habits:home')
+            return redirect('habits:habits')
     else:
         form = HabitForm(instance=habit)
     
@@ -654,13 +765,13 @@ def delete_habit(request, habit_id):
         messages.error(request, '❌ Admin cannot delete habits. Use Admin Habit Manager to view progress.')
         return redirect('habits:admin_habit_manager')
     
-    habit = get_object_or_404(Habit, id=habit_id, user=request.user)
+    habit = get_object_or_404(Habit, id=habit_id)
     
     if request.method == 'POST':
         habit_name = habit.name
         habit.delete()
         messages.success(request, f'✅ Habit "{habit_name}" deleted successfully!')
-        return redirect('habits:home')
+        return redirect('habits:habits')
     
     context = {
         'habit': habit,
@@ -724,7 +835,7 @@ def admin_habit_manager(request):
     excel_data = []
     
     for user in users:
-        user_habits = Habit.objects.filter(user=user).order_by('category__name', 'name')
+        user_habits = Habit.objects.all().order_by('category__name', 'name')
         
         for habit in user_habits:
             habit_row = {
@@ -742,7 +853,7 @@ def admin_habit_manager(request):
             excel_data.append(habit_row)
     
     # Calculate summary statistics
-    total_habits = sum(len(Habit.objects.filter(user=user)) for user in users)
+    total_habits = Habit.objects.count()
     total_completions = HabitDay.objects.filter(completed=True).count()
     total_possible = total_habits * min(current_day, 75)
     overall_completion = (total_completions / total_possible * 100) if total_possible > 0 else 0
@@ -785,14 +896,15 @@ def excel_view(request):
         completed_habits = request.POST.getlist('completed_habits')
         # Clear existing completions for today
         HabitDay.objects.filter(
-            habit__user=request.user,
+            user=request.user,
             day=current_day
         ).delete()
         # Add new completions
         for habit_id in completed_habits:
             try:
-                habit = Habit.objects.get(id=habit_id, user=request.user)
+                habit = Habit.objects.get(id=habit_id)
                 HabitDay.objects.create(
+                    user=request.user,
                     habit=habit,
                     day=current_day,
                     completed=True
@@ -804,9 +916,9 @@ def excel_view(request):
     
     # Get user's habits and categories
     user_categories = Category.objects.all()
-    user_habits = Habit.objects.filter(user=request.user)
+    user_habits = Habit.objects.all()
     completed_today = HabitDay.objects.filter(
-        habit__user=request.user,
+        user=request.user,
         day=current_day,
         completed=True
     ).values_list('habit_id', flat=True)
@@ -975,3 +1087,16 @@ def feedback_page(request):
         'user': request.user
     }
     return render(request, 'habits/feedback.html', context)
+
+@login_required
+def reset_streak(request):
+    """Reset user's current streak"""
+    if request.method == 'POST':
+        try:
+            streak = get_or_create_streak(request.user)
+            streak.reset_streak()
+            messages.success(request, '🔥 Streak reset successfully! Start fresh and build a new streak!')
+        except Exception as e:
+            messages.error(request, f'❌ Error resetting streak: {str(e)}')
+    
+    return redirect('habits:scoreboard')

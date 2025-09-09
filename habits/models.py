@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from datetime import date
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils import timezone
 import os
 from django.conf import settings
 
@@ -77,26 +78,35 @@ class Category(models.Model):
         return self.name
 
 class Habit(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    """Global habit shared by all users"""
     name = models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='habits', null=True, blank=True)
     start_date = models.DateField(default=date(2025, 7, 15))  # July 15th, 2025
     description = models.TextField(blank=True, null=True)
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='created_habits')
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['category', 'name']
+        unique_together = ('category', 'name')  # Prevent duplicate habits per category
 
     def __str__(self):
-        return self.name
+        return f"{self.category.name} - {self.name}" if self.category else self.name
 
 class HabitDay(models.Model):
-    habit = models.ForeignKey(Habit, on_delete=models.CASCADE)
+    """User's daily completion of a global habit"""
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='habit_days', default=1)
+    habit = models.ForeignKey(Habit, on_delete=models.CASCADE, related_name='habit_days')
     day = models.IntegerField()  # Day number in the 75-day challenge
     completed = models.BooleanField(default=False)
     date = models.DateField(auto_now_add=True)
     
     class Meta:
-        unique_together = ('habit', 'day')
+        unique_together = ('user', 'habit', 'day')  # One completion per user per habit per day
+        ordering = ['-day', 'habit__name']
     
     def __str__(self):
-        return f"{self.habit.name} - Day {self.day} ({'Completed' if self.completed else 'Not Completed'})"
+        return f"{self.user.username} - {self.habit.name} - Day {self.day} ({'Completed' if self.completed else 'Not Completed'})"
 
 class Feedback(models.Model):
     FEEDBACK_TYPES = [
@@ -163,3 +173,32 @@ class BugReport(models.Model):
     
     def __str__(self):
         return f"Bug: {self.title} ({self.get_severity_display()})"
+
+class Streak(models.Model):
+    """Track user streak days - can be reset by user"""
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='streaks')
+    current_streak = models.PositiveIntegerField(default=0, help_text="Current streak in days")
+    best_streak = models.PositiveIntegerField(default=0, help_text="Best streak achieved")
+    last_reset_date = models.DateTimeField(auto_now_add=True, help_text="When streak was last reset")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        unique_together = ('user',)  # One streak record per user
+        ordering = ['-current_streak', '-updated_at']
+    
+    def __str__(self):
+        return f"{self.user.username} - {self.current_streak} days"
+    
+    def reset_streak(self):
+        """Reset the current streak to 0"""
+        self.current_streak = 0
+        self.last_reset_date = timezone.now()
+        self.save()
+    
+    def update_streak(self, new_streak):
+        """Update streak and track best streak"""
+        if new_streak > self.best_streak:
+            self.best_streak = new_streak
+        self.current_streak = new_streak
+        self.save()
