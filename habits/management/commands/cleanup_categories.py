@@ -37,21 +37,20 @@ class Command(BaseCommand):
                     self.stdout.write(f"Found existing shared category: {category.name}")
         
         # Update all habits to use the shared categories
-        for user in users:
-            for habit in Habit.objects.filter(user=user):
-                if habit.category:
-                    # Find the corresponding shared category
-                    shared_category = None
-                    for shared_cat in shared_categories:
-                        if shared_cat.name == habit.category.name:
-                            shared_category = shared_cat
-                            break
-                    
-                    if shared_category and habit.category != shared_category:
-                        old_category = habit.category
-                        habit.category = shared_category
-                        habit.save()
-                        self.stdout.write(f"Updated habit '{habit.name}' from category '{old_category.name}' to shared category '{shared_category.name}'")
+        for habit in Habit.objects.all():
+            if habit.category:
+                # Find the corresponding shared category
+                shared_category = None
+                for shared_cat in shared_categories:
+                    if shared_cat.name == habit.category.name:
+                        shared_category = shared_cat
+                        break
+                
+                if shared_category and habit.category != shared_category:
+                    old_category = habit.category
+                    habit.category = shared_category
+                    habit.save()
+                    self.stdout.write(f"Updated habit '{habit.name}' from category '{old_category.name}' to shared category '{shared_category.name}'")
         
         # Delete duplicate categories (keep only the shared ones)
         categories_to_delete = Category.objects.exclude(id__in=[cat.id for cat in shared_categories])

@@ -106,7 +106,7 @@ class Command(BaseCommand):
         # Group habits by user for completion data
         user_habits = {}
         for username, user in users.items():
-            user_habits[username] = Habit.objects.filter(user=user)
+            user_habits[username] = Habit.objects.all()
         
         # Create habit completion data for the past days (July 15th to today)
         challenge_start = date(2025, 7, 15)
@@ -141,7 +141,7 @@ class Command(BaseCommand):
         
         for username, pattern in completion_patterns.items():
             user = users[username]
-            habits = Habit.objects.filter(user=user)
+            habits = Habit.objects.all()
             
             for day_num in range(1, min(days_since_start + 1, 76)):
                 # Determine if user completes habits on this day

@@ -179,7 +179,7 @@ print(f"Profiles: {Profile.objects.count()}")
 # Test relationships
 print("\\n🔗 Testing relationships:")
 for user in User.objects.all():
-    habits = Habit.objects.filter(user=user)
+    habits = Habit.objects.all()
     profile = Profile.objects.filter(user=user).first()
     print(f"  - User {user.username}: {habits.count()} habits, profile: {'Yes' if profile else 'No'}")
 '''

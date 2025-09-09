@@ -16,8 +16,8 @@ def get_user_stats(user):
     else:
         current_day = 0
     
-    # Get user's habits
-    habits = Habit.objects.filter(user=user)
+    # Get all habits (now global)
+    habits = Habit.objects.all()
     total_habits = habits.count()
     
     # Calculate category-based scoring
