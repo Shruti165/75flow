@@ -18,7 +18,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'flow75.settings')
 django.setup()
 
 from django.contrib.auth.models import User
-from habits.models import Profile, Category, Habit, HabitDay, Streak
+from habits.models import Profile, Category, Habit, HabitDay, Streak, Streak
 from django.core import serializers
 
 def export_users():
@@ -198,19 +198,20 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'flow75.settings')
 django.setup()
 
 from django.contrib.auth.models import User
-from habits.models import Profile, Category, Habit, HabitDay
+from habits.models import Profile, Category, Habit, HabitDay, Streak
 from django.core.files.base import ContentFile
+from django.utils import timezone
 
 # Import data from local export
-USERS_DATA = {json.dumps(users_data, indent=2)}
+USERS_DATA = {json.dumps(users_data, indent=2).replace('false', 'False').replace('true', 'True').replace('null', 'None')}
 
 CATEGORIES_DATA = {json.dumps(categories_data, indent=2)}
 
 HABITS_DATA = {json.dumps(habits_data, indent=2)}
 
-HABIT_DAYS_DATA = {json.dumps(habit_days_data, indent=2)}
+HABIT_DAYS_DATA = {json.dumps(habit_days_data, indent=2).replace('false', 'False').replace('true', 'True').replace('null', 'None')}
 
-STREAKS_DATA = {json.dumps(streaks_data, indent=2)}
+STREAKS_DATA = {json.dumps(streaks_data, indent=2).replace('null', 'None')}
 
 def import_categories():
     \"\"\"Import categories\"\"\"
@@ -242,7 +243,8 @@ def import_users():
                 'last_name': user_data['last_name'],
                 'is_staff': user_data['is_staff'],
                 'is_superuser': user_data['is_superuser'],
-                'is_active': user_data['is_active']
+                'is_active': user_data['is_active'],
+                'date_joined': timezone.datetime.fromisoformat(user_data['date_joined'])
             }}
         )
         
@@ -251,16 +253,16 @@ def import_users():
         else:
             print(f"  ℹ️  User already exists: {{user.username}}")
         
-                 # Create or update profile
-         profile, profile_created = Profile.objects.get_or_create(
-             user=user,
-             defaults={{
-                 'bio': user_data['profile']['bio'],
-                 'date_of_birth': datetime.fromisoformat(user_data['profile']['date_of_birth']).date() if user_data['profile']['date_of_birth'] else None,
-                 'email': user_data['profile']['email'],
-                 'weekly_stats_enabled': user_data['profile']['weekly_stats_enabled']
-             }}
-         )
+        # Create or update profile
+        profile, profile_created = Profile.objects.get_or_create(
+            user=user,
+            defaults={{
+                'bio': user_data['profile']['bio'],
+                'date_of_birth': timezone.datetime.fromisoformat(user_data['profile']['date_of_birth']).date() if user_data['profile']['date_of_birth'] else None,
+                'email': user_data['profile']['email'],
+                'weekly_stats_enabled': user_data['profile']['weekly_stats_enabled']
+            }}
+        )
         
         if profile_created:
             print(f"    ✅ Created profile for: {{user.username}}")
@@ -305,7 +307,7 @@ def import_habit_days():
         try:
             habit = Habit.objects.get(name=habit_day_data['habit'])
             user = User.objects.get(username=habit_day_data['user'])
-            date = datetime.fromisoformat(habit_day_data['date']).date()
+            date = timezone.datetime.fromisoformat(habit_day_data['date']).date()
             
             habit_day, created = HabitDay.objects.get_or_create(
                 habit=habit,
@@ -341,7 +343,7 @@ def import_streaks():
                 defaults={{
                     'current_streak': streak_data['current_streak'],
                     'best_streak': streak_data['best_streak'],
-                    'last_reset_date': datetime.fromisoformat(streak_data['last_reset_date'])
+                    'last_reset_date': timezone.datetime.fromisoformat(streak_data['last_reset_date'])
                 }}
             )
             
