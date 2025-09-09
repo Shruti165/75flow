@@ -205,9 +205,9 @@ from django.utils import timezone
 # Import data from local export
 USERS_DATA = {json.dumps(users_data, indent=2).replace('false', 'False').replace('true', 'True').replace('null', 'None')}
 
-CATEGORIES_DATA = {json.dumps(categories_data, indent=2)}
+CATEGORIES_DATA = {json.dumps(categories_data, indent=2).replace('null', 'None')}
 
-HABITS_DATA = {json.dumps(habits_data, indent=2)}
+HABITS_DATA = {json.dumps(habits_data, indent=2).replace('null', 'None')}
 
 HABIT_DAYS_DATA = {json.dumps(habit_days_data, indent=2).replace('false', 'False').replace('true', 'True').replace('null', 'None')}
 

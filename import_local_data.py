@@ -191,7 +191,7 @@ CATEGORIES_DATA = [
 HABITS_DATA = [
   {
     "name": "7 Minute HIIT",
-    "description": null,
+    "description": None,
     "category": "Fitness",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -199,7 +199,7 @@ HABITS_DATA = [
   },
   {
     "name": "Dance",
-    "description": null,
+    "description": None,
     "category": "Fitness",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -215,7 +215,7 @@ HABITS_DATA = [
   },
   {
     "name": "Football",
-    "description": null,
+    "description": None,
     "category": "Fitness",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -223,7 +223,7 @@ HABITS_DATA = [
   },
   {
     "name": "Go To The Park",
-    "description": null,
+    "description": None,
     "category": "Fitness",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -231,7 +231,7 @@ HABITS_DATA = [
   },
   {
     "name": "Gym",
-    "description": null,
+    "description": None,
     "category": "Fitness",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -239,7 +239,7 @@ HABITS_DATA = [
   },
   {
     "name": "Hand Stand / Pull Up / Pole Session",
-    "description": null,
+    "description": None,
     "category": "Fitness",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -255,7 +255,7 @@ HABITS_DATA = [
   },
   {
     "name": "Run",
-    "description": null,
+    "description": None,
     "category": "Fitness",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -263,7 +263,7 @@ HABITS_DATA = [
   },
   {
     "name": "Swim",
-    "description": null,
+    "description": None,
     "category": "Fitness",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -271,7 +271,7 @@ HABITS_DATA = [
   },
   {
     "name": "Walk (7k/10k)",
-    "description": null,
+    "description": None,
     "category": "Fitness",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -279,7 +279,7 @@ HABITS_DATA = [
   },
   {
     "name": "Yoga / Stretch",
-    "description": null,
+    "description": None,
     "category": "Fitness",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -287,7 +287,7 @@ HABITS_DATA = [
   },
   {
     "name": "Consume Leaves",
-    "description": null,
+    "description": None,
     "category": "Nutrition",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -303,7 +303,7 @@ HABITS_DATA = [
   },
   {
     "name": "Drink Coconut Water",
-    "description": null,
+    "description": None,
     "category": "Nutrition",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -311,7 +311,7 @@ HABITS_DATA = [
   },
   {
     "name": "Drink Matcha",
-    "description": null,
+    "description": None,
     "category": "Nutrition",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -319,7 +319,7 @@ HABITS_DATA = [
   },
   {
     "name": "Drink Vegetable Juice",
-    "description": null,
+    "description": None,
     "category": "Nutrition",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -327,7 +327,7 @@ HABITS_DATA = [
   },
   {
     "name": "Drink Water",
-    "description": null,
+    "description": None,
     "category": "Nutrition",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -343,7 +343,7 @@ HABITS_DATA = [
   },
   {
     "name": "Have Fruits",
-    "description": null,
+    "description": None,
     "category": "Nutrition",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -351,7 +351,7 @@ HABITS_DATA = [
   },
   {
     "name": "Prepare Meal / Cook Dinner",
-    "description": null,
+    "description": None,
     "category": "Nutrition",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -359,7 +359,7 @@ HABITS_DATA = [
   },
   {
     "name": "Take Chia Seeds",
-    "description": null,
+    "description": None,
     "category": "Nutrition",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -367,7 +367,7 @@ HABITS_DATA = [
   },
   {
     "name": "Take Supplements",
-    "description": null,
+    "description": None,
     "category": "Nutrition",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -375,7 +375,7 @@ HABITS_DATA = [
   },
   {
     "name": "Fiction",
-    "description": null,
+    "description": None,
     "category": "Reading",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -391,7 +391,7 @@ HABITS_DATA = [
   },
   {
     "name": "Non-Fiction",
-    "description": null,
+    "description": None,
     "category": "Reading",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -407,7 +407,7 @@ HABITS_DATA = [
   },
   {
     "name": "Spiritual",
-    "description": null,
+    "description": None,
     "category": "Reading",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -415,7 +415,7 @@ HABITS_DATA = [
   },
   {
     "name": "Align High Income Job Offers",
-    "description": null,
+    "description": None,
     "category": "Wealth",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -423,7 +423,7 @@ HABITS_DATA = [
   },
   {
     "name": "Create Content",
-    "description": null,
+    "description": None,
     "category": "Wealth",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -431,7 +431,7 @@ HABITS_DATA = [
   },
   {
     "name": "Deep Work",
-    "description": null,
+    "description": None,
     "category": "Wealth",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -439,7 +439,7 @@ HABITS_DATA = [
   },
   {
     "name": "Get Leads",
-    "description": null,
+    "description": None,
     "category": "Wealth",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -447,7 +447,7 @@ HABITS_DATA = [
   },
   {
     "name": "Go To The Office",
-    "description": null,
+    "description": None,
     "category": "Wealth",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -463,7 +463,7 @@ HABITS_DATA = [
   },
   {
     "name": "Optimise Linkedin",
-    "description": null,
+    "description": None,
     "category": "Wealth",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -471,7 +471,7 @@ HABITS_DATA = [
   },
   {
     "name": "Passion Projects",
-    "description": null,
+    "description": None,
     "category": "Wealth",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -487,7 +487,7 @@ HABITS_DATA = [
   },
   {
     "name": "Upskill",
-    "description": null,
+    "description": None,
     "category": "Wealth",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -495,7 +495,7 @@ HABITS_DATA = [
   },
   {
     "name": "Chanting",
-    "description": null,
+    "description": None,
     "category": "Spiritual",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -511,7 +511,7 @@ HABITS_DATA = [
   },
   {
     "name": "Grounding",
-    "description": null,
+    "description": None,
     "category": "Spiritual",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -519,7 +519,7 @@ HABITS_DATA = [
   },
   {
     "name": "Journal",
-    "description": null,
+    "description": None,
     "category": "Spiritual",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -527,7 +527,7 @@ HABITS_DATA = [
   },
   {
     "name": "Meditate",
-    "description": null,
+    "description": None,
     "category": "Spiritual",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -543,7 +543,7 @@ HABITS_DATA = [
   },
   {
     "name": "Sleep Well / Binaural Beats",
-    "description": null,
+    "description": None,
     "category": "Spiritual",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -551,7 +551,7 @@ HABITS_DATA = [
   },
   {
     "name": "Sungazing/Moongazing",
-    "description": null,
+    "description": None,
     "category": "Spiritual",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -559,7 +559,7 @@ HABITS_DATA = [
   },
   {
     "name": "Attend an Event",
-    "description": null,
+    "description": None,
     "category": "Fun",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -567,7 +567,7 @@ HABITS_DATA = [
   },
   {
     "name": "Community Meet",
-    "description": null,
+    "description": None,
     "category": "Fun",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -583,7 +583,7 @@ HABITS_DATA = [
   },
   {
     "name": "Dance",
-    "description": null,
+    "description": None,
     "category": "Fun",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -591,7 +591,7 @@ HABITS_DATA = [
   },
   {
     "name": "DeclutterPlanning for Tomorrow",
-    "description": null,
+    "description": None,
     "category": "Fun",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -599,7 +599,7 @@ HABITS_DATA = [
   },
   {
     "name": "Gardening",
-    "description": null,
+    "description": None,
     "category": "Fun",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -607,7 +607,7 @@ HABITS_DATA = [
   },
   {
     "name": "Hackathons",
-    "description": null,
+    "description": None,
     "category": "Fun",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -615,7 +615,7 @@ HABITS_DATA = [
   },
   {
     "name": "Music",
-    "description": null,
+    "description": None,
     "category": "Fun",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -623,7 +623,7 @@ HABITS_DATA = [
   },
   {
     "name": "Painitng Sketch",
-    "description": null,
+    "description": None,
     "category": "Fun",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -639,7 +639,7 @@ HABITS_DATA = [
   },
   {
     "name": "Social Service",
-    "description": null,
+    "description": None,
     "category": "Fun",
     "created_by": "shruti",
     "start_date": "2025-07-15",
@@ -647,7 +647,7 @@ HABITS_DATA = [
   },
   {
     "name": "Time with pets",
-    "description": null,
+    "description": None,
     "category": "Fun",
     "created_by": "shruti",
     "start_date": "2025-07-15",
