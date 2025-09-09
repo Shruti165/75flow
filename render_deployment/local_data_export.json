@@ -1,6 +1,126 @@
 {
-  "exported_at": "2025-08-29T11:17:43.134487",
+  "export_date": "2025-09-09T13:55:54.552979",
   "users": [
+    {
+      "username": "shruti",
+      "email": "shruti@example.com",
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_superuser": false,
+      "is_active": true,
+      "date_joined": "2025-09-08T17:36:17.360721+00:00",
+      "profile": {
+        "date_of_birth": null,
+        "email": null,
+        "weekly_stats_enabled": true
+      }
+    },
+    {
+      "username": "sidd",
+      "email": "sidd@example.com",
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_superuser": false,
+      "is_active": true,
+      "date_joined": "2025-09-08T17:36:41.622628+00:00",
+      "profile": {
+        "date_of_birth": null,
+        "email": null,
+        "weekly_stats_enabled": true
+      }
+    },
+    {
+      "username": "sanju",
+      "email": "sanju@example.com",
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_superuser": false,
+      "is_active": true,
+      "date_joined": "2025-09-08T17:36:51.800532+00:00",
+      "profile": {
+        "date_of_birth": null,
+        "email": null,
+        "weekly_stats_enabled": true
+      }
+    },
+    {
+      "username": "mahi",
+      "email": "mahi@example.com",
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_superuser": false,
+      "is_active": true,
+      "date_joined": "2025-09-08T17:36:52.153512+00:00",
+      "profile": {
+        "date_of_birth": null,
+        "email": null,
+        "weekly_stats_enabled": true
+      }
+    },
+    {
+      "username": "anurag",
+      "email": "anurag@example.com",
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_superuser": false,
+      "is_active": true,
+      "date_joined": "2025-09-08T17:36:52.489115+00:00",
+      "profile": {
+        "date_of_birth": null,
+        "email": null,
+        "weekly_stats_enabled": true
+      }
+    },
+    {
+      "username": "pooja",
+      "email": "pooja@example.com",
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_superuser": false,
+      "is_active": true,
+      "date_joined": "2025-09-08T17:36:52.824705+00:00",
+      "profile": {
+        "date_of_birth": null,
+        "email": null,
+        "weekly_stats_enabled": true
+      }
+    },
+    {
+      "username": "sachin",
+      "email": "sachin@example.com",
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_superuser": false,
+      "is_active": true,
+      "date_joined": "2025-09-08T17:36:53.159832+00:00",
+      "profile": {
+        "date_of_birth": null,
+        "email": null,
+        "weekly_stats_enabled": true
+      }
+    },
+    {
+      "username": "defni",
+      "email": "defni@example.com",
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_superuser": false,
+      "is_active": true,
+      "date_joined": "2025-09-08T17:36:53.492932+00:00",
+      "profile": {
+        "date_of_birth": null,
+        "email": null,
+        "weekly_stats_enabled": true
+      }
+    },
     {
       "username": "Sid",
       "email": "",
@@ -9,10 +129,8 @@
       "is_staff": false,
       "is_superuser": false,
       "is_active": true,
-      "date_joined": "2025-07-13T20:08:29.586041+00:00",
+      "date_joined": "2025-09-09T13:52:01.350860+00:00",
       "profile": {
-        "bio": "",
-        "profile_image": "profile_images/Sid_1_MD4DgkD.png",
         "date_of_birth": null,
         "email": null,
         "weekly_stats_enabled": true
@@ -26,12 +144,10 @@
       "is_staff": false,
       "is_superuser": false,
       "is_active": true,
-      "date_joined": "2025-07-13T20:08:30.048332+00:00",
+      "date_joined": "2025-09-09T13:52:01.362856+00:00",
       "profile": {
-        "bio": "hello",
-        "profile_image": "profile_images/Shruti_5lA8J6j.png",
         "date_of_birth": null,
-        "email": "strength.shruti@gmail.com",
+        "email": null,
         "weekly_stats_enabled": true
       }
     },
@@ -43,10 +159,8 @@
       "is_staff": false,
       "is_superuser": false,
       "is_active": true,
-      "date_joined": "2025-07-13T20:08:30.563520+00:00",
+      "date_joined": "2025-09-09T13:52:01.367247+00:00",
       "profile": {
-        "bio": "",
-        "profile_image": "profile_images/Sanjh.png",
         "date_of_birth": null,
         "email": null,
         "weekly_stats_enabled": true
@@ -60,10 +174,8 @@
       "is_staff": true,
       "is_superuser": true,
       "is_active": true,
-      "date_joined": "2025-08-01T10:05:04.306733+00:00",
+      "date_joined": "2025-09-09T13:52:01.372173+00:00",
       "profile": {
-        "bio": "",
-        "profile_image": null,
         "date_of_birth": null,
         "email": null,
         "weekly_stats_enabled": true
@@ -77,10 +189,8 @@
       "is_staff": false,
       "is_superuser": false,
       "is_active": true,
-      "date_joined": "2025-08-29T07:14:49.929459+00:00",
+      "date_joined": "2025-09-09T13:52:01.375863+00:00",
       "profile": {
-        "bio": "",
-        "profile_image": null,
         "date_of_birth": null,
         "email": null,
         "weekly_stats_enabled": true
@@ -94,10 +204,8 @@
       "is_staff": false,
       "is_superuser": false,
       "is_active": true,
-      "date_joined": "2025-08-29T07:16:41.919444+00:00",
+      "date_joined": "2025-09-09T13:52:01.382130+00:00",
       "profile": {
-        "bio": "",
-        "profile_image": null,
         "date_of_birth": null,
         "email": null,
         "weekly_stats_enabled": true
@@ -111,10 +219,8 @@
       "is_staff": false,
       "is_superuser": false,
       "is_active": true,
-      "date_joined": "2025-08-29T08:08:52.775112+00:00",
+      "date_joined": "2025-09-09T13:52:01.385917+00:00",
       "profile": {
-        "bio": "",
-        "profile_image": null,
         "date_of_birth": null,
         "email": null,
         "weekly_stats_enabled": true
@@ -123,2279 +229,1602 @@
   ],
   "categories": [
     {
-      "name": "Reading",
-      "color": "#2196f3"
-    },
-    {
       "name": "Fitness",
-      "color": "#4caf50"
+      "color": "#FF6B6B"
     },
     {
       "name": "Nutrition",
-      "color": "#ff9800"
+      "color": "#4ECDC4"
+    },
+    {
+      "name": "Reading",
+      "color": "#45B7D1"
     },
     {
       "name": "Wealth",
-      "color": "#9c27b0"
+      "color": "#96CEB4"
     },
     {
       "name": "Spiritual",
-      "color": "#e91e63"
+      "color": "#FFEAA7"
     },
     {
       "name": "Fun",
-      "color": "#00bcd4"
+      "color": "#DDA0DD"
     }
   ],
   "habits": [
     {
-      "name": "Fiction",
-      "description": "Daily fiction habit",
-      "category": "Reading",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Non-Fiction",
-      "description": "Daily non-fiction habit",
-      "category": "Reading",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Spiritual",
-      "description": "Daily spiritual habit",
-      "category": "Reading",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Swim",
-      "description": "Daily swim habit",
+      "name": "7 Minute HIIT",
+      "description": null,
       "category": "Fitness",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Run",
-      "description": "Daily run habit",
-      "category": "Fitness",
-      "user": "Sid",
-      "start_date": "2025-07-15"
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.553029+00:00"
     },
     {
       "name": "Dance",
-      "description": "Daily dance habit",
+      "description": null,
       "category": "Fitness",
-      "user": "Sid",
-      "start_date": "2025-07-15"
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.519952+00:00"
     },
     {
-      "name": "Yoga / Stretch",
-      "description": "Daily yoga / stretch habit",
+      "name": "Evening Walk",
+      "description": "Take a 20-minute walk after dinner",
       "category": "Fitness",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Gym",
-      "description": "Daily gym habit",
-      "category": "Fitness",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Go To The Park",
-      "description": "Daily go to the park habit",
-      "category": "Fitness",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Walk",
-      "description": "Daily walk habit",
-      "category": "Fitness",
-      "user": "Sid",
-      "start_date": "2025-07-15"
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T17:42:47.676455+00:00"
     },
     {
       "name": "Football",
-      "description": "Daily football habit",
+      "description": null,
       "category": "Fitness",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Hand Stand / Pull Up / Pole Session",
-      "description": "Daily hand stand / pull up / pole session habit",
-      "category": "Fitness",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "7 Minute HIIT",
-      "description": "Daily 7 minute hiit habit",
-      "category": "Fitness",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Drink Matcha",
-      "description": "Daily drink matcha habit",
-      "category": "Nutrition",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Consume Leaves",
-      "description": "Daily consume leaves habit",
-      "category": "Nutrition",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Drink Coconut Water",
-      "description": "Daily drink coconut water habit",
-      "category": "Nutrition",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Take Supplements",
-      "description": "Daily take supplements habit",
-      "category": "Nutrition",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Have Fruits",
-      "description": "Daily have fruits habit",
-      "category": "Nutrition",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Drink Water",
-      "description": "Daily drink water habit",
-      "category": "Nutrition",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Drink Vegetable Juice",
-      "description": "Daily drink vegetable juice habit",
-      "category": "Nutrition",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Prepare Meal / Cook Dinner",
-      "description": "Daily prepare meal / cook dinner habit",
-      "category": "Nutrition",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Take Chia Seeds",
-      "description": "Daily take chia seeds habit",
-      "category": "Nutrition",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Mantra Chanting",
-      "description": "Daily mantra chanting habit",
-      "category": "Wealth",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Get Aligned High Income Job Offers",
-      "description": "Daily get aligned high income job offers habit",
-      "category": "Wealth",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Optimise Linkedin",
-      "description": "Daily optimise linkedin habit",
-      "category": "Wealth",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "AI Projects",
-      "description": "Daily ai projects habit",
-      "category": "Wealth",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Passion Projects",
-      "description": "Daily passion projects habit",
-      "category": "Wealth",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Upskill",
-      "description": "Daily upskill habit",
-      "category": "Wealth",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Create Content",
-      "description": "Daily create content habit",
-      "category": "Wealth",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Go To The Office",
-      "description": "Daily go to the office habit",
-      "category": "Wealth",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Chanting",
-      "description": "Daily chanting habit",
-      "category": "Spiritual",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Journal",
-      "description": "Daily journal habit",
-      "category": "Spiritual",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Grounding",
-      "description": "Daily grounding habit",
-      "category": "Spiritual",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Sleep Well / Binaural Beats",
-      "description": "Daily sleep well / binaural beats habit",
-      "category": "Spiritual",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Attend an Event",
-      "description": "Daily attend an event habit",
-      "category": "Fun",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Social Club Meet",
-      "description": "Daily social club meet habit",
-      "category": "Fun",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Community Service",
-      "description": "Daily community service habit",
-      "category": "Fun",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Visit Orphanage/ Old Age Home",
-      "description": "Daily visit orphanage/ old age home habit",
-      "category": "Fun",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Music Jam",
-      "description": "Daily music jam habit",
-      "category": "Fun",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Painitng, Gardening, Sketch",
-      "description": "Daily painitng, gardening, sketch habit",
-      "category": "Fun",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Declutter / Organise",
-      "description": "Daily declutter / organise habit",
-      "category": "Fun",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Planning for Tomorrow",
-      "description": "Daily planning for tomorrow habit",
-      "category": "Fun",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Feed The Dogs",
-      "description": "Daily feed the dogs habit",
-      "category": "Fun",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Fiction",
-      "description": "Daily fiction habit",
-      "category": "Reading",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Non-Fiction",
-      "description": "Daily non-fiction habit",
-      "category": "Reading",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Spiritual",
-      "description": "Daily spiritual habit",
-      "category": "Reading",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Swim",
-      "description": "Daily swim habit",
-      "category": "Fitness",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Run",
-      "description": "Daily run habit",
-      "category": "Fitness",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Dance",
-      "description": "Daily dance habit",
-      "category": "Fitness",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Yoga / Stretch",
-      "description": "Daily yoga / stretch habit",
-      "category": "Fitness",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Gym",
-      "description": "Daily gym habit",
-      "category": "Fitness",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.542751+00:00"
     },
     {
       "name": "Go To The Park",
-      "description": "Daily go to the park habit",
+      "description": null,
       "category": "Fitness",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Walk",
-      "description": "Daily walk habit",
-      "category": "Fitness",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Football",
-      "description": "Daily football habit",
-      "category": "Fitness",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Hand Stand / Pull Up / Pole Session",
-      "description": "Daily hand stand / pull up / pole session habit",
-      "category": "Fitness",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "7 Minute HIIT",
-      "description": "Daily 7 minute hiit habit",
-      "category": "Fitness",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Drink Matcha",
-      "description": "Daily drink matcha habit",
-      "category": "Nutrition",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Consume Leaves",
-      "description": "Daily consume leaves habit",
-      "category": "Nutrition",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Drink Coconut Water",
-      "description": "Daily drink coconut water habit",
-      "category": "Nutrition",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Take Supplements",
-      "description": "Daily take supplements habit",
-      "category": "Nutrition",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Have Fruits",
-      "description": "Daily have fruits habit",
-      "category": "Nutrition",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Drink Water",
-      "description": "Daily drink water habit",
-      "category": "Nutrition",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Drink Vegetable Juice",
-      "description": "Daily drink vegetable juice habit",
-      "category": "Nutrition",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Prepare Meal / Cook Dinner",
-      "description": "Daily prepare meal / cook dinner habit",
-      "category": "Nutrition",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Take Chia Seeds",
-      "description": "Daily take chia seeds habit",
-      "category": "Nutrition",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Mantra Chanting",
-      "description": "Daily mantra chanting habit",
-      "category": "Wealth",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Get Aligned High Income Job Offers",
-      "description": "Daily get aligned high income job offers habit",
-      "category": "Wealth",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Optimise Linkedin",
-      "description": "Daily optimise linkedin habit",
-      "category": "Wealth",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "AI Projects",
-      "description": "Daily ai projects habit",
-      "category": "Wealth",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Passion Projects",
-      "description": "Daily passion projects habit",
-      "category": "Wealth",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Upskill",
-      "description": "Daily upskill habit",
-      "category": "Wealth",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Create Content",
-      "description": "Daily create content habit",
-      "category": "Wealth",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Go To The Office",
-      "description": "Daily go to the office habit",
-      "category": "Wealth",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Chanting",
-      "description": "Daily chanting habit",
-      "category": "Spiritual",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Journal",
-      "description": "Daily journal habit",
-      "category": "Spiritual",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Meditate",
-      "description": "Daily meditate habit",
-      "category": "Spiritual",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Grounding",
-      "description": "Daily grounding habit",
-      "category": "Spiritual",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Sleep Well / Binaural Beats",
-      "description": "Daily sleep well / binaural beats habit",
-      "category": "Spiritual",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Attend an Event",
-      "description": "Daily attend an event habit",
-      "category": "Fun",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Hackathons",
-      "description": "Daily hackathons habit",
-      "category": "Fun",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Social Club Meet",
-      "description": "Daily social club meet habit",
-      "category": "Fun",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Community Service",
-      "description": "Daily community service habit",
-      "category": "Fun",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Visit Orphanage/ Old Age Home",
-      "description": "Daily visit orphanage/ old age home habit",
-      "category": "Fun",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Music Jam",
-      "description": "Daily music jam habit",
-      "category": "Fun",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Painitng, Gardening, Sketch",
-      "description": "Daily painitng, gardening, sketch habit",
-      "category": "Fun",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Declutter / Organise",
-      "description": "Daily declutter / organise habit",
-      "category": "Fun",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Planning for Tomorrow",
-      "description": "Daily planning for tomorrow habit",
-      "category": "Fun",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Feed The Dogs",
-      "description": "Daily feed the dogs habit",
-      "category": "Fun",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Fiction",
-      "description": "Daily fiction habit",
-      "category": "Reading",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Non-Fiction",
-      "description": "Daily non-fiction habit",
-      "category": "Reading",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Spiritual",
-      "description": "Daily spiritual habit",
-      "category": "Reading",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Swim",
-      "description": "Daily swim habit",
-      "category": "Fitness",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Run",
-      "description": "Daily run habit",
-      "category": "Fitness",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Dance",
-      "description": "Daily dance habit",
-      "category": "Fitness",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Yoga / Stretch",
-      "description": "Daily yoga / stretch habit",
-      "category": "Fitness",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.530924+00:00"
     },
     {
       "name": "Gym",
-      "description": "Daily gym habit",
+      "description": null,
       "category": "Fitness",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Go To The Park",
-      "description": "Daily go to the park habit",
-      "category": "Fitness",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Walk",
-      "description": "Daily walk habit",
-      "category": "Fitness",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Football",
-      "description": "Daily football habit",
-      "category": "Fitness",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Hand Stand / Pull Up / Pole Session",
-      "description": "Daily hand stand / pull up / pole session habit",
-      "category": "Fitness",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "7 Minute HIIT",
-      "description": "Daily 7 minute hiit habit",
-      "category": "Fitness",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Drink Matcha",
-      "description": "Daily drink matcha habit",
-      "category": "Nutrition",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Consume Leaves",
-      "description": "Daily consume leaves habit",
-      "category": "Nutrition",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Drink Coconut Water",
-      "description": "Daily drink coconut water habit",
-      "category": "Nutrition",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Take Supplements",
-      "description": "Daily take supplements habit",
-      "category": "Nutrition",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Have Fruits",
-      "description": "Daily have fruits habit",
-      "category": "Nutrition",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Drink Water",
-      "description": "Daily drink water habit",
-      "category": "Nutrition",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Drink Vegetable Juice",
-      "description": "Daily drink vegetable juice habit",
-      "category": "Nutrition",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Prepare Meal / Cook Dinner",
-      "description": "Daily prepare meal / cook dinner habit",
-      "category": "Nutrition",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Take Chia Seeds",
-      "description": "Daily take chia seeds habit",
-      "category": "Nutrition",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Mantra Chanting",
-      "description": "Daily mantra chanting habit",
-      "category": "Wealth",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Get Aligned High Income Job Offers",
-      "description": "Daily get aligned high income job offers habit",
-      "category": "Wealth",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Optimise Linkedin",
-      "description": "Daily optimise linkedin habit",
-      "category": "Wealth",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "AI Projects",
-      "description": "Daily ai projects habit",
-      "category": "Wealth",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Passion Projects",
-      "description": "Daily passion projects habit",
-      "category": "Wealth",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Upskill",
-      "description": "Daily upskill habit",
-      "category": "Wealth",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Create Content",
-      "description": "Daily create content habit",
-      "category": "Wealth",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Go To The Office",
-      "description": "Daily go to the office habit",
-      "category": "Wealth",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Chanting",
-      "description": "Daily chanting habit",
-      "category": "Spiritual",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Journal",
-      "description": "Daily journal habit",
-      "category": "Spiritual",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Meditate",
-      "description": "Daily meditate habit",
-      "category": "Spiritual",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Grounding",
-      "description": "Daily grounding habit",
-      "category": "Spiritual",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Sleep Well / Binaural Beats",
-      "description": "Daily sleep well / binaural beats habit",
-      "category": "Spiritual",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Attend an Event",
-      "description": "Daily attend an event habit",
-      "category": "Fun",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Hackathons",
-      "description": "Daily hackathons habit",
-      "category": "Fun",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Social Club Meet",
-      "description": "Daily social club meet habit",
-      "category": "Fun",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Community Service",
-      "description": "Daily community service habit",
-      "category": "Fun",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Visit Orphanage/ Old Age Home",
-      "description": "Daily visit orphanage/ old age home habit",
-      "category": "Fun",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Music Jam",
-      "description": "Daily music jam habit",
-      "category": "Fun",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Painitng, Gardening, Sketch",
-      "description": "Daily painitng, gardening, sketch habit",
-      "category": "Fun",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Declutter / Organise",
-      "description": "Daily declutter / organise habit",
-      "category": "Fun",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Planning for Tomorrow",
-      "description": "Daily planning for tomorrow habit",
-      "category": "Fun",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Feed The Dogs",
-      "description": "Daily feed the dogs habit",
-      "category": "Fun",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Study fintech",
-      "description": "Increase knowledge base",
-      "category": "Wealth",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Read 30 minutes",
-      "description": "Read books or articles",
-      "category": "Reading",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Morning workout",
-      "description": "30 minutes exercise",
-      "category": "Fitness",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Drink 8 glasses water",
-      "description": "Stay hydrated",
-      "category": "Nutrition",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Track expenses",
-      "description": "Log daily spending",
-      "category": "Wealth",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Meditation",
-      "description": "10 minutes mindfulness",
-      "category": "Spiritual",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Play guitar",
-      "description": "Practice music",
-      "category": "Fun",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.527808+00:00"
     },
     {
       "name": "Gym workout",
       "description": "Weight training session",
       "category": "Fitness",
-      "user": "Sid",
-      "start_date": "2025-07-15"
+      "created_by": "Sid",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.788943+00:00"
+    },
+    {
+      "name": "Hand Stand / Pull Up / Pole Session",
+      "description": null,
+      "category": "Fitness",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.549179+00:00"
+    },
+    {
+      "name": "Morning Workout",
+      "description": "Start your day with 30 minutes of exercise",
+      "category": "Fitness",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T17:42:47.673252+00:00"
+    },
+    {
+      "name": "Morning workout",
+      "description": "30 minutes exercise",
+      "category": "Fitness",
+      "created_by": "Shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.760912+00:00"
+    },
+    {
+      "name": "Run",
+      "description": null,
+      "category": "Fitness",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.513388+00:00"
+    },
+    {
+      "name": "Running",
+      "description": "Daily run or jog",
+      "category": "Fitness",
+      "created_by": "Sanju",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.817463+00:00"
+    },
+    {
+      "name": "Swim",
+      "description": null,
+      "category": "Fitness",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.509645+00:00"
+    },
+    {
+      "name": "Walk",
+      "description": "Daily walk habit",
+      "category": "Fitness",
+      "created_by": "Sid",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.415186+00:00"
+    },
+    {
+      "name": "Walk (7k/10k)",
+      "description": null,
+      "category": "Fitness",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.537909+00:00"
+    },
+    {
+      "name": "Yoga / Stretch",
+      "description": null,
+      "category": "Fitness",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.524439+00:00"
+    },
+    {
+      "name": "Consume Leaves",
+      "description": null,
+      "category": "Nutrition",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.565324+00:00"
+    },
+    {
+      "name": "Drink 8 Glasses of Water",
+      "description": "Stay hydrated throughout the day",
+      "category": "Nutrition",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T17:42:47.679509+00:00"
+    },
+    {
+      "name": "Drink 8 glasses water",
+      "description": "Stay hydrated",
+      "category": "Nutrition",
+      "created_by": "Shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.765821+00:00"
+    },
+    {
+      "name": "Drink Coconut Water",
+      "description": null,
+      "category": "Nutrition",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.569331+00:00"
+    },
+    {
+      "name": "Drink Matcha",
+      "description": null,
+      "category": "Nutrition",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.559035+00:00"
+    },
+    {
+      "name": "Drink Vegetable Juice",
+      "description": null,
+      "category": "Nutrition",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.581374+00:00"
+    },
+    {
+      "name": "Drink Water",
+      "description": null,
+      "category": "Nutrition",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.577664+00:00"
     },
     {
       "name": "Drink water",
       "description": "Stay hydrated throughout day",
       "category": "Nutrition",
-      "user": "Sid",
-      "start_date": "2025-07-15"
+      "created_by": "Sid",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.793043+00:00"
     },
     {
-      "name": "Track investments",
-      "description": "Monitor portfolio",
-      "category": "Wealth",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Meditation",
-      "description": "15 minutes mindfulness",
-      "category": "Spiritual",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Coding practice",
-      "description": "Work on side projects",
-      "category": "Fun",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Read business books",
-      "description": "Business and leadership books",
-      "category": "Reading",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Running",
-      "description": "Daily run or jog",
-      "category": "Fitness",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
+      "name": "Eat 5 Servings of Fruits/Veggies",
+      "description": "Include colorful fruits and vegetables",
+      "category": "Nutrition",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T17:42:47.682997+00:00"
     },
     {
       "name": "Eat healthy meals",
       "description": "Balanced nutrition",
       "category": "Nutrition",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
+      "created_by": "Sanju",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.824969+00:00"
     },
     {
-      "name": "Save money",
-      "description": "Daily savings habit",
-      "category": "Wealth",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
+      "name": "Have Fruits",
+      "description": null,
+      "category": "Nutrition",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.574991+00:00"
     },
     {
-      "name": "Prayer time",
-      "description": "Daily prayers",
-      "category": "Spiritual",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
+      "name": "Prepare Meal / Cook Dinner",
+      "description": null,
+      "category": "Nutrition",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.587029+00:00"
     },
     {
-      "name": "Photography",
-      "description": "Take photos and edit",
-      "category": "Fun",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
+      "name": "Protein intake",
+      "description": "Track protein consumption",
+      "category": "Nutrition",
+      "created_by": "Sid",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.978561+00:00"
+    },
+    {
+      "name": "Take Chia Seeds",
+      "description": null,
+      "category": "Nutrition",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.591367+00:00"
+    },
+    {
+      "name": "Take Supplements",
+      "description": null,
+      "category": "Nutrition",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.572426+00:00"
+    },
+    {
+      "name": "Fiction",
+      "description": null,
+      "category": "Reading",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.499090+00:00"
+    },
+    {
+      "name": "Journal Writing",
+      "description": "Write about your day and thoughts",
+      "category": "Reading",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T17:42:47.689279+00:00"
+    },
+    {
+      "name": "Non-Fiction",
+      "description": null,
+      "category": "Reading",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.504232+00:00"
+    },
+    {
+      "name": "Read 30 Minutes",
+      "description": "Read books, articles, or educational content",
+      "category": "Reading",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T17:42:47.685779+00:00"
     },
     {
       "name": "Read 30 minutes",
       "description": "Read books or articles",
       "category": "Reading",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Morning workout",
-      "description": "30 minutes exercise",
-      "category": "Fitness",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Morning workout",
-      "description": "30 minutes exercise",
-      "category": "Fitness",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Drink 8 glasses water",
-      "description": "Stay hydrated",
-      "category": "Nutrition",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Drink 8 glasses water",
-      "description": "Stay hydrated",
-      "category": "Nutrition",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Track expenses",
-      "description": "Log daily spending",
-      "category": "Wealth",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Track expenses",
-      "description": "Log daily spending",
-      "category": "Wealth",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Meditation",
-      "description": "10 minutes mindfulness",
-      "category": "Spiritual",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Play guitar",
-      "description": "Practice music",
-      "category": "Fun",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Play guitar",
-      "description": "Practice music",
-      "category": "Fun",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Read tech blogs",
-      "description": "Read technology articles",
-      "category": "Reading",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Read tech blogs",
-      "description": "Read technology articles",
-      "category": "Reading",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Gym workout",
-      "description": "Weight training session",
-      "category": "Fitness",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Gym workout",
-      "description": "Weight training session",
-      "category": "Fitness",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Eat healthy meals",
-      "description": "Balanced nutrition",
-      "category": "Nutrition",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Eat healthy meals",
-      "description": "Balanced nutrition",
-      "category": "Nutrition",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Save money",
-      "description": "Daily savings habit",
-      "category": "Wealth",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Save money",
-      "description": "Daily savings habit",
-      "category": "Wealth",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Prayer time",
-      "description": "Daily prayers",
-      "category": "Spiritual",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Prayer time",
-      "description": "Daily prayers",
-      "category": "Spiritual",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Photography",
-      "description": "Take photos and edit",
-      "category": "Fun",
-      "user": "Sid",
-      "start_date": "2025-07-15"
-    },
-    {
-      "name": "Photography",
-      "description": "Take photos and edit",
-      "category": "Fun",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
+      "created_by": "Shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.756566+00:00"
     },
     {
       "name": "Read business books",
       "description": "Business and leadership books",
       "category": "Reading",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
+      "created_by": "Sanju",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.812338+00:00"
     },
     {
-      "name": "Running",
-      "description": "Daily run or jog",
-      "category": "Fitness",
-      "user": "Sid",
-      "start_date": "2025-07-15"
+      "name": "Read tech blogs",
+      "description": "Read technology articles",
+      "category": "Reading",
+      "created_by": "Shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.885810+00:00"
     },
     {
-      "name": "Running",
-      "description": "Daily run or jog",
-      "category": "Fitness",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
+      "name": "Spiritual",
+      "description": null,
+      "category": "Reading",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.506671+00:00"
     },
     {
-      "name": "Protein intake",
-      "description": "Track protein consumption",
-      "category": "Nutrition",
-      "user": "Sid",
-      "start_date": "2025-07-15"
+      "name": "AI Projects",
+      "description": "Daily ai projects habit",
+      "category": "Wealth",
+      "created_by": "Sid",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.454767+00:00"
     },
     {
-      "name": "Protein intake",
-      "description": "Track protein consumption",
-      "category": "Nutrition",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
+      "name": "Align High Income Job Offers",
+      "description": null,
+      "category": "Wealth",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.595103+00:00"
     },
     {
-      "name": "Protein intake",
-      "description": "Track protein consumption",
-      "category": "Nutrition",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
+      "name": "Create Content",
+      "description": null,
+      "category": "Wealth",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.617732+00:00"
+    },
+    {
+      "name": "Deep Work",
+      "description": null,
+      "category": "Wealth",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.627045+00:00"
+    },
+    {
+      "name": "Get Aligned High Income Job Offers",
+      "description": "Daily get aligned high income job offers habit",
+      "category": "Wealth",
+      "created_by": "Sid",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.449905+00:00"
+    },
+    {
+      "name": "Get Leads",
+      "description": null,
+      "category": "Wealth",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.603778+00:00"
+    },
+    {
+      "name": "Go To The Office",
+      "description": null,
+      "category": "Wealth",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.623888+00:00"
     },
     {
       "name": "Investment research",
       "description": "Study market trends",
       "category": "Wealth",
-      "user": "Sid",
-      "start_date": "2025-07-15"
+      "created_by": "Sid",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.986784+00:00"
     },
     {
-      "name": "Investment research",
-      "description": "Study market trends",
+      "name": "Learn About Finance",
+      "description": "Read or watch content about money management",
       "category": "Wealth",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T17:42:47.698062+00:00"
     },
     {
-      "name": "Investment research",
-      "description": "Study market trends",
+      "name": "Mantra Chanting",
+      "description": "Daily mantra chanting habit",
       "category": "Wealth",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
+      "created_by": "Sid",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.446149+00:00"
+    },
+    {
+      "name": "Optimise Linkedin",
+      "description": null,
+      "category": "Wealth",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.597912+00:00"
+    },
+    {
+      "name": "Passion Projects",
+      "description": null,
+      "category": "Wealth",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.608845+00:00"
+    },
+    {
+      "name": "Save money",
+      "description": "Daily savings habit",
+      "category": "Wealth",
+      "created_by": "Sanju",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.833577+00:00"
+    },
+    {
+      "name": "Study fintech",
+      "description": "Increase knowledge base",
+      "category": "Wealth",
+      "created_by": "Shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.747152+00:00"
+    },
+    {
+      "name": "Track Expenses",
+      "description": "Log all daily expenses",
+      "category": "Wealth",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T17:42:47.695396+00:00"
+    },
+    {
+      "name": "Track expenses",
+      "description": "Log daily spending",
+      "category": "Wealth",
+      "created_by": "Shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.773162+00:00"
+    },
+    {
+      "name": "Track investments",
+      "description": "Monitor portfolio",
+      "category": "Wealth",
+      "created_by": "Sid",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.796946+00:00"
+    },
+    {
+      "name": "Upskill",
+      "description": null,
+      "category": "Wealth",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.612482+00:00"
+    },
+    {
+      "name": "Chanting",
+      "description": null,
+      "category": "Spiritual",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.630526+00:00"
+    },
+    {
+      "name": "Gratitude Practice",
+      "description": "Write down 3 things you are grateful for",
+      "category": "Spiritual",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T17:42:47.704707+00:00"
+    },
+    {
+      "name": "Grounding",
+      "description": null,
+      "category": "Spiritual",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.648206+00:00"
+    },
+    {
+      "name": "Journal",
+      "description": null,
+      "category": "Spiritual",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.636894+00:00"
     },
     {
       "name": "Journaling",
       "description": "Write daily thoughts",
       "category": "Spiritual",
-      "user": "Sid",
-      "start_date": "2025-07-15"
+      "created_by": "Sid",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.992897+00:00"
     },
     {
-      "name": "Journaling",
-      "description": "Write daily thoughts",
+      "name": "Meditate",
+      "description": null,
       "category": "Spiritual",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.643763+00:00"
     },
     {
-      "name": "Journaling",
-      "description": "Write daily thoughts",
+      "name": "Meditation",
+      "description": "Practice 10 minutes of mindfulness",
       "category": "Spiritual",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T17:42:47.701022+00:00"
+    },
+    {
+      "name": "Prayer time",
+      "description": "Daily prayers",
+      "category": "Spiritual",
+      "created_by": "Sanju",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.839062+00:00"
+    },
+    {
+      "name": "Sleep Well / Binaural Beats",
+      "description": null,
+      "category": "Spiritual",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.654143+00:00"
+    },
+    {
+      "name": "Sungazing/Moongazing",
+      "description": null,
+      "category": "Spiritual",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.659829+00:00"
+    },
+    {
+      "name": "Attend an Event",
+      "description": null,
+      "category": "Fun",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.664260+00:00"
     },
     {
       "name": "Coding practice",
       "description": "Work on side projects",
       "category": "Fun",
-      "user": "Shruti",
-      "start_date": "2025-07-15"
+      "created_by": "Sid",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.808139+00:00"
     },
     {
-      "name": "Coding practice",
-      "description": "Work on side projects",
+      "name": "Community Meet",
+      "description": null,
       "category": "Fun",
-      "user": "Sanju",
-      "start_date": "2025-07-15"
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.679258+00:00"
+    },
+    {
+      "name": "Community Service",
+      "description": "Daily community service habit",
+      "category": "Fun",
+      "created_by": "Sid",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.484046+00:00"
+    },
+    {
+      "name": "Creative Activity",
+      "description": "Engage in drawing, music, or any creative pursuit",
+      "category": "Fun",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T17:42:47.707675+00:00"
+    },
+    {
+      "name": "Dance",
+      "description": null,
+      "category": "Fun",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.699124+00:00"
+    },
+    {
+      "name": "Declutter / Organise",
+      "description": "Daily declutter / organise habit",
+      "category": "Fun",
+      "created_by": "Sid",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.502262+00:00"
+    },
+    {
+      "name": "DeclutterPlanning for Tomorrow",
+      "description": null,
+      "category": "Fun",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.693403+00:00"
+    },
+    {
+      "name": "Feed The Dogs",
+      "description": "Daily feed the dogs habit",
+      "category": "Fun",
+      "created_by": "Sid",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.512443+00:00"
+    },
+    {
+      "name": "Gardening",
+      "description": null,
+      "category": "Fun",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.676033+00:00"
+    },
+    {
+      "name": "Hackathons",
+      "description": null,
+      "category": "Fun",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.669949+00:00"
+    },
+    {
+      "name": "Music",
+      "description": null,
+      "category": "Fun",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.683765+00:00"
+    },
+    {
+      "name": "Music Jam",
+      "description": "Daily music jam habit",
+      "category": "Fun",
+      "created_by": "Sid",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.491782+00:00"
+    },
+    {
+      "name": "Painitng Sketch",
+      "description": null,
+      "category": "Fun",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.690300+00:00"
+    },
+    {
+      "name": "Painitng, Gardening, Sketch",
+      "description": "Daily painitng, gardening, sketch habit",
+      "category": "Fun",
+      "created_by": "Sid",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.498332+00:00"
+    },
+    {
+      "name": "Photography",
+      "description": "Take photos and edit",
+      "category": "Fun",
+      "created_by": "Sanju",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.843677+00:00"
+    },
+    {
+      "name": "Planning for Tomorrow",
+      "description": "Daily planning for tomorrow habit",
+      "category": "Fun",
+      "created_by": "Sid",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.505624+00:00"
+    },
+    {
+      "name": "Play guitar",
+      "description": "Practice music",
+      "category": "Fun",
+      "created_by": "Shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.783650+00:00"
+    },
+    {
+      "name": "Social Club Meet",
+      "description": "Daily social club meet habit",
+      "category": "Fun",
+      "created_by": "Sid",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.480585+00:00"
+    },
+    {
+      "name": "Social Connection",
+      "description": "Connect with friends or family",
+      "category": "Fun",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T17:42:47.713372+00:00"
+    },
+    {
+      "name": "Social Service",
+      "description": null,
+      "category": "Fun",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.705836+00:00"
+    },
+    {
+      "name": "Time with pets",
+      "description": null,
+      "category": "Fun",
+      "created_by": "shruti",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-08T18:00:23.695991+00:00"
+    },
+    {
+      "name": "Visit Orphanage/ Old Age Home",
+      "description": "Daily visit orphanage/ old age home habit",
+      "category": "Fun",
+      "created_by": "Sid",
+      "start_date": "2025-07-15",
+      "updated_at": "2025-09-09T13:52:01.488402+00:00"
     }
   ],
   "habit_days": [
     {
-      "habit": "Fiction",
-      "user": "Shruti",
-      "date": "2025-07-13",
-      "completed": true,
-      "day": 0
-    },
-    {
-      "habit": "Spiritual",
-      "user": "Shruti",
-      "date": "2025-07-13",
-      "completed": true,
-      "day": 0
-    },
-    {
-      "habit": "Swim",
-      "user": "Shruti",
-      "date": "2025-07-13",
-      "completed": true,
-      "day": 0
-    },
-    {
-      "habit": "Run",
-      "user": "Shruti",
-      "date": "2025-07-13",
-      "completed": true,
-      "day": 0
-    },
-    {
-      "habit": "Consume Leaves",
-      "user": "Shruti",
-      "date": "2025-07-13",
-      "completed": true,
-      "day": 0
-    },
-    {
-      "habit": "Take Supplements",
-      "user": "Shruti",
-      "date": "2025-07-13",
-      "completed": true,
-      "day": 0
-    },
-    {
-      "habit": "AI Projects",
-      "user": "Shruti",
-      "date": "2025-07-13",
-      "completed": true,
-      "day": 0
-    },
-    {
-      "habit": "Upskill",
-      "user": "Shruti",
-      "date": "2025-07-13",
-      "completed": true,
-      "day": 0
-    },
-    {
-      "habit": "Journal",
-      "user": "Shruti",
-      "date": "2025-07-13",
-      "completed": true,
-      "day": 0
-    },
-    {
-      "habit": "Grounding",
-      "user": "Shruti",
-      "date": "2025-07-13",
-      "completed": true,
-      "day": 0
-    },
-    {
-      "habit": "Social Club Meet",
-      "user": "Shruti",
-      "date": "2025-07-13",
-      "completed": true,
-      "day": 0
-    },
-    {
-      "habit": "Visit Orphanage/ Old Age Home",
-      "user": "Shruti",
-      "date": "2025-07-13",
-      "completed": true,
-      "day": 0
-    },
-    {
-      "habit": "Walk",
-      "user": "Sid",
-      "date": "2025-07-14",
-      "completed": true,
-      "day": 0
-    },
-    {
-      "habit": "Hand Stand / Pull Up / Pole Session",
-      "user": "Sid",
-      "date": "2025-07-14",
-      "completed": true,
-      "day": 0
-    },
-    {
-      "habit": "Have Fruits",
-      "user": "Sid",
-      "date": "2025-07-14",
-      "completed": true,
-      "day": 0
-    },
-    {
-      "habit": "Drink Vegetable Juice",
-      "user": "Sid",
-      "date": "2025-07-14",
-      "completed": true,
-      "day": 0
-    },
-    {
-      "habit": "Get Aligned High Income Job Offers",
-      "user": "Sid",
-      "date": "2025-07-14",
-      "completed": true,
-      "day": 0
-    },
-    {
-      "habit": "AI Projects",
-      "user": "Sid",
-      "date": "2025-07-14",
-      "completed": true,
-      "day": 0
-    },
-    {
-      "habit": "Community Service",
-      "user": "Sid",
-      "date": "2025-07-14",
-      "completed": true,
-      "day": 0
-    },
-    {
-      "habit": "Music Jam",
-      "user": "Sid",
-      "date": "2025-07-14",
-      "completed": true,
-      "day": 0
-    },
-    {
-      "habit": "Community Service",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 1
-    },
-    {
-      "habit": "Social Club Meet",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 1
-    },
-    {
-      "habit": "Social Club Meet",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 2
-    },
-    {
-      "habit": "Hackathons",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 2
-    },
-    {
-      "habit": "Music Jam",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 2
-    },
-    {
-      "habit": "Drink Coconut Water",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 2
-    },
-    {
-      "habit": "Declutter / Organise",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 3
-    },
-    {
-      "habit": "Visit Orphanage/ Old Age Home",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 3
-    },
-    {
-      "habit": "Spiritual",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 4
-    },
-    {
-      "habit": "Play guitar",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 4
-    },
-    {
-      "habit": "Drink Coconut Water",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 4
-    },
-    {
-      "habit": "Sleep Well / Binaural Beats",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 4
-    },
-    {
-      "habit": "Run",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 5
-    },
-    {
-      "habit": "Football",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 5
-    },
-    {
-      "habit": "Drink Vegetable Juice",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 5
-    },
-    {
-      "habit": "Play guitar",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 5
-    },
-    {
-      "habit": "Mantra Chanting",
-      "user": "Sid",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 1
-    },
-    {
-      "habit": "Passion Projects",
-      "user": "Sid",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 2
-    },
-    {
-      "habit": "Gym",
-      "user": "Sid",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 2
-    },
-    {
-      "habit": "Run",
-      "user": "Sid",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 2
-    },
-    {
-      "habit": "Painitng, Gardening, Sketch",
-      "user": "Sid",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 3
-    },
-    {
-      "habit": "Drink Water",
-      "user": "Sid",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 3
-    },
-    {
-      "habit": "Go To The Office",
-      "user": "Sid",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 4
-    },
-    {
-      "habit": "Create Content",
-      "user": "Sid",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 4
-    },
-    {
-      "habit": "Attend an Event",
-      "user": "Sid",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 4
-    },
-    {
-      "habit": "Dance",
-      "user": "Sid",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 5
-    },
-    {
-      "habit": "Get Aligned High Income Job Offers",
-      "user": "Sid",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 5
-    },
-    {
-      "habit": "Passion Projects",
-      "user": "Sid",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 5
-    },
-    {
-      "habit": "Gym",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 1
-    },
-    {
-      "habit": "Go To The Park",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 1
-    },
-    {
-      "habit": "Study fintech",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 2
-    },
-    {
-      "habit": "Feed The Dogs",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 2
-    },
-    {
-      "habit": "Swim",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 3
-    },
-    {
-      "habit": "Drink 8 glasses water",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 3
-    },
-    {
-      "habit": "Prepare Meal / Cook Dinner",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 5
-    },
-    {
-      "habit": "Attend an Event",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 5
-    },
-    {
-      "habit": "Prepare Meal / Cook Dinner",
-      "user": "Sanju",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 1
-    },
-    {
-      "habit": "Go To The Park",
-      "user": "Sanju",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 1
-    },
-    {
-      "habit": "Attend an Event",
-      "user": "Sanju",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 2
-    },
-    {
-      "habit": "Grounding",
-      "user": "Sanju",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 2
-    },
-    {
-      "habit": "Take Chia Seeds",
-      "user": "Sanju",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 2
-    },
-    {
-      "habit": "Save money",
-      "user": "Sanju",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 2
-    },
-    {
-      "habit": "Hackathons",
-      "user": "Sanju",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 3
-    },
-    {
-      "habit": "Drink Matcha",
-      "user": "Sanju",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 3
-    },
-    {
-      "habit": "Drink Vegetable Juice",
-      "user": "Sanju",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 5
-    },
-    {
-      "habit": "Drink Water",
-      "user": "Sanju",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 5
-    },
-    {
-      "habit": "Have Fruits",
-      "user": "Sanju",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 5
-    },
-    {
-      "habit": "Hackathons",
-      "user": "Sanju",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 5
-    },
-    {
-      "habit": "Create Content",
-      "user": "Sid",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 1
-    },
-    {
-      "habit": "Football",
-      "user": "Sid",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 1
-    },
-    {
-      "habit": "Gym workout",
-      "user": "Sid",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 1
-    },
-    {
-      "habit": "Investment research",
-      "user": "Sid",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 1
-    },
-    {
-      "habit": "Drink Coconut Water",
-      "user": "Sid",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 2
-    },
-    {
-      "habit": "Grounding",
-      "user": "Sid",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 2
-    },
-    {
-      "habit": "Play guitar",
-      "user": "Sid",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 2
-    },
-    {
-      "habit": "Gym workout",
-      "user": "Sid",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 2
-    },
-    {
-      "habit": "Drink Coconut Water",
-      "user": "Sid",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 3
-    },
-    {
-      "habit": "Music Jam",
-      "user": "Sid",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 3
-    },
-    {
-      "habit": "Grounding",
-      "user": "Sid",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 3
-    },
-    {
-      "habit": "Journal",
-      "user": "Sid",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 5
-    },
-    {
-      "habit": "Mantra Chanting",
-      "user": "Sid",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 5
-    },
-    {
-      "habit": "Music Jam",
-      "user": "Sid",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 5
-    },
-    {
-      "habit": "Football",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 1
-    },
-    {
-      "habit": "Sleep Well / Binaural Beats",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 1
-    },
-    {
-      "habit": "Sleep Well / Binaural Beats",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 2
-    },
-    {
-      "habit": "Attend an Event",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 2
-    },
-    {
-      "habit": "Planning for Tomorrow",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 2
-    },
-    {
-      "habit": "Read tech blogs",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 2
-    },
-    {
-      "habit": "Read tech blogs",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 3
-    },
-    {
+      "user": "sidd",
       "habit": "7 Minute HIIT",
-      "user": "Shruti",
-      "date": "2025-07-20",
+      "day": 57,
       "completed": true,
-      "day": 3
+      "date": "2025-09-09"
     },
     {
-      "habit": "Save money",
-      "user": "Shruti",
-      "date": "2025-07-20",
+      "user": "sidd",
+      "habit": "Align High Income Job Offers",
+      "day": 57,
       "completed": true,
-      "day": 3
+      "date": "2025-09-09"
     },
     {
-      "habit": "Planning for Tomorrow",
-      "user": "Shruti",
-      "date": "2025-07-20",
+      "user": "sidd",
+      "habit": "Attend an Event",
+      "day": 57,
       "completed": true,
-      "day": 4
+      "date": "2025-09-09"
     },
     {
-      "habit": "Swim",
-      "user": "Shruti",
-      "date": "2025-07-20",
+      "user": "sidd",
+      "habit": "Chanting",
+      "day": 57,
       "completed": true,
-      "day": 4
+      "date": "2025-09-09"
     },
     {
-      "habit": "Community Service",
-      "user": "Shruti",
-      "date": "2025-07-20",
+      "user": "sidd",
+      "habit": "Community Meet",
+      "day": 57,
       "completed": true,
-      "day": 4
+      "date": "2025-09-09"
     },
     {
-      "habit": "Drink Matcha",
-      "user": "Shruti",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 4
-    },
-    {
-      "habit": "Drink Water",
-      "user": "Sanju",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 2
-    },
-    {
-      "habit": "Painitng, Gardening, Sketch",
-      "user": "Sanju",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 2
-    },
-    {
-      "habit": "Drink Coconut Water",
-      "user": "Sanju",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 2
-    },
-    {
-      "habit": "Painitng, Gardening, Sketch",
-      "user": "Sanju",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 3
-    },
-    {
-      "habit": "Go To The Park",
-      "user": "Sanju",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 3
-    },
-    {
-      "habit": "Drink 8 glasses water",
-      "user": "Sanju",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 3
-    },
-    {
-      "habit": "Planning for Tomorrow",
-      "user": "Sanju",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 3
-    },
-    {
-      "habit": "Social Club Meet",
-      "user": "Sanju",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 5
-    },
-    {
-      "habit": "Run",
-      "user": "Sanju",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 5
-    },
-    {
-      "habit": "Gym workout",
-      "user": "Sanju",
-      "date": "2025-07-20",
-      "completed": true,
-      "day": 5
-    },
-    {
-      "habit": "Spiritual",
-      "user": "Sid",
-      "date": "2025-08-02",
-      "completed": true,
-      "day": 19
-    },
-    {
-      "habit": "Run",
-      "user": "Sid",
-      "date": "2025-08-02",
-      "completed": true,
-      "day": 19
-    },
-    {
-      "habit": "Dance",
-      "user": "Sid",
-      "date": "2025-08-02",
-      "completed": true,
-      "day": 19
-    },
-    {
-      "habit": "Take Chia Seeds",
-      "user": "Sid",
-      "date": "2025-08-02",
-      "completed": true,
-      "day": 19
-    },
-    {
-      "habit": "Drink water",
-      "user": "Sid",
-      "date": "2025-08-02",
-      "completed": true,
-      "day": 19
-    },
-    {
-      "habit": "Mantra Chanting",
-      "user": "Sid",
-      "date": "2025-08-02",
-      "completed": true,
-      "day": 19
-    },
-    {
-      "habit": "Fiction",
-      "user": "Sid",
-      "date": "2025-08-29",
-      "completed": true,
-      "day": 46
-    },
-    {
-      "habit": "Non-Fiction",
-      "user": "Sid",
-      "date": "2025-08-29",
-      "completed": true,
-      "day": 46
-    },
-    {
-      "habit": "Spiritual",
-      "user": "Sid",
-      "date": "2025-08-29",
-      "completed": true,
-      "day": 46
-    },
-    {
-      "habit": "Swim",
-      "user": "Sid",
-      "date": "2025-08-29",
-      "completed": true,
-      "day": 46
-    },
-    {
-      "habit": "Run",
-      "user": "Sid",
-      "date": "2025-08-29",
-      "completed": true,
-      "day": 46
-    },
-    {
-      "habit": "Dance",
-      "user": "Sid",
-      "date": "2025-08-29",
-      "completed": true,
-      "day": 46
-    },
-    {
-      "habit": "Go To The Park",
-      "user": "Sid",
-      "date": "2025-08-29",
-      "completed": true,
-      "day": 46
-    },
-    {
-      "habit": "Walk",
-      "user": "Sid",
-      "date": "2025-08-29",
-      "completed": true,
-      "day": 46
-    },
-    {
-      "habit": "Football",
-      "user": "Sid",
-      "date": "2025-08-29",
-      "completed": true,
-      "day": 46
-    },
-    {
-      "habit": "Have Fruits",
-      "user": "Sid",
-      "date": "2025-08-29",
-      "completed": true,
-      "day": 46
-    },
-    {
-      "habit": "Drink Water",
-      "user": "Sid",
-      "date": "2025-08-29",
-      "completed": true,
-      "day": 46
-    },
-    {
-      "habit": "Drink Vegetable Juice",
-      "user": "Sid",
-      "date": "2025-08-29",
-      "completed": true,
-      "day": 46
-    },
-    {
-      "habit": "Mantra Chanting",
-      "user": "Sid",
-      "date": "2025-08-29",
-      "completed": true,
-      "day": 46
-    },
-    {
-      "habit": "Optimise Linkedin",
-      "user": "Sid",
-      "date": "2025-08-29",
-      "completed": true,
-      "day": 46
-    },
-    {
-      "habit": "Passion Projects",
-      "user": "Sid",
-      "date": "2025-08-29",
-      "completed": true,
-      "day": 46
-    },
-    {
-      "habit": "Fiction",
-      "user": "Sanju",
-      "date": "2025-08-29",
-      "completed": true,
-      "day": 46
-    },
-    {
-      "habit": "Swim",
-      "user": "Sanju",
-      "date": "2025-08-29",
-      "completed": true,
-      "day": 46
-    },
-    {
-      "habit": "Drink Matcha",
-      "user": "Sanju",
-      "date": "2025-08-29",
-      "completed": true,
-      "day": 46
-    },
-    {
+      "user": "sidd",
       "habit": "Consume Leaves",
-      "user": "Sanju",
-      "date": "2025-08-29",
+      "day": 57,
       "completed": true,
-      "day": 46
+      "date": "2025-09-09"
     },
     {
-      "habit": "Mantra Chanting",
-      "user": "Sanju",
-      "date": "2025-08-29",
+      "user": "sidd",
+      "habit": "Create Content",
+      "day": 57,
       "completed": true,
-      "day": 46
+      "date": "2025-09-09"
     },
     {
+      "user": "sidd",
+      "habit": "Dance",
+      "day": 57,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "sidd",
+      "habit": "Drink 8 Glasses of Water",
+      "day": 57,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "sidd",
+      "habit": "Fiction",
+      "day": 57,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "sidd",
+      "habit": "Gratitude Practice",
+      "day": 57,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "sidd",
+      "habit": "Journal Writing",
+      "day": 57,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sanju",
+      "habit": "Consume Leaves",
+      "day": 46,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Dance",
+      "day": 46,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sanju",
+      "habit": "Drink Matcha",
+      "day": 46,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Drink Vegetable Juice",
+      "day": 46,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Drink Water",
+      "day": 46,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Fiction",
+      "day": 46,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sanju",
+      "habit": "Fiction",
+      "day": 46,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Football",
+      "day": 46,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sanju",
       "habit": "Get Aligned High Income Job Offers",
-      "user": "Sanju",
-      "date": "2025-08-29",
+      "day": 46,
       "completed": true,
-      "day": 46
+      "date": "2025-09-09"
     },
     {
+      "user": "Sid",
+      "habit": "Go To The Park",
+      "day": 46,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sanju",
       "habit": "Grounding",
-      "user": "Sanju",
-      "date": "2025-08-29",
+      "day": 46,
       "completed": true,
-      "day": 46
+      "date": "2025-09-09"
     },
     {
-      "habit": "Social Club Meet",
-      "user": "Sanju",
-      "date": "2025-08-29",
+      "user": "Sid",
+      "habit": "Have Fruits",
+      "day": 46,
       "completed": true,
-      "day": 46
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Mantra Chanting",
+      "day": 46,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sanju",
+      "habit": "Mantra Chanting",
+      "day": 46,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Non-Fiction",
+      "day": 46,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Optimise Linkedin",
+      "day": 46,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Passion Projects",
+      "day": 46,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Run",
+      "day": 46,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sanju",
+      "habit": "Social Club Meet",
+      "day": 46,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Spiritual",
+      "day": 46,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Swim",
+      "day": 46,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sanju",
+      "habit": "Swim",
+      "day": 46,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Walk",
+      "day": 46,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Dance",
+      "day": 19,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Drink water",
+      "day": 19,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Mantra Chanting",
+      "day": 19,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Run",
+      "day": 19,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Spiritual",
+      "day": 19,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Take Chia Seeds",
+      "day": 19,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Shruti",
+      "habit": "7 Minute HIIT",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Attend an Event",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Shruti",
+      "habit": "Attend an Event",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sanju",
+      "habit": "Attend an Event",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Shruti",
+      "habit": "Community Service",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Create Content",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Dance",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Shruti",
+      "habit": "Declutter / Organise",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Shruti",
+      "habit": "Drink 8 glasses water",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sanju",
+      "habit": "Drink 8 glasses water",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Drink Coconut Water",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Shruti",
+      "habit": "Drink Coconut Water",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sanju",
+      "habit": "Drink Coconut Water",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Shruti",
+      "habit": "Drink Matcha",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sanju",
+      "habit": "Drink Matcha",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Shruti",
+      "habit": "Drink Vegetable Juice",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sanju",
+      "habit": "Drink Vegetable Juice",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Drink Water",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sanju",
+      "habit": "Drink Water",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Shruti",
+      "habit": "Feed The Dogs",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Football",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Shruti",
+      "habit": "Football",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Get Aligned High Income Job Offers",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Go To The Office",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Shruti",
+      "habit": "Go To The Park",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sanju",
+      "habit": "Go To The Park",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Grounding",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sanju",
+      "habit": "Grounding",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Gym",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Shruti",
+      "habit": "Gym",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Gym workout",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sanju",
+      "habit": "Gym workout",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Shruti",
+      "habit": "Hackathons",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sanju",
+      "habit": "Hackathons",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sanju",
+      "habit": "Have Fruits",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Investment research",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Journal",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Mantra Chanting",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Music Jam",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Shruti",
+      "habit": "Music Jam",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Painitng, Gardening, Sketch",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sanju",
+      "habit": "Painitng, Gardening, Sketch",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Passion Projects",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Shruti",
+      "habit": "Planning for Tomorrow",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sanju",
+      "habit": "Planning for Tomorrow",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Play guitar",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Shruti",
+      "habit": "Play guitar",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Shruti",
+      "habit": "Prepare Meal / Cook Dinner",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sanju",
+      "habit": "Prepare Meal / Cook Dinner",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Shruti",
+      "habit": "Read tech blogs",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sid",
+      "habit": "Run",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Shruti",
+      "habit": "Run",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sanju",
+      "habit": "Run",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Shruti",
+      "habit": "Save money",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sanju",
+      "habit": "Save money",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Shruti",
+      "habit": "Sleep Well / Binaural Beats",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Shruti",
+      "habit": "Social Club Meet",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sanju",
+      "habit": "Social Club Meet",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Shruti",
+      "habit": "Spiritual",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Shruti",
+      "habit": "Study fintech",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Shruti",
+      "habit": "Swim",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Sanju",
+      "habit": "Take Chia Seeds",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    },
+    {
+      "user": "Shruti",
+      "habit": "Visit Orphanage/ Old Age Home",
+      "day": 6,
+      "completed": true,
+      "date": "2025-09-09"
+    }
+  ],
+  "streaks": [
+    {
+      "user": "defni",
+      "current_streak": 1,
+      "best_streak": 1,
+      "last_reset_date": "2025-09-08T17:55:08.163366+00:00",
+      "created_at": "2025-09-08T17:55:08.163414+00:00",
+      "updated_at": "2025-09-09T04:39:20.251883+00:00"
+    },
+    {
+      "user": "sachin",
+      "current_streak": 1,
+      "best_streak": 1,
+      "last_reset_date": "2025-09-08T17:55:05.754969+00:00",
+      "created_at": "2025-09-08T17:55:05.755020+00:00",
+      "updated_at": "2025-09-09T04:39:19.957640+00:00"
+    },
+    {
+      "user": "pooja",
+      "current_streak": 1,
+      "best_streak": 1,
+      "last_reset_date": "2025-09-08T17:55:03.822290+00:00",
+      "created_at": "2025-09-08T17:55:03.822333+00:00",
+      "updated_at": "2025-09-09T04:39:19.664745+00:00"
+    },
+    {
+      "user": "anurag",
+      "current_streak": 1,
+      "best_streak": 1,
+      "last_reset_date": "2025-09-08T17:55:02.331492+00:00",
+      "created_at": "2025-09-08T17:55:02.331560+00:00",
+      "updated_at": "2025-09-09T04:39:19.349838+00:00"
+    },
+    {
+      "user": "mahi",
+      "current_streak": 1,
+      "best_streak": 1,
+      "last_reset_date": "2025-09-08T17:55:00.802271+00:00",
+      "created_at": "2025-09-08T17:55:00.802307+00:00",
+      "updated_at": "2025-09-09T04:39:19.061011+00:00"
+    },
+    {
+      "user": "sanju",
+      "current_streak": 1,
+      "best_streak": 1,
+      "last_reset_date": "2025-09-08T17:54:59.729067+00:00",
+      "created_at": "2025-09-08T17:54:59.729211+00:00",
+      "updated_at": "2025-09-09T04:39:17.947223+00:00"
+    },
+    {
+      "user": "sidd",
+      "current_streak": 1,
+      "best_streak": 1,
+      "last_reset_date": "2025-09-09T04:23:17.558180+00:00",
+      "created_at": "2025-09-08T17:38:46.630339+00:00",
+      "updated_at": "2025-09-09T04:39:17.078232+00:00"
+    },
+    {
+      "user": "shruti",
+      "current_streak": 1,
+      "best_streak": 1,
+      "last_reset_date": "2025-09-08T17:43:58.609445+00:00",
+      "created_at": "2025-09-08T17:43:58.609480+00:00",
+      "updated_at": "2025-09-09T04:39:15.959259+00:00"
+    },
+    {
+      "user": "Pooja",
+      "current_streak": 0,
+      "best_streak": 0,
+      "last_reset_date": "2025-09-09T13:53:10.300819+00:00",
+      "created_at": "2025-09-09T13:53:10.300856+00:00",
+      "updated_at": "2025-09-09T13:53:10.300874+00:00"
+    },
+    {
+      "user": "Defni",
+      "current_streak": 0,
+      "best_streak": 0,
+      "last_reset_date": "2025-09-09T13:53:10.298015+00:00",
+      "created_at": "2025-09-09T13:53:10.298055+00:00",
+      "updated_at": "2025-09-09T13:53:10.298074+00:00"
+    },
+    {
+      "user": "Sachin",
+      "current_streak": 0,
+      "best_streak": 0,
+      "last_reset_date": "2025-09-09T13:53:10.294333+00:00",
+      "created_at": "2025-09-09T13:53:10.294407+00:00",
+      "updated_at": "2025-09-09T13:53:10.294426+00:00"
+    },
+    {
+      "user": "admin",
+      "current_streak": 0,
+      "best_streak": 0,
+      "last_reset_date": "2025-09-09T13:53:10.289612+00:00",
+      "created_at": "2025-09-09T13:53:10.289730+00:00",
+      "updated_at": "2025-09-09T13:53:10.289766+00:00"
+    },
+    {
+      "user": "Sanju",
+      "current_streak": 0,
+      "best_streak": 0,
+      "last_reset_date": "2025-09-09T13:53:10.284212+00:00",
+      "created_at": "2025-09-09T13:53:10.284258+00:00",
+      "updated_at": "2025-09-09T13:53:10.284278+00:00"
+    },
+    {
+      "user": "Shruti",
+      "current_streak": 0,
+      "best_streak": 0,
+      "last_reset_date": "2025-09-09T13:53:10.270066+00:00",
+      "created_at": "2025-09-09T13:53:10.270100+00:00",
+      "updated_at": "2025-09-09T13:53:10.270116+00:00"
+    },
+    {
+      "user": "Sid",
+      "current_streak": 0,
+      "best_streak": 0,
+      "last_reset_date": "2025-09-09T13:53:10.266634+00:00",
+      "created_at": "2025-09-09T13:53:10.267028+00:00",
+      "updated_at": "2025-09-09T13:53:10.267049+00:00"
     }
   ]
 }
