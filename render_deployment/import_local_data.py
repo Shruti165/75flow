@@ -181,7 +181,7 @@ def import_habit_days(export_data):
             start_date = date(2025, 7, 15)  # Challenge start date
             day_number = (habit_date - start_date).days + 1
             
-            # Only import if day is within 75-day range
+            # Only import if day is within challenge range
             if 1 <= day_number <= 75:
                 habit_day, created = HabitDay.objects.get_or_create(
                     habit=habit,
@@ -195,7 +195,7 @@ def import_habit_days(export_data):
             if created:
                     imported_count += 1
             else:
-                print(f"  ⚠️  Skipping day {day_number} (outside 75-day range)")
+                print(f"  ⚠️  Skipping day {day_number} (outside challenge range)")
                 
         except User.DoesNotExist:
             print(f"  ❌ User not found: {habit_day_data['user']}")

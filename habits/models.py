@@ -21,7 +21,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_image = models.ImageField(
         upload_to=profile_image_path, 
-        null=True, 
+        null=True,
         blank=True,
         help_text="Upload a profile picture (JPG, PNG, GIF up to 5MB)"
     )
@@ -81,7 +81,7 @@ class Habit(models.Model):
     """Global habit shared by all users"""
     name = models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='habits', null=True, blank=True)
-    start_date = models.DateField(default=date(2025, 7, 15))  # July 15th, 2025
+    start_date = models.DateField(default=lambda: date.fromisoformat(settings.CHALLENGE_START_DATE))
     description = models.TextField(blank=True, null=True)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='created_habits')
     updated_at = models.DateTimeField(auto_now=True)

@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from datetime import date, timedelta
 import random
+from django.conf import settings
 from habits.models import Category, Habit, HabitDay, Profile
 
 class Command(BaseCommand):
@@ -96,7 +97,7 @@ class Command(BaseCommand):
                     defaults={
                         'description': habit_data['description'],
                         'category': categories[habit_data['category']],
-                        'start_date': date(2025, 7, 15)
+                        'start_date': date.fromisoformat(settings.CHALLENGE_START_DATE)
                     }
                 )
                 if created:
@@ -109,7 +110,7 @@ class Command(BaseCommand):
             user_habits[username] = Habit.objects.all()
         
         # Create habit completion data for the past days (July 15th to today)
-        challenge_start = date(2025, 7, 15)
+        challenge_start = date.fromisoformat(settings.CHALLENGE_START_DATE)
         today = timezone.now().date()
         
         # Calculate days since challenge start

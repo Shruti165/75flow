@@ -9,19 +9,20 @@ from datetime import datetime, timedelta, date
 from django.http import JsonResponse, HttpResponse
 from .models import Habit, HabitDay, Category, Profile, Feedback, BugReport, Streak
 from .forms import CategoryForm, HabitForm, ProfileForm, FeedbackForm, BugReportForm
+from .utils import get_challenge_start_date, get_challenge_duration
 
 # Create your views here.
 
 def calculate_user_streak(user):
     """Calculate current streak for a user based on habit completions"""
     today = timezone.now().date()
-    challenge_start_date = date(2025, 7, 15)
+    challenge_start_date = get_challenge_start_date()
     
     # Calculate current day of the challenge
     if today >= challenge_start_date:
         current_day = (today - challenge_start_date).days + 1
-        if current_day > 75:
-            current_day = 75
+        if current_day > get_challenge_duration():
+            current_day = get_challenge_duration()
     else:
         current_day = 0
     
@@ -84,12 +85,12 @@ def home(request):
     
     # Calculate today's date and challenge day
     today = timezone.now().date()
-    challenge_start_date = date(2025, 7, 15)
+    challenge_start_date = get_challenge_start_date()
     
     if today >= challenge_start_date:
         current_day = (today - challenge_start_date).days + 1
-        if current_day > 75:
-            current_day = 75
+        if current_day > get_challenge_duration():
+            current_day = get_challenge_duration()
     else:
         current_day = 0
     
@@ -134,12 +135,12 @@ def habits(request):
     
     # Calculate today's date and challenge day
     today = timezone.now().date()
-    challenge_start_date = date(2025, 7, 15)
+    challenge_start_date = get_challenge_start_date()
     
     if today >= challenge_start_date:
         current_day = (today - challenge_start_date).days + 1
-        if current_day > 75:
-            current_day = 75
+        if current_day > get_challenge_duration():
+            current_day = get_challenge_duration()
     else:
         current_day = 0
     
@@ -200,13 +201,13 @@ def profile(request):
 def scoreboard(request):
     """Scoreboard showing all participants' progress with daily, weekly, and overall stats"""
     today = timezone.now().date()
-    challenge_start_date = date(2025, 7, 15)  # July 15th, 2025
+    challenge_start_date = get_challenge_start_date()  # July 15th, 2025
     
     # Calculate current day of the challenge
     if today >= challenge_start_date:
         current_day = (today - challenge_start_date).days + 1
-        if current_day > 75:
-            current_day = 75  # Cap at 75 days
+        if current_day > get_challenge_duration():
+            current_day = get_challenge_duration()  # Cap at 75 days
     else:
         current_day = 0  # Challenge hasn't started yet
     
@@ -536,13 +537,13 @@ def daily_tracking(request):
         return redirect('habits:admin_habit_manager')
     
     today = timezone.now().date()
-    challenge_start_date = date(2025, 7, 15)  # July 15th, 2025
+    challenge_start_date = get_challenge_start_date()  # July 15th, 2025
     
     # Calculate current day of the challenge
     if today >= challenge_start_date:
         current_day = (today - challenge_start_date).days + 1
-        if current_day > 75:
-            current_day = 75  # Cap at 75 days
+        if current_day > get_challenge_duration():
+            current_day = get_challenge_duration()  # Cap at 75 days
     else:
         current_day = 0  # Challenge hasn't started yet
     
@@ -653,7 +654,7 @@ def toggle_habit(request, habit_id):
     
     if request.method == 'POST':
         today = timezone.now().date()
-        challenge_start_date = date(2025, 7, 15)
+        challenge_start_date = get_challenge_start_date()
         
         if today >= challenge_start_date:
             current_day = (today - challenge_start_date).days + 1
@@ -788,13 +789,13 @@ def admin_habit_manager(request):
         return redirect('habits:home')
     
     today = timezone.now().date()
-    challenge_start_date = date(2025, 7, 15)  # July 15th, 2025
+    challenge_start_date = get_challenge_start_date()  # July 15th, 2025
     
     # Calculate current day of the challenge
     if today >= challenge_start_date:
         current_day = (today - challenge_start_date).days + 1
-        if current_day > 75:
-            current_day = 75  # Cap at 75 days
+        if current_day > get_challenge_duration():
+            current_day = get_challenge_duration()  # Cap at 75 days
     else:
         current_day = 0  # Challenge hasn't started yet
     
@@ -881,13 +882,13 @@ def excel_view(request):
         return redirect('habits:admin_habit_manager')
     
     today = timezone.now().date()
-    challenge_start_date = date(2025, 7, 15)  # July 15th, 2025
+    challenge_start_date = get_challenge_start_date()  # July 15th, 2025
     
     # Calculate current day of the challenge
     if today >= challenge_start_date:
         current_day = (today - challenge_start_date).days + 1
-        if current_day > 75:
-            current_day = 75  # Cap at 75 days
+        if current_day > get_challenge_duration():
+            current_day = get_challenge_duration()  # Cap at 75 days
     else:
         current_day = 0  # Challenge hasn't started yet
     

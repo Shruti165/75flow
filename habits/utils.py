@@ -1,18 +1,28 @@
 from django.utils import timezone
 from datetime import date, timedelta
 from django.contrib.auth.models import User
-from .models import Habit, HabitDay, Category, Notification, Achievement
+from django.conf import settings
+from .models import Habit, HabitDay, Category, Streak
+
+def get_challenge_start_date():
+    """Get the challenge start date from settings"""
+    return date.fromisoformat(settings.CHALLENGE_START_DATE)
+
+def get_challenge_duration():
+    """Get the challenge duration in days from settings"""
+    return settings.CHALLENGE_DURATION_DAYS
 
 def get_user_stats(user):
     """Get comprehensive user statistics"""
     today = timezone.now().date()
-    challenge_start_date = date(2025, 7, 15)
+    challenge_start_date = get_challenge_start_date()
+    challenge_duration = get_challenge_duration()
     
     # Calculate current day of the challenge
     if today >= challenge_start_date:
         current_day = (today - challenge_start_date).days + 1
-        if current_day > 75:
-            current_day = 75
+        if current_day > challenge_duration:
+            current_day = challenge_duration
     else:
         current_day = 0
     
@@ -34,7 +44,7 @@ def get_user_stats(user):
         if category_habit_count > 0:
             # Calculate days where user completed at least 2 activities from this category
             category_completed_days = 0
-            for day_num in range(1, min(current_day + 1, 76)):
+            for day_num in range(1, min(current_day + 1, challenge_duration + 1)):
                 completed_in_category = HabitDay.objects.filter(
                     habit__in=category_habits,
                     day=day_num,
@@ -45,7 +55,7 @@ def get_user_stats(user):
                     category_completed_days += 1
                     total_completed_days += 1
             
-            category_total_days = min(current_day, 75)
+            category_total_days = min(current_day, challenge_duration)
             total_possible_days += category_total_days
             
             category_percentage = (category_completed_days / category_total_days * 100) if category_total_days > 0 else 0
@@ -91,7 +101,7 @@ def get_user_stats(user):
     # Calculate best streak
     best_streak = 0
     temp_streak = 0
-    for day_num in range(1, min(current_day + 1, 76)):
+    for day_num in range(1, min(current_day + 1, challenge_duration + 1)):
         day_categories_completed = 0
         
         for category in Category.objects.all():
@@ -124,80 +134,3 @@ def get_user_stats(user):
         'category_stats': category_stats,
         'current_day': current_day,
     }
-
-def check_and_create_achievements(user):
-    """Check if user has earned new achievements and create notifications"""
-    stats = get_user_stats(user)
-    achievements = Achievement.objects.all()
-    
-    for achievement in achievements:
-        # Check if user has already been notified about this achievement
-        existing_notification = Notification.objects.filter(
-            user=user,
-            notification_type='achievement',
-            data__achievement_id=achievement.id
-        ).exists()
-        
-        if not existing_notification and achievement.is_earned_by_user(user):
-            # Create achievement notification
-            Notification.objects.create(
-                user=user,
-                notification_type='achievement',
-                title=f"🏆 Achievement Unlocked: {achievement.name}",
-                message=achievement.description,
-                data={'achievement_id': achievement.id, 'achievement_name': achievement.name}
-            )
-
-def create_streak_notification(user, streak_count):
-    """Create streak milestone notifications"""
-    streak_milestones = [3, 7, 14, 21, 30, 50, 75]
-    
-    if streak_count in streak_milestones:
-        # Check if notification already exists
-        existing_notification = Notification.objects.filter(
-            user=user,
-            notification_type='streak',
-            data__streak_count=streak_count
-        ).exists()
-        
-        if not existing_notification:
-            messages = {
-                3: "🔥 3-day streak! You're building momentum!",
-                7: "🌟 7-day streak! A full week of consistency!",
-                14: "💪 14-day streak! Two weeks strong!",
-                21: "🎯 21-day streak! You're forming lasting habits!",
-                30: "🏆 30-day streak! A full month of dedication!",
-                50: "🚀 50-day streak! You're unstoppable!",
-                75: "👑 75-day streak! You've completed the challenge!"
-            }
-            
-            Notification.objects.create(
-                user=user,
-                notification_type='streak',
-                title=f"🔥 {streak_count}-Day Streak!",
-                message=messages.get(streak_count, f"Amazing {streak_count}-day streak!"),
-                data={'streak_count': streak_count}
-            )
-
-def get_user_achievements(user):
-    """Get all achievements earned by a user"""
-    stats = get_user_stats(user)
-    achievements = Achievement.objects.all()
-    earned_achievements = []
-    
-    for achievement in achievements:
-        if achievement.is_earned_by_user(user):
-            earned_achievements.append(achievement)
-    
-    return earned_achievements
-
-def get_unread_notifications_count(user):
-    """Get count of unread notifications for a user"""
-    return Notification.objects.filter(user=user, is_read=False).count()
-
-def mark_notifications_as_read(user, notification_ids=None):
-    """Mark notifications as read"""
-    if notification_ids:
-        Notification.objects.filter(user=user, id__in=notification_ids).update(is_read=True)
-    else:
-        Notification.objects.filter(user=user).update(is_read=True) 

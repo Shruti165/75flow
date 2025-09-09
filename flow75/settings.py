@@ -30,6 +30,11 @@ CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', 'http://localhost:8000,
 if 'healthcheck.railway.app' not in ALLOWED_HOSTS:
     ALLOWED_HOSTS.append('healthcheck.railway.app')
 
+# Challenge settings
+CHALLENGE_START_DATE = os.getenv('CHALLENGE_START_DATE', '2025-07-15')
+CHALLENGE_DURATION_DAYS = int(os.getenv('CHALLENGE_DURATION_DAYS', '75'))
+CHALLENGE_NAME = os.getenv('CHALLENGE_NAME', '75Flow Challenge')
+
 # Ensure the specific Railway domain is always included
 if 'flow75.up.railway.app' not in ALLOWED_HOSTS:
     ALLOWED_HOSTS.append('flow75.up.railway.app')
