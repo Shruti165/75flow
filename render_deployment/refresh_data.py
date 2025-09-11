@@ -302,195 +302,43 @@ def import_all_habits():
         {'name': 'Social Connection', 'category': 'Fun'},
         {'name': 'Creative Activity', 'category': 'Fun'},
     ]
-        {'user': 'Shruti', 'name': 'AI Projects', 'category': 'Wealth'},
-        {'user': 'Shruti', 'name': 'Passion Projects', 'category': 'Wealth'},
-        {'user': 'Shruti', 'name': 'Upskill', 'category': 'Wealth'},
-        {'user': 'Shruti', 'name': 'Create Content', 'category': 'Wealth'},
-        {'user': 'Shruti', 'name': 'Go To The Office', 'category': 'Wealth'},
-        {'user': 'Shruti', 'name': 'Chanting', 'category': 'Spiritual'},
-        {'user': 'Shruti', 'name': 'Journal', 'category': 'Spiritual'},
-        {'user': 'Shruti', 'name': 'Grounding', 'category': 'Spiritual'},
-        {'user': 'Shruti', 'name': 'Sleep Well / Binaural Beats', 'category': 'Spiritual'},
-        {'user': 'Shruti', 'name': 'Attend an Event', 'category': 'Fun'},
-        {'user': 'Shruti', 'name': 'Social Club Meet', 'category': 'Fun'},
-        {'user': 'Shruti', 'name': 'Community Service', 'category': 'Fun'},
-        {'user': 'Shruti', 'name': 'Visit Orphanage/ Old Age Home', 'category': 'Fun'},
-        {'user': 'Shruti', 'name': 'Music Jam', 'category': 'Fun'},
-        {'user': 'Shruti', 'name': 'Painitng, Gardening, Sketch', 'category': 'Fun'},
-        {'user': 'Shruti', 'name': 'Declutter / Organise', 'category': 'Fun'},
-        {'user': 'Shruti', 'name': 'Planning for Tomorrow', 'category': 'Fun'},
-        {'user': 'Shruti', 'name': 'Feed The Dogs', 'category': 'Fun'},
-        
-        # Admin's habits (same as Shruti)
-        {'user': 'admin', 'name': 'Fiction', 'category': 'Reading'},
-        {'user': 'admin', 'name': 'Non-Fiction', 'category': 'Reading'},
-        {'user': 'admin', 'name': 'Spiritual', 'category': 'Reading'},
-        {'user': 'admin', 'name': 'Swim', 'category': 'Fitness'},
-        {'user': 'admin', 'name': 'Run', 'category': 'Fitness'},
-        {'user': 'admin', 'name': 'Dance', 'category': 'Fitness'},
-        {'user': 'admin', 'name': 'Yoga / Stretch', 'category': 'Fitness'},
-        {'user': 'admin', 'name': 'Gym', 'category': 'Fitness'},
-        {'user': 'admin', 'name': 'Go To The Park', 'category': 'Fitness'},
-        {'user': 'admin', 'name': 'Walk', 'category': 'Fitness'},
-        {'user': 'admin', 'name': 'Football', 'category': 'Fitness'},
-        {'user': 'admin', 'name': 'Hand Stand / Pull Up / Pole Session', 'category': 'Fitness'},
-        {'user': 'admin', 'name': '7 Minute HIIT', 'category': 'Fitness'},
-        {'user': 'admin', 'name': 'Drink Matcha', 'category': 'Nutrition'},
-        {'user': 'admin', 'name': 'Consume Leaves', 'category': 'Nutrition'},
-        {'user': 'admin', 'name': 'Drink Coconut Water', 'category': 'Nutrition'},
-        {'user': 'admin', 'name': 'Take Supplements', 'category': 'Nutrition'},
-        {'user': 'admin', 'name': 'Have Fruits', 'category': 'Nutrition'},
-        {'user': 'admin', 'name': 'Drink Water', 'category': 'Nutrition'},
-        {'user': 'admin', 'name': 'Drink Vegetable Juice', 'category': 'Nutrition'},
-        {'user': 'admin', 'name': 'Prepare Meal / Cook Dinner', 'category': 'Nutrition'},
-        {'user': 'admin', 'name': 'Take Chia Seeds', 'category': 'Nutrition'},
-        {'user': 'admin', 'name': 'Mantra Chanting', 'category': 'Spiritual'},
-        {'user': 'admin', 'name': 'Get Aligned High Income Job Offers', 'category': 'Wealth'},
-        {'user': 'admin', 'name': 'Optimise Linkedin', 'category': 'Wealth'},
-        {'user': 'admin', 'name': 'AI Projects', 'category': 'Wealth'},
-        {'user': 'admin', 'name': 'Passion Projects', 'category': 'Wealth'},
-        {'user': 'admin', 'name': 'Upskill', 'category': 'Wealth'},
-        {'user': 'admin', 'name': 'Create Content', 'category': 'Wealth'},
-        {'user': 'admin', 'name': 'Go To The Office', 'category': 'Wealth'},
-        {'user': 'admin', 'name': 'Chanting', 'category': 'Spiritual'},
-        {'user': 'admin', 'name': 'Journal', 'category': 'Spiritual'},
-        {'user': 'admin', 'name': 'Meditate', 'category': 'Spiritual'},
-        {'user': 'admin', 'name': 'Grounding', 'category': 'Spiritual'},
-        {'user': 'admin', 'name': 'Sleep Well / Binaural Beats', 'category': 'Spiritual'},
-        {'user': 'admin', 'name': 'Attend an Event', 'category': 'Fun'},
-        {'user': 'admin', 'name': 'Hackathons', 'category': 'Fun'},
-        {'user': 'admin', 'name': 'Social Club Meet', 'category': 'Fun'},
-        {'user': 'admin', 'name': 'Community Service', 'category': 'Fun'},
-        {'user': 'admin', 'name': 'Visit Orphanage/ Old Age Home', 'category': 'Fun'},
-        {'user': 'admin', 'name': 'Music Jam', 'category': 'Fun'},
-        {'user': 'admin', 'name': 'Painitng, Gardening, Sketch', 'category': 'Fun'},
-        {'user': 'admin', 'name': 'Declutter / Organise', 'category': 'Fun'},
-        {'user': 'admin', 'name': 'Planning for Tomorrow', 'category': 'Fun'},
-        {'user': 'admin', 'name': 'Feed The Dogs', 'category': 'Fun'},
-        
-        # Other users' habits
-        {'user': 'Sid', 'name': 'Study fintech', 'category': 'Reading'},
-        {'user': 'Sid', 'name': 'Read 30 minutes', 'category': 'Reading'},
-        {'user': 'Sid', 'name': 'Morning workout', 'category': 'Fitness'},
-        {'user': 'Sid', 'name': 'Drink 8 glasses water', 'category': 'Nutrition'},
-        {'user': 'Sid', 'name': 'Track expenses', 'category': 'Wealth'},
-        {'user': 'Sid', 'name': 'Meditation', 'category': 'Spiritual'},
-        {'user': 'Sid', 'name': 'Play guitar', 'category': 'Fun'},
-        {'user': 'Sid', 'name': 'Gym workout', 'category': 'Fitness'},
-        {'user': 'Sid', 'name': 'Drink water', 'category': 'Nutrition'},
-        {'user': 'Sid', 'name': 'Track investments', 'category': 'Wealth'},
-        {'user': 'Sid', 'name': 'Coding practice', 'category': 'Fun'},
-        {'user': 'Sid', 'name': 'Read business books', 'category': 'Reading'},
-        {'user': 'Sid', 'name': 'Running', 'category': 'Fitness'},
-        {'user': 'Sid', 'name': 'Eat healthy meals', 'category': 'Nutrition'},
-        {'user': 'Sid', 'name': 'Save money', 'category': 'Wealth'},
-        {'user': 'Sid', 'name': 'Prayer time', 'category': 'Spiritual'},
-        {'user': 'Sid', 'name': 'Photography', 'category': 'Fun'},
-        
-        # Additional habits for other users
-        {'user': 'Sanju', 'name': 'Read 30 minutes', 'category': 'Reading'},
-        {'user': 'Sanju', 'name': 'Morning workout', 'category': 'Fitness'},
-        {'user': 'Sanju', 'name': 'Drink 8 glasses water', 'category': 'Nutrition'},
-        {'user': 'Sanju', 'name': 'Track expenses', 'category': 'Wealth'},
-        {'user': 'Sanju', 'name': 'Meditation', 'category': 'Spiritual'},
-        {'user': 'Sanju', 'name': 'Play guitar', 'category': 'Fun'},
-        {'user': 'Sanju', 'name': 'Read tech blogs', 'category': 'Reading'},
-        {'user': 'Sanju', 'name': 'Gym workout', 'category': 'Fitness'},
-        {'user': 'Sanju', 'name': 'Eat healthy meals', 'category': 'Nutrition'},
-        {'user': 'Sanju', 'name': 'Save money', 'category': 'Wealth'},
-        {'user': 'Sanju', 'name': 'Prayer time', 'category': 'Spiritual'},
-        {'user': 'Sanju', 'name': 'Photography', 'category': 'Fun'},
-        {'user': 'Sanju', 'name': 'Running', 'category': 'Fitness'},
-        {'user': 'Sanju', 'name': 'Protein intake', 'category': 'Nutrition'},
-        {'user': 'Sanju', 'name': 'Investment research', 'category': 'Wealth'},
-        {'user': 'Sanju', 'name': 'Journaling', 'category': 'Spiritual'},
-        {'user': 'Sanju', 'name': 'Coding practice', 'category': 'Fun'},
-        
-        # Sachin's habits
-        {'user': 'Sachin', 'name': 'Read 30 minutes', 'category': 'Reading'},
-        {'user': 'Sachin', 'name': 'Morning workout', 'category': 'Fitness'},
-        {'user': 'Sachin', 'name': 'Drink 8 glasses water', 'category': 'Nutrition'},
-        {'user': 'Sachin', 'name': 'Track expenses', 'category': 'Wealth'},
-        {'user': 'Sachin', 'name': 'Meditation', 'category': 'Spiritual'},
-        {'user': 'Sachin', 'name': 'Play guitar', 'category': 'Fun'},
-        {'user': 'Sachin', 'name': 'Read tech blogs', 'category': 'Reading'},
-        {'user': 'Sachin', 'name': 'Gym workout', 'category': 'Fitness'},
-        {'user': 'Sachin', 'name': 'Eat healthy meals', 'category': 'Nutrition'},
-        {'user': 'Sachin', 'name': 'Save money', 'category': 'Wealth'},
-        {'user': 'Sachin', 'name': 'Prayer time', 'category': 'Spiritual'},
-        {'user': 'Sachin', 'name': 'Photography', 'category': 'Fun'},
-        {'user': 'Sachin', 'name': 'Running', 'category': 'Fitness'},
-        {'user': 'Sachin', 'name': 'Protein intake', 'category': 'Nutrition'},
-        {'user': 'Sachin', 'name': 'Investment research', 'category': 'Wealth'},
-        {'user': 'Sachin', 'name': 'Journaling', 'category': 'Spiritual'},
-        {'user': 'Sachin', 'name': 'Coding practice', 'category': 'Fun'},
-        
-        # Defni's habits
-        {'user': 'Defni', 'name': 'Read 30 minutes', 'category': 'Reading'},
-        {'user': 'Defni', 'name': 'Morning workout', 'category': 'Fitness'},
-        {'user': 'Defni', 'name': 'Drink 8 glasses water', 'category': 'Nutrition'},
-        {'user': 'Defni', 'name': 'Track expenses', 'category': 'Wealth'},
-        {'user': 'Defni', 'name': 'Meditation', 'category': 'Spiritual'},
-        {'user': 'Defni', 'name': 'Play guitar', 'category': 'Fun'},
-        {'user': 'Defni', 'name': 'Read tech blogs', 'category': 'Reading'},
-        {'user': 'Defni', 'name': 'Gym workout', 'category': 'Fitness'},
-        {'user': 'Defni', 'name': 'Eat healthy meals', 'category': 'Nutrition'},
-        {'user': 'Defni', 'name': 'Save money', 'category': 'Wealth'},
-        {'user': 'Defni', 'name': 'Prayer time', 'category': 'Spiritual'},
-        {'user': 'Defni', 'name': 'Photography', 'category': 'Fun'},
-        {'user': 'Defni', 'name': 'Running', 'category': 'Fitness'},
-        {'user': 'Defni', 'name': 'Protein intake', 'category': 'Nutrition'},
-        {'user': 'Defni', 'name': 'Investment research', 'category': 'Wealth'},
-        {'user': 'Defni', 'name': 'Journaling', 'category': 'Spiritual'},
-        {'user': 'Defni', 'name': 'Coding practice', 'category': 'Fun'},
-        
-        # Pooja's habits
-        {'user': 'Pooja', 'name': 'Read 30 minutes', 'category': 'Reading'},
-        {'user': 'Pooja', 'name': 'Morning workout', 'category': 'Fitness'},
-        {'user': 'Pooja', 'name': 'Drink 8 glasses water', 'category': 'Nutrition'},
-        {'user': 'Pooja', 'name': 'Track expenses', 'category': 'Wealth'},
-        {'user': 'Pooja', 'name': 'Meditation', 'category': 'Spiritual'},
-        {'user': 'Pooja', 'name': 'Play guitar', 'category': 'Fun'},
-        {'user': 'Pooja', 'name': 'Read tech blogs', 'category': 'Reading'},
-        {'user': 'Pooja', 'name': 'Gym workout', 'category': 'Fitness'},
-        {'user': 'Pooja', 'name': 'Eat healthy meals', 'category': 'Nutrition'},
-        {'user': 'Pooja', 'name': 'Save money', 'category': 'Wealth'},
-        {'user': 'Pooja', 'name': 'Prayer time', 'category': 'Spiritual'},
-        {'user': 'Pooja', 'name': 'Photography', 'category': 'Fun'},
-        {'user': 'Pooja', 'name': 'Running', 'category': 'Fitness'},
-        {'user': 'Pooja', 'name': 'Protein intake', 'category': 'Nutrition'},
-        {'user': 'Pooja', 'name': 'Investment research', 'category': 'Wealth'},
-        {'user': 'Pooja', 'name': 'Journaling', 'category': 'Spiritual'},
-        {'user': 'Pooja', 'name': 'Coding practice', 'category': 'Fun'},
-    ]
     
-    imported_count = 0
+    # Import habits
     for habit_data in all_habits_data:
         try:
-            user = User.objects.get(username=habit_data['user'])
-            category = Category.objects.get(name=habit_data['category'])
+            # Get the user who created this habit (if specified)
+            created_by = None
+            if 'user' in habit_data and habit_data['user']:
+                try:
+                    created_by = User.objects.get(username=habit_data['user'])
+                except User.DoesNotExist:
+                    print(f"  ⚠️  User {habit_data['user']} not found, creating habit without creator")
             
-            habit, created = Habit.objects.get_or_create(
+            category = Category.objects.get(name=habit_data['category']) if habit_data['category'] else None
+            
+            # Check if habit already exists (global habits)
+            existing_habits = Habit.objects.filter(name=habit_data['name'])
+            if existing_habits.exists():
+                print(f"  ℹ️  Habit already exists: {habit_data['name']}")
+                continue
+            
+            # Create new global habit
+            habit = Habit.objects.create(
                 name=habit_data['name'],
-                user=user,
-                defaults={
-                    'description': f"Daily {habit_data['name'].lower()}",
-                    'category': category
-                }
+                description=habit_data.get('description', ''),
+                category=category,
+                created_by=created_by,
+                start_date=datetime.strptime(habit_data['start_date'], '%Y-%m-%d').date() if habit_data.get('start_date') else date.today()
             )
             
-            if created:
-                imported_count += 1
-                print(f"  ✅ Created habit: {habit.name} for {user.username}")
-            else:
-                print(f"  ℹ️  Habit already exists: {habit.name} for {user.username}")
-                
-        except User.DoesNotExist:
-            print(f"  ❌ User not found: {habit_data['user']}")
+            print(f"  ✅ Created habit: {habit.name}")
+            
         except Category.DoesNotExist:
             print(f"  ❌ Category not found: {habit_data['category']}")
+        except Exception as e:
+            print(f"  ❌ Error importing habit {habit_data.get('name', 'Unknown')}: {e}")
     
-    print(f"  🎯 Total habits imported: {imported_count}")
+    print(f"  🎯 Total habits imported: {len(all_habits_data)}")
 
 def reset_passwords():
     """Reset all user passwords to usernames"""
@@ -503,50 +351,26 @@ def reset_passwords():
             print(f"  ✅ Reset password for: {user.username}")
         except Exception as e:
             print(f"  ❌ Error resetting password for {user.username}: {e}")
-    
-    print("\n🎉 Password reset complete!")
-    print("All users can now login with:")
-    print("Username: their_username")
-    print("Password: their_username")
 
 def main():
     """Main refresh function"""
-    print("🔄 Starting data refresh...")
-    print("=" * 60)
-    print(f"🕐 Refresh started at: {datetime.now()}")
-    print("=" * 60)
-    
     try:
+        print("🔄 Starting data refresh...")
+        print("=" * 50)
+        
         # Clear existing data
         clear_existing_data()
-        print()
         
-        # Ensure admin exists
+        # Create admin user
         create_admin_if_not_exists()
-        print()
         
         # Import fresh data
         import_categories()
-        print()
         import_users()
-        print()
         import_all_habits()
-        print()
         reset_passwords()
-        print()
         
-        print("=" * 60)
-        print("🎉 Data refresh completed successfully!")
-        print(f"🕐 Refresh completed at: {datetime.now()}")
-        print("\n📊 Summary:")
-        print("  ✅ All existing data cleared")
-        print("  ✅ Fresh data imported")
-        print("  ✅ Passwords reset")
-        print("\n🔑 Login Credentials:")
-        print("  Username: Shruti, Password: Shruti")
-        print("  Username: admin, Password: admin")
-        print("  Username: Sid, Password: Sid")
-        print("  And so on...")
+        print("\n🎉 Data refresh completed successfully!")
         print("\n📝 Note: This script runs automatically on every deploy/restart!")
         
     except Exception as e:
