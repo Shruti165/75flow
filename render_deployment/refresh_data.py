@@ -7,7 +7,7 @@ This script can be run manually or automatically to refresh data
 import os
 import sys
 import django
-from datetime import datetime
+from datetime import datetime, date
 
 # Add the project directory to Python path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -328,7 +328,7 @@ def import_all_habits():
                 description=habit_data.get('description', ''),
                 category=category,
                 created_by=created_by,
-                start_date=datetime.strptime(habit_data['start_date'], '%Y-%m-%d').date() if habit_data.get('start_date') else date.today()
+                start_date=date.today()
             )
             
             print(f"  ✅ Created habit: {habit.name}")
