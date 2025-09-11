@@ -404,8 +404,8 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'habits:habits' %}">
-                                <i class="ri-heart-pulse-line"></i>Habits
+                            <a class="nav-link" href="{% url 'habits:excel' %}">
+                                <i class="ri-file-excel-2-line"></i>Excel
                             </a>
                         </li>
                         <li class="nav-item">
@@ -416,11 +416,6 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'habits:daily_tracking' %}">
                                 <i class="ri-checkbox-multiple-line"></i>Daily Tracking
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'habits:excel' %}">
-                                <i class="ri-file-excel-2-line"></i>Excel
                             </a>
                         </li>
                         {% if user.username == 'admin' %}
@@ -438,6 +433,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'habits:profile' %}">
                                 <i class="ri-user-settings-line"></i>Profile
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'habits:habits' %}">
+                                <i class="ri-heart-pulse-line"></i>Habits
                             </a>
                         </li>
                         <li class="nav-item">
