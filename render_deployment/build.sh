@@ -38,13 +38,13 @@ python manage.py migrate
             echo "🔍 Checking available import scripts..."
             ls -la render_deployment/ || echo "render_deployment directory not accessible"
             
-            # Always refresh data on every deploy/restart
-            if [ -f "render_deployment/refresh_data.py" ]; then
-                echo "🔄 Running data refresh on every deploy/restart..."
-                python render_deployment/refresh_data.py
-            elif [ -f "render_deployment/import_local_data.py" ]; then
+            # Always import local data on every deploy/restart
+            if [ -f "render_deployment/import_local_data.py" ]; then
                 echo "🔄 Importing local data on every deploy/restart..."
                 python render_deployment/import_local_data.py
+            elif [ -f "render_deployment/refresh_data.py" ]; then
+                echo "🔄 Running data refresh on every deploy/restart..."
+                python render_deployment/refresh_data.py
             else
                 echo "⚠️  No import scripts found, creating default users..."
                 python manage.py create_default_users

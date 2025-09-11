@@ -73,13 +73,13 @@ def import_users(export_data):
         user, created = User.objects.get_or_create(
             username=user_data['username'],
             defaults={
-                'email': user_data['email'],
-                'first_name': user_data['first_name'],
-                'last_name': user_data['last_name'],
-                'is_staff': user_data['is_staff'],
-                'is_superuser': user_data['is_superuser'],
-                'is_active': user_data['is_active'],
-                'date_joined': timezone.datetime.fromisoformat(user_data['date_joined'].replace('Z', '+00:00'))
+                'email': user_data.get('email', ''),
+                'first_name': user_data.get('first_name', ''),
+                'last_name': user_data.get('last_name', ''),
+                'is_staff': user_data.get('is_staff', False),
+                'is_superuser': user_data.get('is_superuser', False),
+                'is_active': user_data.get('is_active', True),
+                'date_joined': timezone.datetime.fromisoformat(user_data['date_joined'].replace('Z', '+00:00')) if user_data.get('date_joined') else timezone.now()
             }
         )
         
