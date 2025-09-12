@@ -143,55 +143,16 @@
             font-size: 1.1rem;
         }
 
-        /* Dropdown Styling */
-        .dropdown-toggle {
-            position: relative;
-        }
-
-        .dropdown-arrow {
-            font-size: 0.9rem;
-            margin-left: 4px;
+        /* Mobile Menu Arrow */
+        .mobile-menu-arrow {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            margin-left: 8px;
             transition: transform 0.3s ease;
         }
 
-        .dropdown-toggle[aria-expanded="true"] .dropdown-arrow {
+        .navbar-toggler[aria-expanded="true"] .mobile-menu-arrow {
             transform: rotate(180deg);
-        }
-
-        .dropdown-menu {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            box-shadow: var(--shadow-medium);
-            margin-top: 8px;
-            padding: 8px 0;
-        }
-
-        .dropdown-item {
-            color: var(--text-primary);
-            font-weight: 500;
-            padding: 10px 20px;
-            transition: all 0.3s ease;
-            border-radius: 8px;
-            margin: 2px 8px;
-        }
-
-        .dropdown-item:hover {
-            background: var(--gradient-secondary);
-            color: white;
-            transform: translateX(4px);
-        }
-
-        .dropdown-item i {
-            font-size: 1rem;
-            margin-right: 8px;
-            width: 16px;
-        }
-
-        .dropdown-divider {
-            margin: 8px 16px;
-            border-color: rgba(0, 0, 0, 0.1);
         }
 
         /* Card Styling */
@@ -435,39 +396,10 @@
                 margin-bottom: 1rem;
             }
 
-            /* Mobile Dropdown Styling */
-            .dropdown-menu {
-                position: static !important;
-                transform: none !important;
-                box-shadow: none;
-                background: rgba(255, 255, 255, 0.1);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                margin: 8px 0;
-            }
-
-            .dropdown-item {
-                background: rgba(255, 255, 255, 0.1);
-                margin: 2px 0;
-                border-radius: 8px;
-            }
-
-            .dropdown-item:hover {
-                background: var(--gradient-secondary);
-                transform: none;
-            }
-
-            /* Make dropdown arrows more prominent on mobile */
-            .dropdown-arrow {
-                font-size: 1rem;
-                margin-left: 6px;
-            }
-
-            /* Ensure dropdowns are easily tappable on mobile */
-            .dropdown-toggle {
-                padding: 12px 16px;
-                min-height: 44px;
-                display: flex;
-                align-items: center;
+            /* Mobile menu arrow styling */
+            .mobile-menu-arrow {
+                font-size: 1.4rem;
+                margin-left: 10px;
             }
         }
     </style>
@@ -480,6 +412,7 @@
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
+                <i class="ri-arrow-down-s-line mobile-menu-arrow"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
@@ -490,60 +423,51 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="{% url 'habits:excel' %}">
+                                <i class="ri-file-excel-2-line"></i>Excel
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'habits:scoreboard' %}">
+                                <i class="ri-trophy-line"></i>Scoreboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'habits:daily_tracking' %}">
+                                <i class="ri-checkbox-multiple-line"></i>Daily Tracking
+                            </a>
+                        </li>
+                        {% if user.username == 'admin' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'habits:add_participant' %}">
+                                <i class="ri-user-add-line"></i>Add Participant
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'habits:admin_habit_manager' %}">
+                                <i class="ri-admin-line"></i>Admin Manager
+                            </a>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'habits:profile' %}">
+                                <i class="ri-user-settings-line"></i>Profile
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{% url 'habits:habits' %}">
                                 <i class="ri-heart-pulse-line"></i>Habits
                             </a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="trackingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="ri-bar-chart-line"></i>Tracking
-                                <i class="ri-arrow-down-s-line dropdown-arrow"></i>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'habits:feedback' %}">
+                                <i class="ri-feedback-line"></i>Feedback
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="trackingDropdown">
-                                <li><a class="dropdown-item" href="{% url 'habits:daily_tracking' %}">
-                                    <i class="ri-checkbox-multiple-line"></i>Daily Tracking
-                                </a></li>
-                                <li><a class="dropdown-item" href="{% url 'habits:scoreboard' %}">
-                                    <i class="ri-trophy-line"></i>Scoreboard
-                                </a></li>
-                                <li><a class="dropdown-item" href="{% url 'habits:excel' %}">
-                                    <i class="ri-file-excel-2-line"></i>Excel Export
-                                </a></li>
-                            </ul>
                         </li>
-                        {% if user.username == 'admin' %}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="ri-admin-line"></i>Admin
-                                <i class="ri-arrow-down-s-line dropdown-arrow"></i>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'habits:logout' %}">
+                                <i class="ri-logout-box-r-line"></i>Logout
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="adminDropdown">
-                                <li><a class="dropdown-item" href="{% url 'habits:add_participant' %}">
-                                    <i class="ri-user-add-line"></i>Add Participant
-                                </a></li>
-                                <li><a class="dropdown-item" href="{% url 'habits:admin_habit_manager' %}">
-                                    <i class="ri-settings-3-line"></i>Habit Manager
-                                </a></li>
-                            </ul>
-                        </li>
-                        {% endif %}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="ri-user-line"></i>Account
-                                <i class="ri-arrow-down-s-line dropdown-arrow"></i>
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                                <li><a class="dropdown-item" href="{% url 'habits:profile' %}">
-                                    <i class="ri-user-settings-line"></i>Profile
-                                </a></li>
-                                <li><a class="dropdown-item" href="{% url 'habits:feedback' %}">
-                                    <i class="ri-feedback-line"></i>Feedback
-                                </a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="{% url 'habits:logout' %}">
-                                    <i class="ri-logout-box-r-line"></i>Logout
-                                </a></li>
-                            </ul>
                         </li>
                     {% else %}
                         <li class="nav-item">
